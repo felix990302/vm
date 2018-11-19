@@ -3,5 +3,6 @@
 
 *.swp
 *.swo
-
+*.kdev4
+.kdev4
 vm
