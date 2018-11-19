@@ -4,8 +4,8 @@ EXEC = vm
 OBJECTS = application.o
 DEPENDS = ${OBJECTS:.o=.d}
 
-%${EXEC}: ${OBJECTS}
-%	${CXX} ${OBJECTS} -o ${EXEC}
+#${EXEC}: ${OBJECTS}
+#	${CXX} ${OBJECTS} -o ${EXEC}
 
 -include ${DEPENDS}
 
