@@ -4,23 +4,34 @@
 #include <memory>
 #include <string>
 
+
 #include "coordinates.h"
-class Component;
+
+
 
 
 namespace VM {
 
+    class Component;
+
     class TextDisplay {
     private:
-        std::shared_ptr<Component> main_component:
-
+        std::shared_ptr<Component> mainComponent;
     public:
-        void putc(const Coordinates &c, char c); //TODO extend to color
-        void puts(const Coordinates &c, const std::string &s);
-        //char get(int x, int y, char c);
-        void redraw();
 
-    public:
+
+        TextDisplay();
+        virtual void putc(const Coordinates &c, char ch) = 0; //TODO extend to color
+        virtual void puts(const Coordinates &c, const std::string &s) =0;
+
+        virtual void redraw();
+        virtual void resizeHandler(const Coordinates &size);
+
+
+        const std::shared_ptr<Component> &getMainComponent() const;
+
+        void setMainComponent(const std::shared_ptr<Component> &mainComponent);
+
 
     };
 }

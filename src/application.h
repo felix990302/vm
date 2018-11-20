@@ -1,11 +1,15 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include <memory>
+
 #include "text_display.h"
 #include "ncurses_input.h"
 #include "buffer_view.h"
 #include "buffer_base.h"
 #include "controller.h"
+
+
 
 namespace VM {
 
@@ -16,7 +20,7 @@ namespace VM {
         BufferView bufferView;
         NCursesInput nCursesInput;
         Controller controller;
-        TextDisplay display;
+        TextDisplay * display;
 
 
     public:
