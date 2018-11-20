@@ -6,9 +6,9 @@
 #include "text_display.h"
 #include "ncurses_input.h"
 #include "buffer_view.h"
-#include "buffer_type.h"
-#include "controller.h"
 #include "file_buffer.h"
+#include "buffer_base.h"
+#include "controller.h"
 
 
 
@@ -18,15 +18,16 @@ namespace VM {
     private:
         int argc;
         char **argv;
-        //Controller controller;
-        TextDisplay * display;
-        FileBuffer fileBuffer;
-        std::shared_ptr<BufferView> bufferView;
+        std::unique_ptr<FileBuffer> fileBuffer;
+        BufferView bufferView;
         NCursesInput nCursesInput;
+        Controller *controller;
+        TextDisplay * display;
+
 
     public:
-        Application();
-        void run(int argc, char *argv[]);
+        Application(int argc, char *argv[]);
+        void run();
     };
 
 }

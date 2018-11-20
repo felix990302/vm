@@ -1,21 +1,23 @@
 #include "application.h"
 #include "n_curses_display.h"
-#include "buffer_view.h"
-#include "file_buffer.h"
-#include "buffer_type.h"
 
 int main(int argc, char *argv[]) {
-    VM::Application app;
-    app.run(argc, argv);
+    VM::Application app {argc, argv};
+    app.run();
 }
 
 namespace VM {
 
-    Application::Application() : display(&NCursesDisplay::getMainDisplay()), fileBuffer(), bufferView(std::make_shared<BufferView>(&fileBuffer)){
+    Application::Application(int argc, char **argv):
+        argc(argc),
+        argv(argv),
+        fileBuffer(std::make_unique<FileBuffer>()),
+        bufferView(fileBuffer.get()),
+        controller(),
+        display(&NCursesDisplay::getMainDisplay())
+    {}
 
-    }
-
-    void Application::run(int argc, char **argv) {
+    void Application::run() {
 
     }
 }

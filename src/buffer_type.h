@@ -6,6 +6,8 @@
 namespace VM {
     typedef std::list<char> LineType;
     typedef std::list<LineType> BufferType;
+
+    typedef BufferType BufferBase;
 }
 
 #endif
