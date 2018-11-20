@@ -18,9 +18,6 @@ namespace VM {
     private:
         std::shared_ptr<Component> mainComponent;
     public:
-
-
-        TextDisplay();
         virtual void putc(const Coordinates &c, char ch) = 0; //TODO extend to color
         virtual void puts(const Coordinates &c, const std::string &s) =0;
 

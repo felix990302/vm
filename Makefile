@@ -7,8 +7,8 @@ OBJ_FILES = $(patsubst $(SRC_DIR)/%.cc,$(OBJ_DIR)/%.o,$(SRC_FILES))
 DEP_FILES = $(patsubst $(SRC_DIR)/%.cc,$(DEP_DIR)/%.d,$(SRC_FILES))
 
 CXX = g++
-CXXFLAGS = -std=c++14 -Wall -MMD -g
-CPPFLAGS = ${CXXFLAGS} -I $(SRC_DIR)
+CPPFLAGS = -std=c++14 -Wall -MMD -g -I $(SRC_DIR)
+CXXFLAGS = -std=c++14 -Wall -g -lncurses
 EXEC = vm
 
 
