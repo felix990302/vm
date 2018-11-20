@@ -6,5 +6,9 @@ int main(int argc, char *argv[]) {
 }
 
 namespace VM {
+    Application::Application(int argc, char **argv) : argc(argc), argv(argv) {}
 
+    void Application::run() {
+
+    }
 }
