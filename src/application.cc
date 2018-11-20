@@ -1,10 +1,10 @@
-#include <iostream>
-#include <fstream>
-
-open
+#include "application.h"
 
 int main(int argc, char *argv[]) {
-   if(argc == 1) {
+    VM::Application app(argc, argv);
+    app.run();
+}
 
-   } 
+namespace VM {
+
 }
