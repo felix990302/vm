@@ -7,7 +7,7 @@
 
 
 namespace VM {
-    class DeleteCommand: Command {
+    class DeleteCommand: public Command {
         const Direction direction;
         std::string toDelete;
 

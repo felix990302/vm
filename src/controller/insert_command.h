@@ -7,7 +7,7 @@
 
 
 namespace VM {
-    class InsertCommand: Command {
+    class InsertCommand: public Command {
         const Direction direction;
         std::string toInsert;
 

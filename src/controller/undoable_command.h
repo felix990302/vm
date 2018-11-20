@@ -5,7 +5,7 @@
 
 
 namespace VM {
-    class UndoableCommand: Command {
+    class UndoableCommand: public Command {
         public:
         virtual void UndoCommand() = 0;
         virtual void RedoCommand() = 0;
