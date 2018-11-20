@@ -11,119 +11,184 @@
 ### Legend
 
 ```plantuml
-abstract class LEGEND {
+
+class Class
+
+abstract class AbstractClass
+
+object LEGEND {
     -private field
     #protected field
     +public field
+    {static} static field
 
     -private method() 
     #protected method()
     +public method()
+    {abstract} virtual method()
+    {static} static method()
 }
 
 ```
 ### General Architecture
 
 ```plantuml
-abstract class Controller {
-    -ControllerViews
-    -Mode*
-    -Stack<TrackableCommand*> UndoStack
-    -Stack<TrackableCommand*> RedoStack
-
-    +addControllerView()
-    +remoteControllerView()
-    +getMode()
+class Application {
+    -argc : Int
+    -argv : char**
 }
-Controller --o ControllerView
+
+abstract class Controller {
+    -Stack<UndoableCommand*> UndoStack
+    -Stack<UndoableCommand*> RedoStack
+
+    {abstract} +getAndProcessChar() : Void
+}
 Controller --* Application
 Controller --o FileBuffer
 
-abstract class Mode {
-    -commandMap
+abstract class Input {
+    {abstract} +getChar() : Char
+}
+Input --* Controller
+Input <|-- NCursesInput
 
-    +exit()
-    +interpret()
+class NCursesInput {
+    +getChar() : Char
+}
+
+abstract class Mode {
+    {abstract} +processChar() : void
 }
 Mode --* Controller
-Mode <|-- CommandMode
+Mode <|-- InsertMode
 
-CommandMode <|-- CommandLineMode
-CommandMode <|-- MutateMode
-
-abstract class MutateMode
-MutateMode <|-- InsertMode
-MutateMode <|-- ReplaceMode
-
-abstract class View {
-    +resize()
+class InsertMode {
+    +processChar() : void
 }
-View <|-- NCursesView
-View <|-- DecoratedView
-View --o DecoratedView
-View --o Application
-
-abstract class DecoratedView
 
 class BufferView {
-    +notify()
-    +updateScreen()
+    +draw(Coordinates, TextDisplay) : void
 }
-BufferView --* View
+BufferView --* Application
 
-class ControllerView {
-    +notify()
-    +updateScreen()
+abstract class Component {
+    {abstract} +setSize(Coordinates) : void
+    {abstract} +setPosn(Coordinates) : void
+    {abstract} +draw(Coordinates, TextDisplay) : void
+    +getSize() : Coordinates
+    +getPosn() : Coordinates
+    +enforceFitIntoSize(Coordinates) : void
+    +appendChildren(Component *) : void
+    +detachChildren(Component *) : void
 }
-ControllerView --* View
+Component --o TextDisplay
+Component --o Component
+Component <|-- BufferView
 
-abstract class FileBuffer {
-    -BufferViews
-
-    -notifyBufferViews()
-    +addBufferView
-    +removeBufferView
-    +getState()
+abstract class TextDisplay {
+    {abstract} +putc(Coordinates, char) : void 
+    {abstract} +putc(Coordinates, string) : void 
+    {abstract} +redraw() : void;
+    {abstract} +resizeHandler(Coordinates) : void
+    +getMainComponent() : Component *
+    +setMainCompoenent(Component *) : void
 }
+TextDisplay --o Application
+TextDisplay <|-- NCursesDisplay
+
+class NCursesDisplay {
+    {static} NCursesDisplay
+
+    {static} +resizeHandler(int) : void
+    {static} +getMainDisplay() : NCursesDisplay
+    +putc(Coordinates, char) : void
+    +puts(Coordinates, string) : void
+    +redraw() : void
+}
+
+class Coordinates {
+    +cor_t x
+    +cor_t y
+}
+Coordinates --* Component
+
+class BufferType
+BufferType --* FileBuffer
+
+class FileBuffer {
+    +type(char) : void
+    +type(String) : void
+    +delete_forward(int) : void
+    +delete_backward(int) : void
+    +getBuffer() : BufferType
+}
+FileBuffer --* Application
+FileBuffer --o Controller
 FileBuffer --o BufferView
 
-Cursor --* FileBuffer
+class Cursor {
+    +line : size_t
+    +col : size_t
+}
+Cursor --* BufferView
+Cursor <|-- PtrCursor
 
-Lines --* FileBuffer
+class PtrCursor {
+    +linePosn : BufferType::iterator
+    +charPosn : LineType::iterator:w
+}
+PtrCursor --* FileBuffer
 ```
 
 ### Commands
 
 ```plantuml
 abstract class Command {
-    -repetitions
+    -quant : size_t
 
-    +do() 
-    +undo()
-    +redo()
+    +doCommand() : void 
 }
-Command <|-- MovementCommand
-Command <|-- MutateCommand
+Command <|-- MoveCommand
+Command <|-- UndoableCommand
+Command <|-- EnterInsertCommand
 
-abstract class MovementCommand {
-    +getPosition()
-    +move()
+abstract class MoveCommand {
 }
-MovementCommand --* MutateCommand
-MovementCommand <|-- Find
-MovementCommand <|-- Search
 
-abstract class TrackableCommand
-TrackableCommand <|-- Cut
+abstract class UndoableCommand {
+    {abstract} +UndoCommand() : void
+    {abstract} +RedoCommand() : void
+}
+UndoableCommand <|-- MutateCommand
 
 abstract class MutateCommand
-MutateCommand <|-- Cut
-```
+MutateCommand <|-- InsertCommand
+MutateCommand <|-- DeleteCommand
 
-## An Idea to Consider
+class InsertCommand {
+    +doCommmand() : void
+    +UndoCommand() : void
+    +RedoCommand() : void
+}
 
-```plantuml
-QuantifierMode --|> MODE
-MotionMode --|> QuantifierMode
-NormalMode --|> MotionMode
+class DeleteCommand {
+    +doCommmand() : void
+    +UndoCommand() : void
+    +RedoCommand() : void
+}
+
+class Motion {
+    +nextPosition(Cursor) : Cursor    
+}
+Motion --* MoveCommand
+Motion --* UndoableCommand
+
+object Direction {
+    Up
+    Down
+    Forward
+    Backward
+}
+Direction --* MutateCommand
 ```
