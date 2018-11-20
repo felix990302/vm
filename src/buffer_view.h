@@ -12,7 +12,7 @@ namespace VM {
         FileBuffer *fileBuffer;
         Cursor cursor;
     public:
-        BufferView (FileBuffer * fileBuffer);
+        BufferView(FileBuffer *fileBuffer);
         void draw(const Coordinates &parentPosn, const TextDisplay &display);
     };
 }
