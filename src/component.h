@@ -1,15 +1,27 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-#include <vector>
+#include <list>
 #include <memory>
 #include "coordinates.h"
 #include "text_display.h"
 
 namespace VM {
-    class Component{
+    class Component {
         Coordinates size, posn;
-        std::vector<std::shared_ptr<Component> > children;
+    public:
+        const Coordinates &getSize() const;
+
+        virtual void setSize(const Coordinates &size);
+
+        const Coordinates &getPosn() const;
+
+        virtual void setPosn(const Coordinates &posn);
+
+        void enforceFitIntoSize(const Coordinates &size);
+
+    private:
+        std::list<std::shared_ptr<Component> > children;
 
     public:
         Component(const Coordinates &posn, const Coordinates &size);
@@ -24,9 +36,6 @@ namespace VM {
         void detachChildren(std::shared_ptr<Component> childrenComponent);
 
         virtual void draw(const Coordinates &parentPosn, const TextDisplay &display);
-
-        virtual void resize(const Coordinates &newSize);
-        virtual void move(const Coordinates &newPos);
     };
 }
 

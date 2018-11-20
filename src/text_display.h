@@ -2,19 +2,37 @@
 #define TEXT_DISPLAY_H
 
 #include <memory>
+#include <string>
 
-class Component;
 
-namespace vm {
+#include "coordinates.h"
+
+
+
+
+namespace VM {
+
+    class Component;
 
     class TextDisplay {
-        int height, width;
-        std::shared_ptr<Component> main_component:
+    private:
+        std::shared_ptr<Component> mainComponent;
+    public:
 
-        void put(int x, int y, char c); //TODO extend to color
-        void get(int x, int y, char c);
 
-        void redraw();
+        TextDisplay();
+        virtual void putc(const Coordinates &c, char ch) = 0; //TODO extend to color
+        virtual void puts(const Coordinates &c, const std::string &s) =0;
+
+        virtual void redraw();
+        virtual void resizeHandler(const Coordinates &size);
+
+
+        const std::shared_ptr<Component> &getMainComponent() const;
+
+        void setMainComponent(const std::shared_ptr<Component> &mainComponent);
+
+
     };
 }
-#endif //VM_TEXT_DISPLAY_H
+#endif
