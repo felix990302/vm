@@ -1,38 +1,6 @@
-# Plan of Attack
+@startuml
+title General Architecture
 
-## Parsing
-- function within Normal mode
-- traverse through string / linearly
-    - check if motion character
-    - any type of commands `make_unique`
-
-## UML
-
-### Legend
-
-```plantuml
-
-class Class
-
-abstract class AbstractClass
-
-object LEGEND {
-    -private field
-    #protected field
-    +public field
-    {static} static field
-
-    -private method() 
-    #protected method()
-    +public method()
-    {abstract} virtual method()
-    {static} static method()
-}
-
-```
-### General Architecture
-
-```plantuml
 class Application {
     -argc : Int
     -argv : char**
@@ -139,56 +107,4 @@ class PtrCursor {
     +charPosn : LineType::iterator:w
 }
 PtrCursor --* FileBuffer
-```
-
-### Commands
-
-```plantuml
-abstract class Command {
-    -quant : size_t
-
-    +doCommand() : void 
-}
-Command <|-- MoveCommand
-Command <|-- UndoableCommand
-Command <|-- EnterInsertCommand
-
-abstract class MoveCommand {
-}
-
-abstract class UndoableCommand {
-    {abstract} +UndoCommand() : void
-    {abstract} +RedoCommand() : void
-}
-UndoableCommand <|-- MutateCommand
-
-abstract class MutateCommand
-MutateCommand <|-- InsertCommand
-MutateCommand <|-- DeleteCommand
-
-class InsertCommand {
-    +doCommmand() : void
-    +UndoCommand() : void
-    +RedoCommand() : void
-}
-
-class DeleteCommand {
-    +doCommmand() : void
-    +UndoCommand() : void
-    +RedoCommand() : void
-}
-
-class Motion {
-    +nextPosition(Cursor) : Cursor    
-}
-Motion --* MoveCommand
-Motion --* UndoableCommand
-
-object Direction {
-    Up
-    Down
-    Forward
-    Backward
-}
-Direction --* MutateCommand
-```
+@enduml
