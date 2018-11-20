@@ -7,7 +7,7 @@
 #include "ncurses_input.h"
 #include "buffer_view.h"
 #include "file_buffer.h"
-#include "buffer_base.h"
+#include "buffer_type.h"
 #include "controller.h"
 
 
