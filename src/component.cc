@@ -1,7 +1,8 @@
 #include "component.h"
 
 namespace VM {
-    Component::Component(const Coordinates &posn, const Coordinates &size):  posn(posn), size(size) {}
+    Component::Component(const Coordinates &posn, const Coordinates &size): size(size), posn(posn) {}
+    Component::Component(): size{0,0}, posn{0,0} {}
 
     void Component::appendChildren(std::shared_ptr<Component> childrenComponent) {
         detachChildren(childrenComponent);
@@ -14,16 +15,15 @@ namespace VM {
 
     void Component::draw(const Coordinates &parentPosn, const TextDisplay &display) {
         const Coordinates myCoordinates = parentPosn + posn;
-        for(const Component & child : children)
-            child.draw(myCoordinates);
+        for(const std::shared_ptr<Component> &child : children)
+            child->draw(myCoordinates, display);
     }
 
     const Coordinates &Component::getSize() const {
         return size;
     }
 
-    void Component::setSize(const Coordinates &size) {
-        if(size == newSize) return;
+    void Component::setSize(const Coordinates &newSize) {
         size = newSize;
     }
 

@@ -3,7 +3,7 @@
 
 #include <list>
 #include "cursor.h"
-#include "buffer_base.h"
+#include "buffer_type.h"
 
 
 namespace VM {
@@ -11,7 +11,7 @@ namespace VM {
         BufferType::iterator linePosn;
         LineType::iterator charPosn;
 
-        PtrCursor(const Cursor &cursor, const BufferType &bufferBase);
+        PtrCursor(const Cursor &cursor, BufferType &buffer);
     };
 }
 

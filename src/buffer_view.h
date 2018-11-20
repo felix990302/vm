@@ -4,16 +4,18 @@
 #include "cursor.h"
 #include "component.h"
 
-class FileBuffer;
 
 namespace VM {
+
+    class FileBuffer;
+
     class BufferView : public Component {
     private:
         FileBuffer *fileBuffer;
         Cursor cursor;
     public:
         BufferView (FileBuffer * fileBuffer);
-        void draw(const Coordinates &parentPosn, const TextDisplay &display);
+        void draw(const Coordinates &parentPosn, TextDisplay &display);
     };
 }
 

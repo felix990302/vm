@@ -17,16 +17,15 @@ namespace VM {
 
     void NCursesDisplay::redraw() {
         TextDisplay::redraw();
-        refresh(stdscr);
+        wrefresh(stdscr);
     }
 
     void NCursesDisplay::resizeHandler(int)
     {
         int nh, nw;
         getmaxyx(stdscr, nh, nw);
-        NCursesDisplay::mainDisplay.resizeHandler(Coordinates {nw, nh});
-
-        redraw();
+        ((TextDisplay *)&NCursesDisplay::mainDisplay)->resizeHandler(Coordinates {nw, nh});
+        NCursesDisplay::mainDisplay.redraw();
     }
 
     NCursesDisplay &NCursesDisplay::getMainDisplay() {

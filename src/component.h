@@ -25,6 +25,7 @@ namespace VM {
 
     public:
         Component(const Coordinates &posn, const Coordinates &size);
+        Component();
 
         //Component(const Component &component) = delete;
         //Component(const Component &&component) = delete;

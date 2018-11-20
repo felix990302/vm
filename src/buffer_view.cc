@@ -3,18 +3,18 @@
 #include "file_buffer.h"
 
 namespace VM{
-    void BufferView::draw(const VM::Coordinates &parentPosn, const VM::TextDisplay &display)
+    void BufferView::draw(const VM::Coordinates &parentPosn, VM::TextDisplay &display)
     {
-        cursor =  {max(min(fileBuffer->ptrCursor.line, cursor.line), cursor.line + getSize().y),
-                   max(min(fileBuffer->ptrCursor.col , cursor.col ), cursor.col  + getSize().x)};
+        cursor =  {std::max(std::min(fileBuffer->ptrCursor.line, cursor.line), cursor.line + getSize().y),
+                   std::max(std::min(fileBuffer->ptrCursor.col , cursor.col ), cursor.col  + getSize().x)};
 
         for(int y = 0; y < getSize().y; ++y)
         {
-            PtrCursor it(Cursor {cursor.line + y, cursor.col});
+            PtrCursor it(Cursor {cursor.line + y, cursor.col}, fileBuffer->getBuffer());
             for(int x = 0; x < getSize().x; ++x)
             {
-                if (it.charPosn == it.linePosn.end()) break;
-                display.putc(getPosn() + {x,y}, *it.charPosn);
+                if (it.charPosn == it.linePosn->end()) break;
+                display.putc(getPosn() + Coordinates{x,y}, *it.charPosn);
             }
         }
     }
