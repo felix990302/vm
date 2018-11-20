@@ -26,14 +26,13 @@ namespace VM {
     {
         int nh, nw;
         getmaxyx(stdscr, nh, nw);
-        ((TextDisplay *)&NCursesDisplay::mainDisplay)->resizeHandler(Coordinates {nw, nh});
-        NCursesDisplay::mainDisplay.redraw();
+        ((TextDisplay *)&NCursesDisplay::getMainDisplay())->resizeHandler(Coordinates {nw, nh});
+        NCursesDisplay::getMainDisplay().redraw();
     }
 
     NCursesDisplay &NCursesDisplay::getMainDisplay() {
-        return mainDisplay;
+        if(!mainDisplay)
+            mainDisplay = std::make_unique<NCursesDisplay>();
+        return *mainDisplay;
     }
-
-    NCursesDisplay NCursesDisplay::mainDisplay = NCursesDisplay();
-
 }

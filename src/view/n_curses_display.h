@@ -8,7 +8,7 @@ namespace VM {
 
     class NCursesDisplay : public TextDisplay {
     private:
-        static NCursesDisplay mainDisplay;
+        static std::unique_ptr<NCursesDisplay> mainDisplay;
     public:
         static NCursesDisplay &getMainDisplay();
 
