@@ -2,9 +2,9 @@
 #define CONTROLLER_H
 
 #include <memory>
+#include "mode.h" // FIXME: should forward declare
 
 class Input;
-class Mode;
 class FileBuffer;
 
 namespace VM {
@@ -13,7 +13,7 @@ namespace VM {
         std::unique_ptr<Mode> mode;
         FileBuffer *fileBuffer;
 
-        Controller(std::unique_ptr<Input> input, std::unique_ptr<Mode> mode);
+        Controller(); // FIXME
         void getAndProcessChar();
     };
 }

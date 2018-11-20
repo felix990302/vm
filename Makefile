@@ -8,7 +8,7 @@ DEP_FILES = $(patsubst $(SRC_DIR)/%.cc,$(DEP_DIR)/%.d,$(SRC_FILES))
 
 CXX = g++
 CPPFLAGS = -std=c++14 -Wall -MMD -g -I $(SRC_DIR)
-CXXFLAGS = -std=c++14 -Wall -g -lncurses
+CXXFLAGS = -std=c++14 -Wall -g
 EXEC = vm
 
 
@@ -16,10 +16,10 @@ EXEC = vm
 objects: ${OBJ_FILES}
 
 ${EXEC}: ${OBJ_FILES}
-	${CXX} ${CXXFLAGS} -o ${EXEC} ${OBJ_FILES}
+	${CXX} ${CXXFLAGS} -o ${EXEC} ${OBJ_FILES} -lncurses
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cc
-	${CXX} $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
+	${CXX} $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $< -lncurses
 
 
 -include ${DEP_FILES}
