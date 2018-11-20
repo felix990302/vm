@@ -1,11 +1,16 @@
 *.o
 *.d
 
+.ycm_extra_conf.py
+
 *.swp
 *.swo
+
 *.kdev4
 .kdev4
 vm
+
 .idea/
+
 **/CMakeLists.txt
 **/cmake-build-debug
