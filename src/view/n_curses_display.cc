@@ -2,6 +2,8 @@
 #include "n_curses_display.h"
 
 namespace VM {
+
+
     NCursesDisplay::NCursesDisplay() : TextDisplay() {
         initscr();
         signal(SIGWINCH, NCursesDisplay::resizeHandler);
@@ -31,4 +33,7 @@ namespace VM {
     NCursesDisplay &NCursesDisplay::getMainDisplay() {
         return mainDisplay;
     }
+
+    NCursesDisplay NCursesDisplay::mainDisplay = NCursesDisplay();
+
 }
