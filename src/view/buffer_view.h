@@ -1,7 +1,7 @@
 #ifndef BUFFER_VIEW_H
 #define BUFFER_VIEW_H
 
-#include "cursor.h"
+#include "model/cursor.h"
 #include "component.h"
 
 

@@ -3,12 +3,12 @@
 
 #include <memory>
 
-#include "text_display.h"
-#include "ncurses_input.h"
-#include "buffer_view.h"
-#include "file_buffer.h"
-#include "buffer_type.h"
-#include "controller.h"
+#include "view/text_display.h"
+#include "controller/ncurses_input.h"
+#include "view/buffer_view.h"
+#include "model/file_buffer.h"
+#include "model/buffer_type.h"
+#include "controller/controller.h"
 
 
 

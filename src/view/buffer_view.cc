@@ -1,6 +1,6 @@
 #include "buffer_view.h"
-#include "ptr_cursor.h"
-#include "file_buffer.h"
+#include "model/ptr_cursor.h"
+#include "model/file_buffer.h"
 
 namespace VM{
     void BufferView::draw(const VM::Coordinates &parentPosn, VM::TextDisplay &display)

@@ -1,5 +1,5 @@
 #include "application.h"
-#include "n_curses_display.h"
+#include "view/n_curses_display.h"
 
 int main(int argc, char *argv[]) {
     VM::Application app {argc, argv};
