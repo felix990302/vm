@@ -2,9 +2,10 @@
 #define CONTROLLER_H
 
 #include <memory>
+#include "mode.h" // FIXME: should forward declare
+
 
 class Input;
-class Mode;
 class FileBuffer;
 
 namespace VM {

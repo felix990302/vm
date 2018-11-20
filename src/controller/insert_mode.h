@@ -5,7 +5,7 @@
 
 
 namespace VM {
-    class InsertMode: Mode {
+    class InsertMode: public Mode {
         public:
         void processChar() override;
     };
