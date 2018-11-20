@@ -1,4 +1,5 @@
 #include "application.h"
+#include "controller/ncurses_input.h"
 #include "view/n_curses_display.h"
 
 int main(int argc, char *argv[]) {
@@ -13,7 +14,8 @@ namespace VM {
         argv(argv),
         fileBuffer(std::make_unique<FileBuffer>()),
         bufferView(fileBuffer.get()),
-        controller(),
+        controller(std::make_unique<Controller>(std::make_unique<NCursesInput>(), std::make_unique<Mode>())),
+        input(controller->input.get())
         display(&NCursesDisplay::getMainDisplay())
     {}
 

@@ -8,13 +8,13 @@ class Mode;
 class FileBuffer;
 
 namespace VM {
-    class Controller {
+    struct Controller {
         std::unique_ptr<Input> input; 
         std::unique_ptr<Mode> mode;
         FileBuffer *fileBuffer;
 
-        public:
-        virtual void getAndProcessChar() = 0;
+        Controller(std::unique_ptr<Input> input, std::unique_ptr<Mode> mode);
+        void getAndProcessChar();
     };
 }
 

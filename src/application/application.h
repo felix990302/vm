@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "view/text_display.h"
-#include "controller/ncurses_input.h"
+#include "controller/input.h"
 #include "view/buffer_view.h"
 #include "model/file_buffer.h"
 #include "model/buffer_type.h"
@@ -20,8 +20,8 @@ namespace VM {
         char **argv;
         std::unique_ptr<FileBuffer> fileBuffer;
         BufferView bufferView;
-        NCursesInput nCursesInput;
-        Controller *controller;
+        std::unique_ptr<Controller> controller;
+        Input *input;
         TextDisplay * display;
 
 
