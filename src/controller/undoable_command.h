@@ -9,6 +9,8 @@ namespace VM {
         public:
         virtual void UndoCommand() = 0;
         virtual void RedoCommand() = 0;
+
+        UndoableCommand(const size_t &quant);
         virtual ~UndoableCommand() = 0;
     };
 }

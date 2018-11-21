@@ -13,6 +13,8 @@ namespace VM {
 
         public:
         MutateCommand(const size_t &quant, Direction direction, const std::string &toMutate);
+
+        virtual ~MutateCommand();
     };
 }
 
