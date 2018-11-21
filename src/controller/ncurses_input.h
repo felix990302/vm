@@ -7,6 +7,7 @@
 namespace VM {
     struct NCursesInput: public Input {
         char getChar() override;
+        NCursesInput();
     };
 }
 
