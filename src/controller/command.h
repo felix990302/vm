@@ -2,17 +2,25 @@
 #define COMMAND_H
 
 #include <memory>
+#include "model/cursor.h"
 
+
+class Cursor;
 
 namespace VM {
     class Command {
         const size_t quant;
+        Cursor appliedPosn;
+
+        protected:
+        virtual void doTheCommand() = 0;
+        const Cursor &getAppliedPosn();
 
         public:
-        virtual void doCommand() = 0;
-        virtual std::unique_ptr<Command> clone() = 0;
+        void doCommand(const Cursor &currentCursor);
 
         Command(const size_t &quant);
+        virtual std::unique_ptr<Command> clone() const = 0;
         virtual ~Command() = 0;
     };
 }

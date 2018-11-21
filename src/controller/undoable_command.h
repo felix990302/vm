@@ -6,9 +6,12 @@
 
 namespace VM {
     class UndoableCommand: public Command {
+        protected:
+        virtual void undoTheCommand() = 0;
+
         public:
-        virtual void undoCommand() = 0;
-        virtual void redoCommand() = 0;
+        void undoCommand();
+        virtual void redoCommand();
 
         UndoableCommand(const size_t &quant);
         virtual ~UndoableCommand() = 0;

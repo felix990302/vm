@@ -8,12 +8,12 @@
 
 namespace VM {
     class DeleteCommand: public MutateCommand {
-        public:
-        void doCommand() override;
-        void undoCommand() override;
-        void redoCommand() override;
+        protected:
+        void doTheCommand() override;
+        void undoTheCommand() override;
 
-        std::unique_ptr<Command> clone() override;
+        public:
+        std::unique_ptr<Command> clone() const override;
         DeleteCommand(const size_t &quant, Direction direction, const std::string &toDelete);
     };
 }
