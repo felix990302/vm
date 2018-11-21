@@ -1,11 +1,11 @@
-#ifndef INSERT_BACKWARD_COMMAND_H
-#define INSERT_BACKWARD_COMMAND_H
+#ifndef INSERT_COMMAND_H
+#define INSERT_COMMAND_H
 
 #include "mutate_command.h"
 
 
 namespace VM {
-    class InsertBackwardCommand: public MutateCommand {
+    class InsertCommand: public MutateCommand {
         protected:
         void doTheCommand(FileBuffer &fileBuffer) const override;
         void doTheSideEffect(FileBuffer &fileBuffer) override;
@@ -13,9 +13,9 @@ namespace VM {
 
         public:
         std::unique_ptr<Command> clone() const override;
-        InsertBackwardCommand(const size_t &quant, const std::string &toInsert);
-        InsertBackwardCommand(const InsertBackwardCommand &other);
-        InsertBackwardCommand(InsertBackwardCommand &&other);
+        InsertCommand(const size_t &quant, const std::string &toInsert);
+        InsertCommand(const InsertCommand &other);
+        InsertCommand(InsertCommand &&other);
     };
 }
 
