@@ -2,15 +2,12 @@
 #define DELETE_COMMAND_H
 
 #include <string>
-#include "command.h"
+#include "mutate_command.h"
 #include "direction.h"
 
 
 namespace VM {
-    class DeleteCommand: public Command {
-        const Direction direction;
-        std::string toDelete;
-
+    class DeleteCommand: public MutateCommand {
         public:
         void doCommand() override;
         std::unique_ptr<Command> clone() override;
