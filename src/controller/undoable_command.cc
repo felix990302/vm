@@ -2,12 +2,12 @@
 
 
 namespace VM {
-    void UndoableCommand::undoCommand() {
-        undoTheCommand();
+    void UndoableCommand::undoCommand(FileBuffer &fileBuffer) {
+        undoTheCommand(fileBuffer);
     }
 
-    void UndoableCommand::redoCommand() {
-        doTheCommand(); 
+    void UndoableCommand::redoCommand(FileBuffer &fileBuffer) {
+        doTheCommand(fileBuffer); 
     }
 
     UndoableCommand::UndoableCommand(const size_t &quant): Command{quant} {} 

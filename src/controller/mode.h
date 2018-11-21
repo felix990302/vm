@@ -6,8 +6,6 @@ namespace VM {
     class Mode {
         public:
         virtual void processChar() = 0;
-
-        virtual ~Mode() = 0;
     };
 }
 

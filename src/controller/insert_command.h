@@ -9,8 +9,9 @@
 namespace VM {
     class InsertCommand: public MutateCommand {
         protected:
-        void doTheCommand() override;
-        void undoTheCommand() override;
+        void doTheCommand(FileBuffer &fileBuffer) const override;
+        void doTheSideEffect(FileBuffer &fileBuffer) override;
+        void undoTheCommand(FileBuffer &fileBuffer) const override;
 
         public:
         std::unique_ptr<Command> clone() const override;

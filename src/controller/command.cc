@@ -1,17 +1,14 @@
 #include "command.h"
-#include "model/cursor.h"
+#include "model/file_buffer.h"
 
 
 namespace VM {
-    const Cursor &Command::getAppliedPosn() {
-        return appliedPosn;
+    void Command::doCommand(FileBuffer &fileBuffer) {
+        doTheSideEffect(fileBuffer);
+        doTheCommand(fileBuffer);
     }
 
-    void Command::doCommand(const Cursor &currentCursor) {
-        appliedPosn = currentCursor;
-
-        doTheCommand();
-    }
+    void Command::doTheSideEffect(FileBuffer &filebuffer) {}
 
     Command::Command(const size_t &quant): quant{quant} {}
 

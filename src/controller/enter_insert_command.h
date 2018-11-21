@@ -6,11 +6,12 @@
 
 namespace VM {
     class EnterInsertCommand: public Command {
-        public:
-        void doCommand() override;
-        std::unique_ptr<Command> clone() override;
+        protected:
+        void doTheCommand(FileBuffer &filebuffer) const override;
 
-        EnterInsertCommand(const size_t &quant);
+        public:
+        EnterInsertCommand();
+        std::unique_ptr<Command> clone() const override;
     };
 }
 

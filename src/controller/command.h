@@ -2,22 +2,21 @@
 #define COMMAND_H
 
 #include <memory>
-#include "model/cursor.h"
 
-
-class Cursor;
 
 namespace VM {
+    class Cursor;
+    class FileBuffer;
+
     class Command {
         const size_t quant;
-        Cursor appliedPosn;
 
         protected:
-        virtual void doTheCommand() = 0;
-        const Cursor &getAppliedPosn();
+        virtual void doTheCommand(FileBuffer &filebuffer) const = 0;
+        virtual void doTheSideEffect(FileBuffer &filebuffer) = 0;
 
         public:
-        void doCommand(const Cursor &currentCursor);
+        void doCommand(FileBuffer &fileBuffer);
 
         Command(const size_t &quant);
         virtual std::unique_ptr<Command> clone() const = 0;
