@@ -14,8 +14,11 @@ namespace VM {
         Mode &mode;
         FileBuffer *fileBuffer;
 
-        Controller(std::unique_ptr<Input> input, Mode &mode);
         void getAndProcessChar();
+        void changeBuffer(FileBuffer *fileBuffer);
+
+        Controller(std::unique_ptr<Input> input, Mode &mode, FileBuffer *fileBuffer);
+        Controller(const Controller &other) = delete;
     };
 }
 

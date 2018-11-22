@@ -8,6 +8,8 @@ namespace VM {
     struct NCursesInput: public Input {
         char getChar() override;
         NCursesInput();
+        NCursesInput(const NCursesInput &other) = delete;
+        NCursesInput &operator=(const NCursesInput &other) = delete;
     };
 }
 
