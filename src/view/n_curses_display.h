@@ -2,7 +2,7 @@
 #define NCURSESDISPLAY_H
 
 #include "text_display.h"
-#include "ncurses.h"
+#include <ncurses.h>
 
 namespace VM {
 

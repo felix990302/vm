@@ -23,6 +23,10 @@ namespace VM {
         MutateCommand{quant, toInsert}
     {}
 
+    InsertCommand::InsertCommand(size_t quant, char c):
+        MutateCommand{quant, c}
+    {}
+
     InsertCommand::InsertCommand(const InsertCommand &other): MutateCommand{other} {}
 
     InsertCommand::InsertCommand(InsertCommand &&other): MutateCommand{std::move(other)} {}

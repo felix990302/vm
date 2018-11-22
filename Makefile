@@ -12,15 +12,15 @@ DEP_LOC = $(patsubst $(OBJ_DIR)/%,$(DEP_DIR)/%,$*.d)
 DEPFLAGS = -MT $(DEP_LOC) -MMD -MP -MF $(DEP_LOC)
 WFLAGS = -Wall -Werror -g
 CPPFLAGS = -std=c++14 $(WFLAGS) $(DEPFLAGS) -I $(SRC_DIR)
-CXXFLAGS = -std=c++14 $(WFLAGS) -lncurses
+CXXFLAGS = -std=c++14 $(WFLAGS)
 EXEC = vm
 
 
 $(EXEC): ${OBJ_FILES}
-	${CXX} ${CXXFLAGS} -o ${EXEC} ${OBJ_FILES} 
+	${CXX} ${CXXFLAGS} -o ${EXEC} ${OBJ_FILES} -lncurses
 
 $(OBJ_FILES):
-	${CXX} $(CPPFLAGS) -c -o $@ $(patsubst $(OBJ_DIR)/%,$(SRC_DIR)/%,$*.cc)
+	${CXX} $(CPPFLAGS) -c -o $@ $(patsubst $(OBJ_DIR)/%,$(SRC_DIR)/%,$*.cc) -lncurses
 
 -include ${DEP_FILES}
 

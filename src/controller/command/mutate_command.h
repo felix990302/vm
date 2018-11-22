@@ -15,6 +15,7 @@ namespace VM {
         void setCursor(const Cursor &newCursor);
 
         MutateCommand(size_t quant, const std::string &toMutate);
+        MutateCommand(size_t quant, char c);
         MutateCommand(const MutateCommand &other);
         MutateCommand(MutateCommand &&other);
         virtual ~MutateCommand();
