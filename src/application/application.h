@@ -21,7 +21,7 @@ namespace VM {
         std::unique_ptr<FileBuffer> fileBuffer;
         BufferView bufferView;
         std::unique_ptr<Controller> controller;
-        Input *input;
+        const Input *input;
         TextDisplay * display;
 
 

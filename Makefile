@@ -16,8 +16,11 @@ CXXFLAGS = -std=c++14 $(WFLAGS)
 EXEC = vm
 
 
-$(EXEC): ${OBJ_FILES}
+
+all: ${OBJ_FILES}
 	${CXX} ${CXXFLAGS} -o ${EXEC} ${OBJ_FILES} -lncurses
+
+objects: ${OBJ_FILES}
 
 $(OBJ_FILES):
 	${CXX} $(CPPFLAGS) -c -o $@ $(patsubst $(OBJ_DIR)/%,$(SRC_DIR)/%,$*.cc) -lncurses

@@ -11,11 +11,7 @@ namespace VM {
         InsertMode &operator=(const InsertMode &other) = delete; // no assignment
 
         public:
-        static InsertMode &Instance() {
-            static InsertMode singleton;
-
-            return singleton;
-        }
+        static InsertMode &Instance();
         void processChar(char c, FileBuffer &fileBuffer) override;
     };
 }

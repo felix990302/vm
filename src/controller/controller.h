@@ -9,15 +9,18 @@ namespace VM {
     class Mode;
     class FileBuffer;
 
-    struct Controller {
+    class Controller {
         std::unique_ptr<Input> input; 
-        Mode &mode;
+        Mode *mode;
         FileBuffer *fileBuffer;
 
+        public:
         void getAndProcessChar();
+        const Input *getInput();
+        void changeMode(Mode *mode);
         void changeBuffer(FileBuffer *fileBuffer);
 
-        Controller(std::unique_ptr<Input> input, Mode &mode, FileBuffer *fileBuffer);
+        Controller(std::unique_ptr<Input> input, Mode *mode, FileBuffer *fileBuffer);
         Controller(const Controller &other) = delete;
     };
 }
