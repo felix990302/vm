@@ -1,36 +1,42 @@
 SRC_DIR = src
 OBJ_DIR = obj
-DEP_DIR = obj
-#don't know how to create them in different dir
-OBJ_DIRS = obj $(patsubst $(SRC_DIR)/%/,$(OBJ_DIR)/%/,$(wildcard $(SRC_DIR)/**/))
-SRC_FILES = $(wildcard $(SRC_DIR)/**/*.cc)
-OBJ_FILES = $(patsubst $(SRC_DIR)/%.cc,$(OBJ_DIR)/%.o,$(SRC_FILES))
-DEP_FILES = $(patsubst $(SRC_DIR)/%.cc,$(DEP_DIR)/%.d,$(SRC_FILES))
+DEP_DIR = dep
+SRC_FILES = $(shell find src -name '*.cc' | sort -k 1nr | cut -f2-)
+OBJ_FILES = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC_FILES:.cc=.o))
+OBJ_DIRS = $(sort $(dir $(OBJ_FILES)))
+DEP_FILES = $(patsubst $(SRC_DIR)/%,$(DEP_DIR)/%,$(SRC_FILES:.cc=.d))
+DEP_DIRS = $(sort $(dir $(DEP_FILES)))
 
 CXX = g++
-CPPFLAGS = -std=c++14 -Wall -MMD -g -I $(SRC_DIR)
-CXXFLAGS = -std=c++14 -Wall -g -lncurses
+DEP_LOC = $(patsubst $(OBJ_DIR)/%,$(DEP_DIR)/%,$*.d)
+DEPFLAGS = -MT $(DEP_LOC) -MMD -MP -MF $(DEP_LOC)
+WFLAGS = -Wall -Werror -g
+CPPFLAGS = -std=c++14 $(WFLAGS) $(DEPFLAGS) -I $(SRC_DIR)
+CXXFLAGS = -std=c++14 $(WFLAGS) -lncurses
 EXEC = vm
 
 
+objects: ${OBJ_FILES}
 
-objects: $(OBJ_DIRS) ${OBJ_FILES}
-
-${EXEC}: ${OBJ_FILES}
+$(EXEC): ${OBJ_FILES}
 	${CXX} ${CXXFLAGS} -o ${EXEC} ${OBJ_FILES} 
 
-$(OBJ_DIRS): %:
-	mkdir $@
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cc 
+$(OBJ_FILES): $(SRC_FILES)
 	${CXX} $(CPPFLAGS) -c -o $@ $< 
 
-
 -include ${DEP_FILES}
+
+.PHONY: configure
+
+configure: ${DEP_DIRS} ${OBJ_DIRS}
+
+$(DEP_DIRS):
+	mkdir -p $@
+
+$(OBJ_DIRS):
+	mkdir -p $@
 
 .PHONY: clean
 
 clean:
-	rm -rf ${OBJ_DIR} #${EXEC} 
-
-
+	rm -rf ${OBJ_FILES} ${DEP_FILES} ${EXEC}

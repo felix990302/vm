@@ -1,0 +1,51 @@
+@startuml
+title Commands
+
+abstract class Command {
+    -quant : size_t
+
+    +doCommand() : void 
+}
+Command <|-- MoveCommand
+Command <|-- UndoableCommand
+Command <|-- EnterInsertCommand
+
+abstract class MoveCommand {
+}
+
+abstract class UndoableCommand {
+    {abstract} +UndoCommand() : void
+    {abstract} +RedoCommand() : void
+}
+UndoableCommand <|-- MutateCommand
+
+abstract class MutateCommand
+MutateCommand <|-- InsertCommand
+MutateCommand <|-- DeleteCommand
+
+class InsertCommand {
+    +doCommmand() : void
+    +UndoCommand() : void
+    +RedoCommand() : void
+}
+
+class DeleteCommand {
+    +doCommmand() : void
+    +UndoCommand() : void
+    +RedoCommand() : void
+}
+
+class Motion {
+    +nextPosition(Cursor) : Cursor    
+}
+Motion --* MoveCommand
+Motion --* UndoableCommand
+
+object Direction {
+    Up
+    Down
+    Forward
+    Backward
+}
+Direction --* MutateCommand
+@enduml

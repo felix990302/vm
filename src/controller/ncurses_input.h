@@ -4,9 +4,12 @@
 #include "input.h"
 
 
-struct NCursesInput: public Input {
-    char getChar() override;
-};
+namespace VM {
+    struct NCursesInput: public Input {
+        char getChar() override;
+        NCursesInput();
+    };
+}
 
 #endif
 

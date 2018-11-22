@@ -1,0 +1,20 @@
+@startuml
+title LEGEND
+
+class Class
+
+abstract class AbstractClass
+
+object Members {
+    -private field
+    #protected field
+    +public field
+    {static} static field
+
+    -privateMethod()
+    #protectedMethod()
+    +publicMethod()
+    {static} staticMethod()
+    {abstract} virtualMethod()
+}
+@endluml

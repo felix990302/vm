@@ -10,9 +10,11 @@ namespace VM {
     class MoveCommand: public Command {
         std::unique_ptr<Motion> motion;
 
+        protected:
+        void doTheCommand(FileBuffer &fileBuffer) const override;
+
         public:
-        void doCommand() override;
-        std::unique_ptr<Command> clone() override;
+        std::unique_ptr<Command> clone() const override;
 
         MoveCommand(std::unique_ptr<Motion> motion, const size_t &quant=1);
         MoveCommand(const Command &other);

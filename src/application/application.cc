@@ -9,13 +9,12 @@ int main(int argc, char *argv[]) {
 }
 
 namespace VM {
-
     Application::Application(int argc, char **argv):
         argc(argc),
         argv(argv),
         fileBuffer(std::make_unique<FileBuffer>()),
         bufferView(fileBuffer.get()),
-        controller(std::make_unique<Controller>()),
+        controller(std::make_unique<Controller>(std::make_unique<NCursesInput>(), std::make_unique<InsertMode>())),
         input(controller->input.get()),
         display(&NCursesDisplay::getMainDisplay())
     {}
