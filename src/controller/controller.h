@@ -11,10 +11,10 @@ namespace VM {
 
     struct Controller {
         std::unique_ptr<Input> input; 
-        std::unique_ptr<Mode> mode;
+        Mode &mode;
         FileBuffer *fileBuffer;
 
-        Controller(std::unique_ptr<Input> input, std::unique_ptr<Mode> mode);
+        Controller(std::unique_ptr<Input> input, Mode &mode);
         void getAndProcessChar();
     };
 }
