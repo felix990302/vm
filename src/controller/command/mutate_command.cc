@@ -2,7 +2,7 @@
 
 
 namespace VM {
-    MutateCommand::MutateCommand(const size_t &quant, const std::string &toMutate):
+    MutateCommand::MutateCommand(size_t quant, const std::string &toMutate):
         UndoableCommand{quant},
         toMutate{toMutate}
     {}

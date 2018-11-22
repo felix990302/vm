@@ -16,7 +16,7 @@ namespace VM {
         public:
         std::unique_ptr<Command> clone() const override;
 
-        MoveCommand(std::unique_ptr<Motion> motion, const size_t &quant=1);
+        MoveCommand(size_t quant, std::unique_ptr<Motion> motion);
         MoveCommand(const Command &other);
         MoveCommand(const Command &&other);
         MoveCommand &operator=(Command other);

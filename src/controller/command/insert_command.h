@@ -13,7 +13,7 @@ namespace VM {
 
         public:
         std::unique_ptr<Command> clone() const override;
-        InsertCommand(const size_t &quant, const std::string &toInsert);
+        InsertCommand(size_t quant, const std::string &toInsert);
         InsertCommand(const InsertCommand &other);
         InsertCommand(InsertCommand &&other);
     };

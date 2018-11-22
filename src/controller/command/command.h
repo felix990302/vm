@@ -18,7 +18,7 @@ namespace VM {
         public:
         void doCommand(FileBuffer &fileBuffer);
 
-        Command(const size_t &quant);
+        Command(size_t quant);
         virtual std::unique_ptr<Command> clone() const = 0;
         virtual ~Command() = 0;
     };

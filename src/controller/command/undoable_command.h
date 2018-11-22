@@ -18,7 +18,7 @@ namespace VM {
         void undoCommand(FileBuffer &fileBuffer);
         virtual void redoCommand(FileBuffer &fileBuffer);
 
-        UndoableCommand(const size_t &quant);
+        UndoableCommand(size_t quant);
         UndoableCommand(const UndoableCommand &other);
         UndoableCommand(UndoableCommand &&other);
         virtual ~UndoableCommand() = 0;

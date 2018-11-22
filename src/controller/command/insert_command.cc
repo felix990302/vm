@@ -19,7 +19,7 @@ namespace VM {
         return std::make_unique<InsertCommand>(*this);
     }
 
-    InsertCommand::InsertCommand(const size_t &quant, const std::string &toInsert):
+    InsertCommand::InsertCommand(size_t quant, const std::string &toInsert):
         MutateCommand{quant, toInsert}
     {}
 

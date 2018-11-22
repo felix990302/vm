@@ -10,7 +10,7 @@ namespace VM {
 
     void Command::doTheSideEffect(FileBuffer &filebuffer) {}
 
-    Command::Command(const size_t &quant): quant{quant} {}
+    Command::Command(size_t quant): quant{quant} {}
 
     Command::~Command() {}
 }

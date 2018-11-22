@@ -16,7 +16,7 @@ namespace VM {
         doTheCommand(fileBuffer); 
     }
 
-    UndoableCommand::UndoableCommand(const size_t &quant): Command{quant} {} 
+    UndoableCommand::UndoableCommand(size_t quant): Command{quant} {} 
 
     UndoableCommand::UndoableCommand(const UndoableCommand &other): Command{other}, cursor{other.cursor} {} 
 

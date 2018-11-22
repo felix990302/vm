@@ -3,7 +3,6 @@
 
 #include <string>
 #include "mutate_command.h"
-#include "direction.h"
 
 
 namespace VM {
@@ -15,7 +14,7 @@ namespace VM {
 
         public:
         std::unique_ptr<Command> clone() const override;
-        DeleteCommand(const size_t &quant, Direction direction, const std::string &toDelete);
+        DeleteCommand(size_t quant);
     };
 }
 
