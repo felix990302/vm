@@ -9,15 +9,11 @@ namespace VM {
     class Controller;
 
     class Command {
+        protected:
         const size_t quant;
 
-        protected:
-        virtual void doTheCommand(Controller &controller) const = 0;
-        virtual void doTheSideEffect(Controller &controller) = 0;
-
         public:
-        size_t getQuant() const {return quant;}
-        void doCommand(Controller &controller);
+        virtual void doCommand(Controller &controller) = 0;
 
         Command(size_t quant=1);
         virtual std::unique_ptr<Command> clone() const = 0;

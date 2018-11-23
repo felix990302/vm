@@ -8,10 +8,10 @@ namespace VM {
     class InsertCommand: public MutateCommand {
         protected:
         void doTheCommand(Controller &controller) const override;
-        void doTheSideEffect(Controller &controller) override;
-        void undoTheCommand(Controller &controlle) const override;
 
         public:
+        void undoCommand(Controller &controlle) const override;
+
         std::unique_ptr<Command> clone() const override;
         InsertCommand(size_t quant, const std::string &toInsert);
         InsertCommand(size_t quant, char c);

@@ -1,7 +1,19 @@
 #include "mutate_command.h"
+#include "controller/controller.h"
+#include "model/file_buffer.h"
 
 
 namespace VM {
+    void MutateCommand::doCommand(Controller &controller) {
+        startPosn = controller.getBuffer()->ptrCursor;
+        doTheCommand(controller);
+        endPosn = controller.getBuffer()->ptrCursor;
+    }
+
+    void MutateCommand::redoCommand(Controller &controller) const {
+        doTheCommand(controller);
+    }
+
     MutateCommand::MutateCommand(size_t quant, const std::string &toMutate):
         UndoableCommand{quant},
         toMutate{toMutate}

@@ -5,15 +5,11 @@
 
 namespace VM {
     void InsertCommand::doTheCommand(Controller &controller) const {
-        controller.getBuffer()->type(getToMutate());
+        controller.getBuffer()->type(toMutate);
     }
 
-    void InsertCommand::doTheSideEffect(Controller &controller) {
-        setCursor(controller.getBuffer()->ptrCursor);
-    }
-
-    void InsertCommand::undoTheCommand(Controller &controller) const {
-        controller.getBuffer()->delete_forward(getToMutate().size());
+    void InsertCommand::undoCommand(Controller &controller) const {
+        controller.getBuffer()->delete_backward(toMutate.size());
     }
 
     std::unique_ptr<Command> InsertCommand::clone() const {

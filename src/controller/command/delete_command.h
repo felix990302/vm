@@ -9,10 +9,10 @@ namespace VM {
     class DeleteForwardCommand: public MutateCommand {
         protected:
         void doTheCommand(Controller &controller) const override;
-        void doTheSideEffect(Controller &controllerr) override;
-        void undoTheCommand(Controller &controller) const override;
 
         public:
+        void undoCommand(Controller &controller) const override;
+
         std::unique_ptr<Command> clone() const override;
         DeleteForwardCommand(size_t quant);
         DeleteForwardCommand(const DeleteForwardCommand &other);

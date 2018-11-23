@@ -9,13 +9,11 @@ namespace VM {
     class Motion;
 
     class MoveCommand: public Command {
+        protected:
         std::unique_ptr<Motion> motion;
 
-        protected:
-        void doTheCommand(Controller &controller) const override;
-        void doTheSideEffect(Controller &controller) override {}
-
         public:
+        void doCommand(Controller &controller) override;
         std::unique_ptr<Command> clone() const override;
 
         MoveCommand(size_t quant, std::unique_ptr<Motion> motion);

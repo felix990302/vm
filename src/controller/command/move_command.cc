@@ -5,9 +5,9 @@
 
 
 namespace VM {
-    void MoveCommand::doTheCommand(Controller &controller) const { // TODO: determine interface for moving cursor
+    void MoveCommand::doCommand(Controller &controller) { // TODO: determine interface for moving cursor
         Cursor nextCursor = controller.getBuffer()->ptrCursor;
-        for(size_t k=0; k<getQuant(); ++k) {
+        for(size_t k=0; k<quant; ++k) {
             nextCursor = motion->nextPosition(nextCursor);
         }
     }

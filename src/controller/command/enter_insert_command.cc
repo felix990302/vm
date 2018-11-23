@@ -4,11 +4,9 @@
 
 
 namespace VM {
-    void EnterInsertCommand::doTheCommand(Controller &controller) const {
+    void EnterInsertCommand::doCommand(Controller &controller) {
         controller.changeMode(&InsertMode::Instance());
     }
-
-    void EnterInsertCommand::doTheSideEffect(Controller &controller) {}
 
     std::unique_ptr<Command> EnterInsertCommand::clone() const {
         return std::make_unique<EnterInsertCommand>();

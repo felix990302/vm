@@ -8,12 +8,14 @@
 
 namespace VM {
     class MutateCommand: public UndoableCommand {
+        virtual void doTheCommand(Controller &controller) const = 0;
+        
+        protected:
         std::string toMutate;
 
         public:
-        const std::string &getToMutate() const {return toMutate;}
-        void setToMutate(const std::string &newToMutate) {toMutate = newToMutate;}
-        void setToMutate(char c) {toMutate = c;}
+        void doCommand(Controller &controller) override;
+        void redoCommand(Controller &controller) const override;
 
         MutateCommand(size_t quant, const std::string &toMutate);
         MutateCommand(size_t quant, char c);
