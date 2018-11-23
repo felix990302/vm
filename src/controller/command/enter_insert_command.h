@@ -7,7 +7,7 @@
 namespace VM {
     class EnterInsertCommand: public Command {
         protected:
-        void doTheCommand(FileBuffer &filebuffer) const override;
+        void doTheCommand(Controller &controller) const override;
 
         public:
         EnterInsertCommand();

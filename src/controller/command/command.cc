@@ -3,12 +3,12 @@
 
 
 namespace VM {
-    void Command::doCommand(FileBuffer &fileBuffer) {
-        doTheSideEffect(fileBuffer);
-        doTheCommand(fileBuffer);
+    void Command::doCommand(Controller &controller) {
+        doTheSideEffect(controller);
+        doTheCommand(controller);
     }
 
-    void Command::doTheSideEffect(FileBuffer &filebuffer) {}
+    void Command::doTheSideEffect(Controller &controller) {}
 
     Command::Command(size_t quant): quant{quant} {}
 

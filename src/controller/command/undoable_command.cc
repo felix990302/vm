@@ -8,12 +8,12 @@ namespace VM {
         cursor = newCursor;
     }
 
-    void UndoableCommand::undoCommand(FileBuffer &fileBuffer) {
-        undoTheCommand(fileBuffer);
+    void UndoableCommand::undoCommand(Controller &controller) {
+        undoTheCommand(controller);
     }
 
-    void UndoableCommand::redoCommand(FileBuffer &fileBuffer) {
-        doTheCommand(fileBuffer); 
+    void UndoableCommand::redoCommand(Controller &controller) {
+        doTheCommand(controller); 
     }
 
     UndoableCommand::UndoableCommand(size_t quant): Command{quant} {} 

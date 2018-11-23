@@ -11,7 +11,7 @@ namespace VM {
         std::unique_ptr<Motion> motion;
 
         protected:
-        void doTheCommand(FileBuffer &fileBuffer) const override;
+        void doTheCommand(Controller &controller) const override;
 
         public:
         std::unique_ptr<Command> clone() const override;
@@ -19,7 +19,6 @@ namespace VM {
         MoveCommand(size_t quant, std::unique_ptr<Motion> motion);
         MoveCommand(const Command &other);
         MoveCommand(const Command &&other);
-        MoveCommand &operator=(Command other);
     };
 }
 

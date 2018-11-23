@@ -10,13 +10,13 @@ namespace VM {
         Cursor cursor;
 
         protected:
-        virtual void undoTheCommand(FileBuffer &fileBuffer) const = 0;
+        virtual void undoTheCommand(Controller &controller) const = 0;
 
         public:
         const Cursor &getCursor();
         void setCursor(const Cursor &newCursor);
-        void undoCommand(FileBuffer &fileBuffer);
-        virtual void redoCommand(FileBuffer &fileBuffer);
+        void undoCommand(Controller &fileBuffer);
+        virtual void redoCommand(Controller &fileBuffer);
 
         UndoableCommand(size_t quant);
         UndoableCommand(const UndoableCommand &other);

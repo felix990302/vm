@@ -3,11 +3,11 @@
 
 
 namespace VM {
-    class FileBuffer;
+    class Controller;
 
     class Mode {
         public:
-        virtual void processChar(char c, FileBuffer &fileBuffer) = 0;
+        virtual void processChar(char c, Controller &controller) = 0;
     };
 }
 

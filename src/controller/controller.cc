@@ -8,7 +8,7 @@ namespace VM {
         mode->processChar(input->getChar(), *fileBuffer);
     }
 
-    const Input *Controller::getInput() {return input.get();}
+    Input* const Controller::getInput() const {return input.get();}
 
     void Controller::changeBuffer(FileBuffer *newFileBuffer) {
         fileBuffer = newFileBuffer;

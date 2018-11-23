@@ -16,9 +16,10 @@ namespace VM {
 
         public:
         void getAndProcessChar();
-        const Input *getInput();
+        Input* const getInput() const;
         void changeMode(Mode *mode);
         void changeBuffer(FileBuffer *fileBuffer);
+        FileBuffer* const getBuffer() const {return fileBuffer;}
 
         Controller(std::unique_ptr<Input> input, Mode *mode, FileBuffer *fileBuffer);
         Controller(const Controller &other) = delete;

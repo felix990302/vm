@@ -6,17 +6,17 @@
 
 namespace VM {
     class Cursor;
-    class FileBuffer;
+    class Controller;
 
     class Command {
         const size_t quant;
 
         protected:
-        virtual void doTheCommand(FileBuffer &filebuffer) const = 0;
-        virtual void doTheSideEffect(FileBuffer &filebuffer) = 0;
+        virtual void doTheCommand(Controller &controller) const = 0;
+        virtual void doTheSideEffect(Controller &controller) = 0;
 
         public:
-        void doCommand(FileBuffer &fileBuffer);
+        void doCommand(Controller &controller);
 
         Command(size_t quant);
         virtual std::unique_ptr<Command> clone() const = 0;

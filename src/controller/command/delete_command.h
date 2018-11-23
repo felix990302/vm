@@ -8,9 +8,9 @@
 namespace VM {
     class DeleteCommand: public MutateCommand {
         protected:
-        void doTheCommand(FileBuffer &fileBuffer) const override;
-        void doTheSideEffect(FileBuffer &fileBuffer) override;
-        void undoTheCommand(FileBuffer &fileBuffer) const override;
+        void doTheCommand(Controller &controller) const override;
+        void doTheSideEffect(Controller &controllerr) override;
+        void undoTheCommand(Controller &controller) const override;
 
         public:
         std::unique_ptr<Command> clone() const override;

@@ -1,18 +1,19 @@
 #include "insert_command.h"
+#include "controller/controller.h"
 #include "model/file_buffer.h"
 
 
 namespace VM {
-    void InsertCommand::doTheCommand(FileBuffer &fileBuffer) const {
-        fileBuffer.type(getToMutate());
+    void InsertCommand::doTheCommand(Controller &controller) const {
+        controller.getBuffer()->type(getToMutate());
     }
 
-    void InsertCommand::doTheSideEffect(FileBuffer &fileBuffer) {
-        setCursor(fileBuffer.ptrCursor);
+    void InsertCommand::doTheSideEffect(Controller &controller) {
+        setCursor(controller.getBuffer()->ptrCursor);
     }
 
-    void InsertCommand::undoTheCommand(FileBuffer &fileBuffer) const {
-        fileBuffer.delete_forward(getToMutate().size());
+    void InsertCommand::undoTheCommand(Controller &controller) const {
+        controller.getBuffer()->delete_forward(getToMutate().size());
     }
 
     std::unique_ptr<Command> InsertCommand::clone() const {

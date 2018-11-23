@@ -12,7 +12,7 @@ namespace VM {
 
         public:
         static InsertMode &Instance();
-        void processChar(char c, FileBuffer &fileBuffer) override;
+        void processChar(char c, Controller &controller) override;
     };
 }
 
