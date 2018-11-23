@@ -18,7 +18,7 @@ namespace VM {
         public:
         void doCommand(Controller &controller);
 
-        Command(size_t quant);
+        Command(size_t quant=1);
         virtual std::unique_ptr<Command> clone() const = 0;
         virtual ~Command() = 0;
     };

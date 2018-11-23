@@ -8,12 +8,6 @@ namespace VM {
         mode->processChar(input->getChar(), *this);
     }
 
-    Input* const Controller::getInput() const {return input.get();}
-
-    void Controller::changeBuffer(FileBuffer *newFileBuffer) {
-        fileBuffer = newFileBuffer;
-    }
-
     Controller::Controller(std::unique_ptr<Input> input, Mode *mode, FileBuffer *fileBuffer):
         input{std::move(input)},
         mode{mode},

@@ -16,9 +16,9 @@ namespace VM {
 
         public:
         void getAndProcessChar();
-        Input* const getInput() const;
-        void changeMode(Mode *mode);
-        void changeBuffer(FileBuffer *fileBuffer);
+        Input* const getInput() const {return input.get();}
+        void changeMode(Mode *newMode) {mode = newMode;}
+        void changeBuffer(FileBuffer *newFileBuffer) {fileBuffer = newFileBuffer;}
         FileBuffer* const getBuffer() const {return fileBuffer;}
 
         Controller(std::unique_ptr<Input> input, Mode *mode, FileBuffer *fileBuffer);
