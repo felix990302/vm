@@ -28,9 +28,9 @@ namespace VM {
         Component();
 
         //Component(const Component &component) = delete;
-        //Component(const Component &&component) = delete;
+        //Component(Component &&component) = delete;
         //Component & operator=(const Component &component) = delete;
-        //Component & operator=(const Component &&component) = delete;
+        //Component & operator=(Component &&component) = delete;
         //~Component();
 
         void appendChildren(std::shared_ptr<Component> childrenComponent);

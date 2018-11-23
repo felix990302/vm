@@ -5,7 +5,7 @@
 
 namespace VM {
     void Controller::getAndProcessChar() {
-        mode->processChar(input->getChar(), *fileBuffer);
+        mode->processChar(input->getChar(), *this);
     }
 
     Input* const Controller::getInput() const {return input.get();}

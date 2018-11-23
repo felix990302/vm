@@ -12,6 +12,8 @@ namespace VM {
 
         public:
         const std::string &getToMutate() const {return toMutate;}
+        void setToMutate(const std::string &newToMutate) {toMutate = newToMutate;}
+        void setToMutate(char c) {toMutate = c;}
 
         MutateCommand(size_t quant, const std::string &toMutate);
         MutateCommand(size_t quant, char c);
