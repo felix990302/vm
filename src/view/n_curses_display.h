@@ -5,15 +5,13 @@
 #include <ncurses.h>
 
 namespace VM {
-
     class NCursesDisplay : public TextDisplay {
-    private:
-        static std::unique_ptr<NCursesDisplay> mainDisplay;
     public:
         static NCursesDisplay &getMainDisplay();
 
-    public:
         NCursesDisplay();
+        NCursesDisplay(const NCursesDisplay& other) = delete;
+        NCursesDisplay &operator=(const NCursesDisplay &other) = delete;
 
         void putc(const Coordinates &c, char ch) override;
 
@@ -22,11 +20,7 @@ namespace VM {
         void redraw() override;
 
         static void resizeHandler(int);
-
-
     };
-
 }
-
 
 #endif

@@ -1,9 +1,8 @@
 #include <csignal>
 #include "n_curses_display.h"
 
+
 namespace VM {
-
-
     NCursesDisplay::NCursesDisplay() : TextDisplay() {
         initscr();
         signal(SIGWINCH, NCursesDisplay::resizeHandler);
@@ -31,8 +30,8 @@ namespace VM {
     }
 
     NCursesDisplay &NCursesDisplay::getMainDisplay() {
-        if(!mainDisplay)
-            mainDisplay = std::make_unique<NCursesDisplay>();
-        return *mainDisplay;
+        static NCursesDisplay mainDisplay;
+
+        return mainDisplay;
     }
 }
