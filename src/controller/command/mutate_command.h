@@ -9,6 +9,7 @@
 namespace VM {
     class MutateCommand: public UndoableCommand {
         virtual void doTheCommand(Controller &controller) const = 0;
+        virtual void sideEffect(Controller &controller) {}
         
         protected:
         std::string toMutate;

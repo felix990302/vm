@@ -1,4 +1,4 @@
-#include "delete_command.h"
+#include "delete_forward_command.h"
 #include "controller/controller.h"
 #include "model/file_buffer.h"
 
@@ -6,6 +6,10 @@
 namespace VM {
     void DeleteForwardCommand::doTheCommand(Controller &controller) const {
         controller.getBuffer()->delete_forward(toMutate.size());
+    }
+
+    void DeleteForwardCommand::sideEffect(Controller &controller) {
+        toMutate = *(controller.getBuffer()->ptrCursor.charPosn);
     }
 
     void DeleteForwardCommand::undoCommand(Controller &controller) const {

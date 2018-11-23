@@ -1,5 +1,5 @@
-#ifndef DELETE_COMMAND_H
-#define DELETE_COMMAND_H
+#ifndef DELETE_FORWARD_COMMAND_H
+#define DELETE_FORWARD_COMMAND_H
 
 #include <string>
 #include "mutate_command.h"
@@ -9,6 +9,7 @@ namespace VM {
     class DeleteForwardCommand: public MutateCommand {
         protected:
         void doTheCommand(Controller &controller) const override;
+        void sideEffect(Controller &controller) override;
 
         public:
         void undoCommand(Controller &controller) const override;
