@@ -16,6 +16,7 @@ namespace VM {
         virtual void doTheSideEffect(Controller &controller) = 0;
 
         public:
+        size_t getQuant() const {return quant;}
         void doCommand(Controller &controller);
 
         Command(size_t quant=1);
