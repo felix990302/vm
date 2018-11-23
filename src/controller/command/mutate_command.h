@@ -12,7 +12,6 @@ namespace VM {
 
         public:
         const std::string &getToMutate() const {return toMutate;}
-        void setCursor(const Cursor &newCursor);
 
         MutateCommand(size_t quant, const std::string &toMutate);
         MutateCommand(size_t quant, char c);
