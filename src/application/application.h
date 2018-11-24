@@ -19,10 +19,11 @@ namespace VM {
         int argc;
         char **argv;
         std::unique_ptr<FileBuffer> fileBuffer;
-        BufferView bufferView;
+        TextDisplay * display;
+        std::shared_ptr<BufferView> bufferView;
         std::unique_ptr<Controller> controller;
         const Input *input;
-        TextDisplay * display;
+
 
 
     public:

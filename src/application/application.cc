@@ -13,13 +13,20 @@ namespace VM {
         argc(argc),
         argv(argv),
         fileBuffer(std::make_unique<FileBuffer>()),
-        bufferView(fileBuffer.get()),
+        display(&NCursesDisplay::getMainDisplay()),
+        bufferView(std::make_shared<BufferView>(fileBuffer.get())),
         controller{std::make_unique<Controller>(std::make_unique<NCursesInput>(), fileBuffer.get())},
-        input(controller->getInput()),
-        display(&NCursesDisplay::getMainDisplay())
-    {}
+        input(controller->getInput())
+    {
+        display->setMainComponent(bufferView);
+        NCursesDisplay::resizeHandler(1);
+
+    }
 
     void Application::run() {
-        while(true)controller->getAndProcessChar();
+        while(true) {
+            controller->getAndProcessChar();
+            display->redraw();
+        }
     }
 }

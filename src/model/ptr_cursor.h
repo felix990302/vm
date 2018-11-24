@@ -8,14 +8,20 @@
 
 namespace VM {
     struct PtrCursor: public Cursor {
-        PtrCursor(const Cursor &cursor, BufferType &buffer);
         VM::BufferType &buffer;
+        bool canPointAfterLastCharacterInLine;
+        bool canWrapBetweenTheLines;
+
+        PtrCursor(const Cursor &cursor, BufferType &buffer);
+        PtrCursor(const Cursor &cursor, BufferType &buffer, bool canPointAfterLastCharacterInLine, bool canWrapBetweenTheLines);
         std::string::iterator getStringIterator();
         BufferType::iterator getLineIterator();
         void moveRight();
         void moveRight(int c);
         void moveLeft();
         void moveLeft(int c);
+        bool isEOF();
+        bool isLastPositionInLine();
     };
 }
 

@@ -11,8 +11,8 @@ namespace VM {
 
     class BufferView : public Component {
     private:
+        Cursor cursor;
         FileBuffer *fileBuffer;
-        Cursor cursor {0, 0};
     public:
         BufferView (FileBuffer * fileBuffer);
         void draw(const Coordinates &parentPosn, TextDisplay &display) override;
