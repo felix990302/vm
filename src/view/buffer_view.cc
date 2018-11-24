@@ -3,7 +3,7 @@
 #include "model/file_buffer.h"
 
 namespace VM{
-    void BufferView::draw(const VM::Coordinates &parentPosn, VM::TextDisplay &display)
+    void BufferView::draw(const Coordinates &parentPosn, TextDisplay &display)
     {
         cursor =  {std::max(std::min(fileBuffer->ptrCursor.line, cursor.line), cursor.line + getSize().y),
                    std::max(std::min(fileBuffer->ptrCursor.col , cursor.col ), cursor.col  + getSize().x)};

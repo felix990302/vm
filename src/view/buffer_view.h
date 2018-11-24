@@ -12,10 +12,10 @@ namespace VM {
     class BufferView : public Component {
     private:
         FileBuffer *fileBuffer;
-        Cursor cursor;
+        Cursor cursor {0, 0};
     public:
         BufferView (FileBuffer * fileBuffer);
-        void draw(const Coordinates &parentPosn, TextDisplay &display);
+        void draw(const Coordinates &parentPosn, TextDisplay &display) override;
     };
 }
 

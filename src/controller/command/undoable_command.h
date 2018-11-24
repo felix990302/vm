@@ -8,7 +8,7 @@
 namespace VM {
     class UndoableCommand: public Command {
         protected:
-        Cursor startPosn, endPosn;
+        Cursor startPosn {0, 0}, endPosn {0, 0};
 
 
         public:

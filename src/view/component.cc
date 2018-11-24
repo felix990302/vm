@@ -13,7 +13,7 @@ namespace VM {
         children.remove(childrenComponent);
     }
 
-    void Component::draw(const Coordinates &parentPosn, const TextDisplay &display) {
+    void Component::draw(const Coordinates &parentPosn, TextDisplay &display) {
         const Coordinates myCoordinates = parentPosn + posn;
         for(const std::shared_ptr<Component> &child : children)
             child->draw(myCoordinates, display);

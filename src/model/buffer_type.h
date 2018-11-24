@@ -1,11 +1,12 @@
 #ifndef BUFFER_BASE_H
 #define BUFFER_BASE_H
 
-#include <list>
+#include <vector>
+#include <string>
 
 namespace VM {
-    typedef std::list<char> LineType;
-    typedef std::list<LineType> BufferType;
+    typedef std::string LineType;
+    typedef std::vector<LineType> BufferType;
 
     typedef BufferType BufferBase;
 }
