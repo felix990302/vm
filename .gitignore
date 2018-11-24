@@ -3,6 +3,8 @@
 
 .ycm_extra_conf.py
 
+errors
+
 *.swp
 *.swo
 

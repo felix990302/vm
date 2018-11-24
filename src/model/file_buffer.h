@@ -24,6 +24,8 @@ namespace VM {
         void type(const std::string &s);
         void type(const std::string &s, const Cursor &cursor);
 
+        void typeNewLine();
+
         void delete_forward(int numChars);
         void delete_forward(int numChars, const Cursor &cursor);
 

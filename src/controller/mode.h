@@ -10,7 +10,7 @@ namespace VM {
         Controller &controller;
 
         public:
-        virtual void processChar(char c) = 0;
+        virtual void processChar(int c) = 0;
 
         Mode(Controller &controller): controller(controller) {}
     };

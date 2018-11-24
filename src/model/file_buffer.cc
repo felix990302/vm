@@ -32,6 +32,16 @@ namespace VM {
         buffer[cursor.line].insert(cursor.col, s);
     }
 
+    void FileBuffer::typeNewLine() {
+        std::string first = ptrCursor.getLineIterator()->substr(0, ptrCursor.col);
+        std::string second = ptrCursor.getLineIterator()->substr(ptrCursor.col);
+
+        *ptrCursor.getLineIterator() = second;
+        buffer.insert(ptrCursor.getLineIterator(), first);
+
+        // TODO: ptrCursor.moveDown();
+    }
+
     void FileBuffer::delete_forward(int numChars) {
         ptrCursor.getLineIterator()->erase(ptrCursor.col, numChars);
     }

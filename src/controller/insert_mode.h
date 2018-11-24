@@ -10,7 +10,7 @@ namespace VM {
         InsertMode &operator=(const InsertMode &other) = delete; // no assignment
 
         public:
-        void processChar(char c) override;
+        void processChar(int c) override;
 
         InsertMode(Controller &controller): Mode(controller) {}
     };
