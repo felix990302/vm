@@ -3,7 +3,7 @@
 
 
 namespace VM {
-    char NCursesInput::getChar() {
+    int NCursesInput::getChar() {
         return getch();
     }
 

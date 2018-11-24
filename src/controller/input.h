@@ -3,7 +3,7 @@
 
 namespace VM {
     struct Input {
-        virtual char getChar() = 0;
+        virtual int getChar() = 0;
     };
 }
 
