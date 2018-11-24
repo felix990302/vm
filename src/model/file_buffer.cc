@@ -4,12 +4,12 @@
 
 namespace VM {
     FileBuffer::FileBuffer():
-        buffer{},
+        buffer{1},
         ptrCursor{Cursor {0, 0}, buffer}
     {}
 
     FileBuffer::FileBuffer(const std::string &fileName):
-        buffer{},
+        buffer{1},
         ptrCursor{Cursor {0, 0}, buffer}
     {
         std::ifstream file {fileName};

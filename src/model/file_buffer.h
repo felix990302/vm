@@ -10,7 +10,7 @@
 
 namespace VM {
     class FileBuffer {
-        BufferType buffer(1);
+        BufferType buffer;
 
     public:
         PtrCursor ptrCursor;
