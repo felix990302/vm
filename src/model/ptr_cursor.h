@@ -20,6 +20,11 @@ namespace VM {
         void moveRight(int c);
         void moveLeft();
         void moveLeft(int c);
+        void moveDown();
+        void moveDown(int c);
+        void moveUp();
+        void moveUp(int c);
+
         bool isEOF();
         bool isLastPositionInLine();
     };

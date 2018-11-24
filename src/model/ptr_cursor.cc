@@ -17,10 +17,18 @@ namespace  VM {
         if(!canPointAfterLastCharacterInLine && col != 0) --col;
     }
     PtrCursor::PtrCursor(const VM::Cursor &cursor, VM::BufferType &buffer) :  PtrCursor(cursor,buffer, false, false) {}
-    void PtrCursor::moveLeft() {col--;}
-    void PtrCursor::moveLeft(int c) {col--; }
-    void PtrCursor::moveRight() {col++; }
-    void PtrCursor::moveRight(int c) {col+=c;}
+    void PtrCursor::moveLeft() {moveLeft(1);}
+    void PtrCursor::moveLeft(int c) {
+        col-=c;
+    }
+    void PtrCursor::moveRight() {moveRight(1);}
+    void PtrCursor::moveRight(int c) {col+=c; }
+    void PtrCursor::moveDown() {moveDown(1);}
+    void PtrCursor::moveDown(int c) {line +=c;}
+    void PtrCursor::moveUp() {moveUp(1);}
+    void PtrCursor::moveUp(int c) {line -= c;}
+
+
     std::string::iterator PtrCursor::getStringIterator() {
         return buffer[line].begin()+col;
     }
