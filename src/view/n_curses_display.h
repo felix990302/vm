@@ -17,6 +17,8 @@ namespace VM {
 
         void puts(const Coordinates &c, const std::string &s) override;
 
+        void setCursorPosition(size_t y, size_t x) override;
+
         void redraw() override;
 
         static void resizeHandler(int);

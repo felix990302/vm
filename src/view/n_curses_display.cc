@@ -35,4 +35,8 @@ namespace VM {
     }
 
     NCursesDisplay::~NCursesDisplay() {endwin();}
+
+    void NCursesDisplay::setCursorPosition(size_t y, size_t x) {
+        wmove(stdscr, y, x);
+    }
 }

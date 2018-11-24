@@ -6,22 +6,32 @@
 namespace VM{
     void BufferView::draw(const Coordinates &parentPosn, TextDisplay &display)
     {
+        size_t newCursorY = cursor.line;
+        size_t newCursorX = cursor.col;
 
-        cursor =  {(size_t) std::max((int) std::min(fileBuffer->ptrCursor.line, cursor.line) - getSize().y, (int) cursor.line ),
-                   (size_t) std::max((int) std::min(fileBuffer->ptrCursor.col , cursor.col ) - getSize().x, (int) cursor.col  )};
+        if(newCursorY > fileBuffer->ptrCursor.line)
+            newCursorY = fileBuffer->ptrCursor.line;
+        if(newCursorY + getSize().y - 1 <= fileBuffer -> ptrCursor.line)
+            newCursorY = fileBuffer -> ptrCursor.line-getSize().y + 1;
+
+        if(newCursorX > fileBuffer->ptrCursor.col)
+            newCursorX = fileBuffer->ptrCursor.col;
+        if(newCursorX + getSize().x - 1 <= fileBuffer -> ptrCursor.col)
+            newCursorX = fileBuffer -> ptrCursor.col - getSize().x + 1;
+
+        cursor = Cursor{newCursorY, newCursorX};
 
 
+        for(int y = 0; y < getSize().y; ++y) {
 
-        for(int y = 0; y < getSize().y; ++y)
-        {
-
-            for(int x = 0; x < getSize().x; ++x)
-            {
-                PtrCursor it(Cursor {cursor.line + y, cursor.col + x}, fileBuffer->getBuffer(), true, false);
-                if (it.getStringIterator() == it.getLineIterator()->end()) break;
-                display.putc(getPosn() + Coordinates{x,y}, *it.getStringIterator());
+            for (int x = 0; x < getSize().x; ++x) {
+                PtrCursor it(Cursor{cursor.line + y, cursor.col + x}, fileBuffer->getBuffer(), true, false);
+                if (it.getStringIterator() != it.getLineIterator()->end())
+                    display.putc(getPosn() + Coordinates{x, y}, *it.getStringIterator());
             }
         }
+        display.setCursorPosition(fileBuffer->ptrCursor.line - cursor.line, fileBuffer->ptrCursor.col - cursor.col);
+
     }
     BufferView::BufferView(FileBuffer *fileBuffer) : cursor(0,0), fileBuffer(fileBuffer) {}
 }
