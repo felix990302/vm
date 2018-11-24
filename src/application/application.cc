@@ -20,6 +20,6 @@ namespace VM {
     {}
 
     void Application::run() {
-
+        while(true)controller->getAndProcessChar();
     }
 }
