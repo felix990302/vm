@@ -7,8 +7,8 @@ namespace VM{
     void BufferView::draw(const Coordinates &parentPosn, TextDisplay &display)
     {
 
-        cursor =  {std::min(std::max(fileBuffer->ptrCursor.line, cursor.line), cursor.line + getSize().y),
-                   std::min(std::max(fileBuffer->ptrCursor.col , cursor.col ), cursor.col  + getSize().x)};
+        cursor =  {(size_t) std::max((int) std::min(fileBuffer->ptrCursor.line, cursor.line) - getSize().y, (int) cursor.line ),
+                   (size_t) std::max((int) std::min(fileBuffer->ptrCursor.col , cursor.col ) - getSize().x, (int) cursor.col  )};
 
 
 

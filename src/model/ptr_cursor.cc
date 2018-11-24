@@ -7,9 +7,10 @@ namespace  VM {
     : Cursor(cursor), buffer(buffer), canPointAfterLastCharacterInLine(canPointAfterLastCharacterInLine),
     canWrapBetweenTheLines(canWrapBetweenTheLines)
     {
+
         if(line >= buffer.size()) {line = buffer.size() - 1; col = buffer[line].size();}
         if(col >= buffer[cursor.line].size()) col = buffer[line].size();
-        if(!canPointAfterLastCharacterInLine) --col;
+        if(!canPointAfterLastCharacterInLine && col != 0) --col;
     }
     PtrCursor::PtrCursor(const VM::Cursor &cursor, VM::BufferType &buffer) :  PtrCursor(cursor,buffer, false, false) {}
     void PtrCursor::moveLeft() {col--;}

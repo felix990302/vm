@@ -6,7 +6,9 @@ namespace VM {
     FileBuffer::FileBuffer():
         buffer{1},
         ptrCursor{Cursor {0, 0}, buffer}
-    {}
+    {
+
+    }
 
     FileBuffer::FileBuffer(const std::string &fileName):
         buffer{1},
