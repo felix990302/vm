@@ -8,10 +8,14 @@
 
 namespace VM {
     struct PtrCursor: public Cursor {
-        BufferType::iterator linePosn;
-        LineType::iterator charPosn;
-
         PtrCursor(const Cursor &cursor, BufferType &buffer);
+        VM::BufferType &buffer;
+        std::string::iterator getStringIterator();
+        BufferType::iterator getLineIterator();
+        void moveRight();
+        void moveRight(int c);
+        void moveLeft();
+        void moveLeft(int c);
     };
 }
 

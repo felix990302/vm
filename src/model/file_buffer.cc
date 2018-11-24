@@ -20,8 +20,8 @@ namespace VM {
     }
 
     void FileBuffer::type(char a) {
-        ptrCursor.linePosn->insert(ptrCursor.charPosn, a);
-        ++ptrCursor.charPosn;
+        ptrCursor.getLineIterator()->insert(ptrCursor.getStringIterator(), a);
+        ptrCursor.moveRight();
     }
 
     void FileBuffer::type(char a, const Cursor &cursor) {
@@ -33,7 +33,7 @@ namespace VM {
     }
 
     void FileBuffer::delete_forward(int numChars) {
-        ptrCursor.linePosn->erase(ptrCursor.col, numChars);
+        ptrCursor.getLineIterator()->erase(ptrCursor.col, numChars);
     }
 
     void FileBuffer::delete_forward(int numChars, const Cursor &cursor) {
@@ -41,12 +41,12 @@ namespace VM {
     }
 
     void FileBuffer::delete_backward(int numChars) {
-        ptrCursor.charPosn -= numChars;
+        /*ptrCursor.charPosn -= numChars;
         ptrCursor.col -= numChars;
-        ptrCursor.linePosn->erase(ptrCursor.col, numChars);
+        ptrCursor.linePosn->erase(ptrCursor.col, numChars);*/
     }
 
     void FileBuffer::delete_backward(int numChars, const Cursor &cursor) {
-        buffer[cursor.col].erase(cursor.col-numChars, numChars);
+        //buffer[cursor.col].erase(cursor.col-numChars, numChars);
     }
 }

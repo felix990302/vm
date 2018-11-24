@@ -8,7 +8,7 @@ namespace VM {
     typedef std::string LineType;
     typedef std::vector<LineType> BufferType;
 
-    typedef BufferType BufferBase;
+    //typedef BufferType BufferBase;
 }
 
 #endif

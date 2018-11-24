@@ -9,7 +9,7 @@ namespace VM {
     }
 
     void DeleteBackwardCommand::sideEffect(Controller &controller) {
-        toMutate = *(controller.getBuffer()->ptrCursor.charPosn);
+        //toMutate = *(controller.getBuffer()->ptrCursor.charPosn);
     }
 
     void DeleteBackwardCommand::undoCommand(Controller &controller) const {

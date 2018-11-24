@@ -10,11 +10,12 @@ namespace VM{
 
         for(int y = 0; y < getSize().y; ++y)
         {
-            PtrCursor it(Cursor {cursor.line + y, cursor.col}, fileBuffer->getBuffer());
+
             for(int x = 0; x < getSize().x; ++x)
             {
-                if (it.charPosn == it.linePosn->end()) break;
-                display.putc(getPosn() + Coordinates{x,y}, *it.charPosn);
+                PtrCursor it(Cursor {cursor.line + y, cursor.col + x}, fileBuffer->getBuffer());
+                if (it.getStringIterator() == it.getLineIterator()->end()) break;
+                display.putc(getPosn() + Coordinates{x,y}, *it.getStringIterator());
             }
         }
     }
