@@ -31,7 +31,6 @@ namespace VM {
 
     NCursesDisplay &NCursesDisplay::getMainDisplay() {
         static NCursesDisplay mainDisplay;
-
         return mainDisplay;
     }
 }

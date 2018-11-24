@@ -28,6 +28,10 @@ namespace VM {
         buffer[cursor.line].insert(cursor.col, std::string {a});
     }
 
+    void FileBuffer::type(const std::string &s, const Cursor &cursor) {
+        buffer[cursor.line].insert(cursor.col, s);
+    }
+
     void FileBuffer::delete_forward(int numChars) {
         ptrCursor.linePosn->erase(ptrCursor.col, numChars);
     }

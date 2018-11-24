@@ -12,8 +12,8 @@ namespace VM {
 
 
         public:
-        virtual void undoCommand(Controller &fileBuffer) const = 0;
-        virtual void redoCommand(Controller &fileBuffer) const = 0;
+        virtual void undoCommand(Controller &fileBuffer) const {};
+        virtual void redoCommand(Controller &fileBuffer) const {}; //TODO
 
         UndoableCommand(size_t quant);
         UndoableCommand(const UndoableCommand &other);
