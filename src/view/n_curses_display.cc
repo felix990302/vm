@@ -33,4 +33,6 @@ namespace VM {
         static NCursesDisplay mainDisplay;
         return mainDisplay;
     }
+
+    NCursesDisplay::~NCursesDisplay() {endwin();}
 }

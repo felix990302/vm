@@ -20,6 +20,8 @@ namespace VM {
         void redraw() override;
 
         static void resizeHandler(int);
+
+        ~NCursesDisplay();
     };
 }
 
