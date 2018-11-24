@@ -6,8 +6,13 @@ namespace VM {
     class Controller;
 
     class Mode {
+        protected:
+        Controller &controller;
+
         public:
-        virtual void processChar(char c, Controller &controller) = 0;
+        virtual void processChar(char c) = 0;
+
+        Mode(Controller &controller): controller(controller) {}
     };
 }
 

@@ -5,12 +5,13 @@
 
 namespace VM {
     void Controller::getAndProcessChar() {
-        mode->processChar(input->getChar(), *this);
+        mode->processChar(input->getChar());
     }
 
-    Controller::Controller(std::unique_ptr<Input> input, Mode *mode, FileBuffer *fileBuffer):
+    Controller::Controller(std::unique_ptr<Input> input, FileBuffer *fileBuffer):
         input{std::move(input)},
-        mode{mode},
-        fileBuffer{fileBuffer}
+        fileBuffer{fileBuffer},
+        modes{*this},
+        mode{&modes.insertMode}
     {}
 }

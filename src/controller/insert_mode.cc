@@ -5,13 +5,7 @@
 
 
 namespace VM {
-    InsertMode &InsertMode::Instance() {
-        static InsertMode singleton;
-
-        return singleton;
-    }
-
-    void InsertMode::processChar(char c, Controller &controller) {
+    void InsertMode::processChar(char c) {
         std::unique_ptr<Command> insert = std::make_unique<InsertCommand> (1, c);
         insert->doCommand(controller);
     }   

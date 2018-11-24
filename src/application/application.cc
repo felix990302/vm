@@ -14,7 +14,7 @@ namespace VM {
         argv(argv),
         fileBuffer(std::make_unique<FileBuffer>()),
         bufferView(fileBuffer.get()),
-        controller{std::make_unique<Controller>(std::make_unique<NCursesInput>(), &InsertMode::Instance(), fileBuffer.get())},
+        controller{std::make_unique<Controller>(std::make_unique<NCursesInput>(), fileBuffer.get())},
         input(controller->getInput()),
         display(&NCursesDisplay::getMainDisplay())
     {}

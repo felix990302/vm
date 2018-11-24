@@ -6,13 +6,13 @@
 
 namespace VM {
     class InsertMode: public Mode {
-        InsertMode() {} // constructor private
         InsertMode(const InsertMode &other) = delete; // no copies
         InsertMode &operator=(const InsertMode &other) = delete; // no assignment
 
         public:
-        static InsertMode &Instance();
-        void processChar(char c, Controller &controller) override;
+        void processChar(char c) override;
+
+        InsertMode(Controller &controller): Mode(controller) {}
     };
 }
 
