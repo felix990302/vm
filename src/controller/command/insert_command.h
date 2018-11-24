@@ -13,7 +13,6 @@ namespace VM {
         void undoCommand(Controller &controlle) const override;
 
         std::unique_ptr<Command> clone() const override;
-        InsertCommand(size_t quant, const std::string &toInsert);
         InsertCommand(size_t quant, char c);
         InsertCommand(const InsertCommand &other);
         InsertCommand(InsertCommand &&other);

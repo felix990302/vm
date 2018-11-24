@@ -15,11 +15,6 @@ namespace VM {
         doTheCommand(controller);
     }
 
-    MutateCommand::MutateCommand(size_t quant, const std::string &toMutate):
-        UndoableCommand{quant},
-        toMutate{toMutate}
-    {}
-
     MutateCommand::MutateCommand(size_t quant, char c):
         UndoableCommand{quant},
         toMutate{c}

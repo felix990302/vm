@@ -9,16 +9,12 @@ namespace VM {
     }
 
     void InsertCommand::undoCommand(Controller &controller) const {
-        controller.getBuffer()->delete_backward(toMutate.size());
+        controller.getBuffer()->delete_backward(1);
     }
 
     std::unique_ptr<Command> InsertCommand::clone() const {
         return std::make_unique<InsertCommand>(*this);
     }
-
-    InsertCommand::InsertCommand(size_t quant, const std::string &toInsert):
-        MutateCommand{quant, toInsert}
-    {}
 
     InsertCommand::InsertCommand(size_t quant, char c):
         MutateCommand{quant, c}

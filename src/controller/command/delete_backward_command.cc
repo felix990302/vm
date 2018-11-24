@@ -5,7 +5,7 @@
 
 namespace VM {
     void DeleteBackwardCommand::doTheCommand(Controller &controller) const {
-        controller.getBuffer()->delete_forward(toMutate.size());
+        controller.getBuffer()->delete_forward(1);
     }
 
     void DeleteBackwardCommand::sideEffect(Controller &controller) {
@@ -20,7 +20,7 @@ namespace VM {
         return std::make_unique<DeleteBackwardCommand>(*this);
     }
 
-    DeleteBackwardCommand::DeleteBackwardCommand(size_t quant): MutateCommand{quant, ""} {}
+    DeleteBackwardCommand::DeleteBackwardCommand(): MutateCommand{1, '\0'} {}
 
     DeleteBackwardCommand::DeleteBackwardCommand(const DeleteBackwardCommand &other): MutateCommand{other} {}
 

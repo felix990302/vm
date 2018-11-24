@@ -12,13 +12,12 @@ namespace VM {
         virtual void sideEffect(Controller &controller) {}
         
         protected:
-        std::string toMutate;
+        char toMutate;
 
         public:
         void doCommand(Controller &controller) override;
         void redoCommand(Controller &controller) const override;
 
-        MutateCommand(size_t quant, const std::string &toMutate);
         MutateCommand(size_t quant, char c);
         MutateCommand(const MutateCommand &other);
         MutateCommand(MutateCommand &&other);
