@@ -10,6 +10,7 @@
 
 namespace VM {
     class FileBuffer {
+        std::string fileName;
         BufferType buffer;
 
     public:

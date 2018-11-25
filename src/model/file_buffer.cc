@@ -4,6 +4,7 @@
 
 namespace VM {
     FileBuffer::FileBuffer():
+        fileName{},
         buffer{1},
         ptrCursor{Cursor {0, 0}, buffer}
     {
@@ -11,7 +12,8 @@ namespace VM {
     }
 
     FileBuffer::FileBuffer(const std::string &fileName):
-        buffer{1},
+        fileName{fileName},
+        buffer{1}, // FIXME: causes one line to appear always when opening files
         ptrCursor{Cursor {0, 0}, buffer}
     {
         std::ifstream file {fileName};
