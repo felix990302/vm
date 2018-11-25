@@ -8,7 +8,7 @@
 namespace VM {
     void InsertMode::processChar(int c) {
         switch(c) {
-            case KEY_ENTER: {
+            case '\n': {
                 std::unique_ptr<Command> newline = std::make_unique<InsertCommand<'\n'>> (1, '\n');
                 newline->doCommand(controller);
                 break;
