@@ -11,6 +11,8 @@ namespace VM {
 
         public:
         void processChar(int c) override;
+        void flush() override {/*TODO: flush queue and make sequence of commands*/}
+        void onExit() override {flush();}
 
         InsertMode(Controller &controller): Mode(controller) {}
     };
