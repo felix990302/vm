@@ -1,9 +1,9 @@
 #include <ncurses.h>
 #include "model/file_buffer.h"
-#include "controller.h"
+#include "controller/controller.h"
 #include "insert_mode.h"
-#include "command/mutate_command/insert_newline_command.h"
-#include "command/escape_command.h"
+#include "controller/command/mutate_command/insert_newline_command.h"
+#include "controller/command/escape_command.h"
 
 
 

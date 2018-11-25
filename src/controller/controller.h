@@ -1,8 +1,8 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "insert_mode.h"
-#include "command_mode.h"
+#include "mode/insert_mode.h"
+#include "mode/command_mode.h"
 #include <memory>
 
 

@@ -1,5 +1,5 @@
 #include "controller.h"
-#include "mode.h"
+#include "mode/mode.h"
 #include "input.h"
 
 
