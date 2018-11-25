@@ -19,10 +19,10 @@ EXEC = vm
 
 
 
-all: ${OBJ_FILES}
+all: objects
 	${CXX} ${CXXFLAGS} -o ${EXEC} ${OBJ_FILES} -lncurses
 
-objects: ${OBJ_FILES}
+objects: configure ${OBJ_FILES}
 
 $(OBJ_FILES):
 	${CXX} $(CPPFLAGS) -c -o $@ $(patsubst $(OBJ_DIR)/%,$(SRC_DIR)/%,$*.cc) -lncurses

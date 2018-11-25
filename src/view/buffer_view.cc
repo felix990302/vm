@@ -28,6 +28,9 @@ namespace VM{
                 PtrCursor it(Cursor{cursor.line + y, cursor.col + x}, fileBuffer->getBuffer(), true);
                 if (it.getStringIterator() != it.getLineIterator()->end())
                     display.putc(getPosn() + Coordinates{x, y}, *it.getStringIterator());
+                else {
+                    display.flush(getPosn() + Coordinates{x, y});
+                }
             }
         }
         display.setCursorPosition(fileBuffer->ptrCursor.line - cursor.line, fileBuffer->ptrCursor.col - cursor.col);

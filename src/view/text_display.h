@@ -20,6 +20,7 @@ namespace VM {
     public:
         virtual void putc(const Coordinates &c, char ch) = 0; //TODO extend to color
         virtual void puts(const Coordinates &c, const std::string &s) =0;
+        virtual void flush(const Coordinates &c) = 0; // flushes to end of line
 
         virtual void redraw();
         virtual void resizeHandler(const Coordinates &size);
