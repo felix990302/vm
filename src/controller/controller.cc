@@ -12,6 +12,6 @@ namespace VM {
         input{std::move(input)},
         fileBuffer{fileBuffer},
         modes{*this},
-        mode{&modes.insertMode}
+        mode{&modes.commandMode}
     {}
 }

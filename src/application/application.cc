@@ -1,6 +1,5 @@
 #include "application.h"
 #include "controller/ncurses_input.h"
-#include "controller/insert_mode.h"
 #include "view/n_curses_display.h"
 
 int main(int argc, char *argv[]) {

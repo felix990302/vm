@@ -4,7 +4,7 @@
 
 namespace VM {
     void InsertNewlineCommand::doTheCommand(Controller &controller) const {
-        controller.getBuffer()->typeNewLine();
+        controller.getBuffer().typeNewLine();
     }
 
     void InsertNewlineCommand::undoCommand(Controller &) const {} // TODO
