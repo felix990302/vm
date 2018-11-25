@@ -3,7 +3,7 @@
 
 #include <string>
 #include "model/cursor.h"
-#include "undoable_command.h"
+#include "controller/command/undoable_command.h"
 
 
 namespace VM {
