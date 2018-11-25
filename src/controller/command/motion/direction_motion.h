@@ -18,7 +18,7 @@ namespace VM {
 
     template<> struct DirectionMotion<Direction::LEFT>: public Motion {
         Cursor nextPosition(const PtrCursor &cursor) override {
-            return Cursor{cursor.line, cursor.col-1}; 
+            return Cursor{cursor.line, cursor.col ? cursor.col-1 : cursor.col};
         }
         std::unique_ptr<Motion> clone() override {
             return std::make_unique<DirectionMotion>(*this);
@@ -27,7 +27,7 @@ namespace VM {
 
     template<> struct DirectionMotion<Direction::UP>: public Motion {
         Cursor nextPosition(const PtrCursor &cursor) override {
-            return Cursor{cursor.line-1, cursor.col}; 
+            return Cursor{cursor.line ? cursor.line-1 : cursor.line, cursor.col};
         }
         std::unique_ptr<Motion> clone() override {
             return std::make_unique<DirectionMotion>(*this);
