@@ -4,10 +4,10 @@
 
 namespace VM {
     enum class Direction {
-        Up,
-        Down,
-        Forward,
-        Backward,
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT,
     };
 }
 

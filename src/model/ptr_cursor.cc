@@ -30,6 +30,23 @@ namespace  VM {
     void PtrCursor::moveUp(size_t c) {line = (size_t)std::max(0, (int) line- (int)c);}
     void PtrCursor::moveUp() {moveUp(1);}
 
+    void PtrCursor::setCursor(const Cursor &posn) {
+        if(posn.line > line) {
+            moveDown(posn.line - line);
+            moveRight(0);
+        }
+        else if(posn.line < line) {
+            moveUp(line - posn.line);
+            moveRight(0);
+        }
+
+        if(posn.col > col) {
+            moveRight(posn.col - col);
+        }
+        else if(posn.col < col) {
+            moveLeft(col - posn.col);
+        }
+    }
 
     std::string::iterator PtrCursor::getStringIterator() {
         return buffer[line].begin()+col;

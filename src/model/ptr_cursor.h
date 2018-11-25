@@ -23,6 +23,7 @@ namespace VM {
         void moveDown(size_t c);
         void moveUp();
         void moveUp(size_t c);
+        void setCursor(const Cursor &posn);
 
         bool isEOF();
         bool isLastPositionInLine();
