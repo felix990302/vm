@@ -15,7 +15,7 @@ namespace  VM {
         if(col >= buffer[line].size()) col = buffer[line].size();
         if(!canPointAfterLastCharacterInLine && col != 0) --col;
     }
-    PtrCursor::PtrCursor(const VM::Cursor &cursor, VM::BufferType &buffer) :  PtrCursor(cursor,buffer, false) {}
+    PtrCursor::PtrCursor(const VM::Cursor &cursor, VM::BufferType &buffer) :  PtrCursor(cursor,buffer, true) {} // FIXME: should depend on the mode!
     void PtrCursor::moveLeft() {moveLeft(1);}
     void PtrCursor::moveLeft(size_t c) {
         col = (size_t) std::max(0, (int)col - (int)c);
@@ -25,10 +25,10 @@ namespace  VM {
     void PtrCursor::moveRight(size_t c) {
         col = std::min(col + c, buffer[line].size() + canPointAfterLastCharacterInLine - 1 );
     }
+    void PtrCursor::moveDown(size_t c) {line = std::min(buffer.size()-1, line + c);}
     void PtrCursor::moveDown() {moveDown(1);}
-    void PtrCursor::moveDown(size_t c) {line = (size_t)std::max(0, (int) line- (int)c);}
+    void PtrCursor::moveUp(size_t c) {line = (size_t)std::max(0, (int) line- (int)c);}
     void PtrCursor::moveUp() {moveUp(1);}
-    void PtrCursor::moveUp(size_t c) {line = std::min(buffer.size()-1, line + c);}
 
 
     std::string::iterator PtrCursor::getStringIterator() {
