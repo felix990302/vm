@@ -8,9 +8,7 @@ namespace VM {
         controller.getBuffer()->delete_forward(1);
     }
 
-    void DeleteBackwardCommand::sideEffect(Controller &controller) {
-        //toMutate = *(controller.getBuffer()->ptrCursor.charPosn);
-    }
+    void DeleteBackwardCommand::sideEffect(Controller &) {} // TODO
 
     void DeleteBackwardCommand::undoCommand(Controller &controller) const {
         controller.getBuffer()->type(toMutate);

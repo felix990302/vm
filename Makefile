@@ -12,7 +12,7 @@ DEP_DIRS = $(sort $(dir $(DEP_FILES)))
 CXX = g++
 DEP_LOC = $(patsubst $(OBJ_DIR)/%,$(DEP_DIR)/%,$*.d)
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP_LOC)
-WFLAGS = -Wall -Werror -g
+WFLAGS = -Wall -Werror -Wextra -g
 CPPFLAGS = -std=c++14 $(WFLAGS) $(DEPFLAGS) -I $(SRC_DIR)
 CXXFLAGS = -std=c++14 $(WFLAGS)
 EXEC = vm

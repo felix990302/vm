@@ -46,13 +46,13 @@ namespace VM {
         buffer[cursor.line].erase(cursor.col, numChars);
     }
 
-    void FileBuffer::delete_backward(int numChars) {
+    void FileBuffer::delete_backward(int) {
         /*ptrCursor.charPosn -= numChars;
         ptrCursor.col -= numChars;
         ptrCursor.linePosn->erase(ptrCursor.col, numChars);*/
     }
 
-    void FileBuffer::delete_backward(int numChars, const Cursor &cursor) {
+    void FileBuffer::delete_backward(int, const Cursor &) {
         //buffer[cursor.col].erase(cursor.col-numChars, numChars);
     }
 }

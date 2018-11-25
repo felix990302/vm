@@ -29,10 +29,10 @@ namespace VM {
 
         public:
         bool getAndProcessChar(); // boolean indicator for if program should exit
-        Input* const getInput() const {return input.get();}
+        Input* getInput() const {return input.get();}
         void changeMode(Mode *newMode) {mode = newMode;}
         void changeBuffer(FileBuffer *newFileBuffer) {fileBuffer = newFileBuffer;}
-        FileBuffer* const getBuffer() const {return fileBuffer;}
+        FileBuffer* getBuffer() const {return fileBuffer;}
 
         Controller(std::unique_ptr<Input> input, FileBuffer *fileBuffer);
         Controller(const Controller &other) = delete;

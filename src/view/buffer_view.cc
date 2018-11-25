@@ -4,7 +4,7 @@
 #include <iostream>
 
 namespace VM{
-    void BufferView::draw(const Coordinates &parentPosn, TextDisplay &display)
+    void BufferView::draw(const Coordinates &, TextDisplay &display)
     {
         size_t newCursorY = cursor.line;
         size_t newCursorX = cursor.col;

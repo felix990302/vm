@@ -7,7 +7,5 @@ namespace VM {
         controller.getBuffer()->typeNewLine();
     }
 
-    void InsertNewlineCommand::undoCommand(Controller &controller) const {
-        // TODO: delete the new line char
-    }
+    void InsertNewlineCommand::undoCommand(Controller &) const {} // TODO
 }
