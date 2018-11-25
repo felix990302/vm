@@ -25,7 +25,7 @@ namespace VM{
         for(int y = 0; y < getSize().y; ++y) {
 
             for (int x = 0; x < getSize().x; ++x) {
-                PtrCursor it(Cursor{cursor.line + y, cursor.col + x}, fileBuffer->getBuffer(), true, false);
+                PtrCursor it(Cursor{cursor.line + y, cursor.col + x}, fileBuffer->getBuffer(), true);
                 if (it.getStringIterator() != it.getLineIterator()->end())
                     display.putc(getPosn() + Coordinates{x, y}, *it.getStringIterator());
             }

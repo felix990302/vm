@@ -15,7 +15,7 @@ namespace  VM {
         if(col >= buffer[line].size()) col = buffer[line].size();
         if(!canPointAfterLastCharacterInLine && col != 0) --col;
     }
-    PtrCursor::PtrCursor(const VM::Cursor &cursor, VM::BufferType &buffer) :  PtrCursor(cursor,buffer, false, false) {}
+    PtrCursor::PtrCursor(const VM::Cursor &cursor, VM::BufferType &buffer) :  PtrCursor(cursor,buffer, false) {}
     void PtrCursor::moveLeft() {moveLeft(1);}
     void PtrCursor::moveLeft(size_t c) {
         col = (size_t) std::max(0, (int)col - (int)c);
