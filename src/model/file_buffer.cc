@@ -42,6 +42,7 @@ namespace VM {
         buffer.insert(ptrCursor.getLineIterator(), first);
 
         ptrCursor.moveDown();
+        ptrCursor.col = 0; // TODO: make this a function?
     }
 
     void FileBuffer::delete_forward(int numChars) {
