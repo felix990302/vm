@@ -6,7 +6,7 @@
 int main(int argc, char *argv[]) {
     if(argc > 1) {
         for(int k=1; k<argc; ++k) {
-            VM::Application app {argv[k]};
+            VM::Application app {argv[k], VM::make_bufferType(argv[k])}; // copy ellision :)
             app.run();
         }
     }
@@ -29,8 +29,8 @@ namespace VM {
 
     }
 
-    Application::Application(const std::string &fileName):
-        fileBuffer(std::make_unique<FileBuffer>(fileName)),
+    Application::Application(const std::string &fileName, const BufferType &buffer):
+        fileBuffer(std::make_unique<FileBuffer>(fileName, buffer)),
         display(&NCursesDisplay::getMainDisplay()),
         bufferView(std::make_shared<BufferView>(fileBuffer.get())),
         controller{std::make_unique<Controller>(std::make_unique<NCursesInput>(), fileBuffer.get())},

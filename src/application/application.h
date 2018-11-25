@@ -26,7 +26,7 @@ namespace VM {
 
     public:
         Application();
-        Application(const std::string &fileName);
+        Application(const std::string &fileName, const BufferType &buffer);
         void run();
     };
 

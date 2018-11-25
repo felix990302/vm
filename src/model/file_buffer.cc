@@ -1,4 +1,3 @@
-#include <fstream>
 #include "file_buffer.h"
 
 
@@ -7,21 +6,13 @@ namespace VM {
         fileName{},
         buffer{1},
         ptrCursor{Cursor {0, 0}, buffer}
-    {
+    {}
 
-    }
-
-    FileBuffer::FileBuffer(const std::string &fileName):
+    FileBuffer::FileBuffer(const std::string &fileName, const BufferType &bufferBase):
         fileName{fileName},
-        buffer{1}, // FIXME: causes one line to appear always when opening files
+        buffer{bufferBase},
         ptrCursor{Cursor {0, 0}, buffer}
-    {
-        std::ifstream file {fileName};
-        std::string temp;
-        while(std::getline(file, temp)) {
-            buffer.push_back(std::move(temp)); 
-        }
-    }
+    {}
 
     void FileBuffer::type(char a) {
         ptrCursor.getLineIterator()->insert(ptrCursor.getStringIterator(), a);
