@@ -4,10 +4,10 @@
 
 namespace VM {
     void InsertCommand::doTheCommand(Controller &controller) const {
-        controller.getBuffer().type(toMutate);
+        for(size_t k=0; k<quant; ++k) controller.getBuffer().type(toMutate);
     }
 
     void InsertCommand::undoCommand(Controller &controller) const {
-        controller.getBuffer().delete_backward(1);
+        controller.getBuffer().delete_backward(quant);
     }
 }
