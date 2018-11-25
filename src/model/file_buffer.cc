@@ -28,14 +28,12 @@ namespace VM {
     }
 
     void FileBuffer::typeNewLine() {
-        std::string first = ptrCursor.getLineIterator()->substr(0, ptrCursor.col);
-        std::string second = ptrCursor.getLineIterator()->substr(ptrCursor.col);
+        std::string nextLine = ptrCursor.getLineIterator()->substr(ptrCursor.col);
 
-        *ptrCursor.getLineIterator() = second;
-        buffer.insert(ptrCursor.getLineIterator(), first);
-
+        ptrCursor.getLineIterator()->erase(ptrCursor.col);
         ptrCursor.moveDown();
         ptrCursor.col = 0; // TODO: make this a function?
+        buffer.insert(ptrCursor.getLineIterator(), nextLine);
     }
 
     void FileBuffer::delete_forward(int numChars) {
