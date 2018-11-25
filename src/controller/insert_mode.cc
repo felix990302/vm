@@ -6,7 +6,7 @@
 
 
 namespace VM {
-    void InsertMode::processChar(int c) {
+    bool InsertMode::processChar(int c) {
         switch(c) {
             case '\n': {
                 std::unique_ptr<Command> newline = std::make_unique<InsertNewlineCommand> (1);
@@ -18,5 +18,7 @@ namespace VM {
                 insert->doCommand(controller);
             }
         }
+
+        return true;
     }   
 }

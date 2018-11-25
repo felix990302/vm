@@ -10,7 +10,7 @@ namespace VM {
         InsertMode &operator=(const InsertMode &other) = delete; // no assignment
 
         public:
-        void processChar(int c) override;
+        bool processChar(int c) override;
         void flush() override {/*TODO: flush queue and make sequence of commands*/}
         void onExit() override {flush();}
 

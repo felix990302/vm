@@ -28,7 +28,7 @@ namespace VM {
         Mode *mode;
 
         public:
-        void getAndProcessChar();
+        bool getAndProcessChar(); // boolean indicator for if program should exit
         Input* const getInput() const {return input.get();}
         void changeMode(Mode *newMode) {mode = newMode;}
         void changeBuffer(FileBuffer *newFileBuffer) {fileBuffer = newFileBuffer;}

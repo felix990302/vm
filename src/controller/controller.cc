@@ -4,8 +4,8 @@
 
 
 namespace VM {
-    void Controller::getAndProcessChar() {
-        mode->processChar(input->getChar());
+    bool Controller::getAndProcessChar() {
+        return mode->processChar(input->getChar());
     }
 
     Controller::Controller(std::unique_ptr<Input> input, FileBuffer *fileBuffer):
