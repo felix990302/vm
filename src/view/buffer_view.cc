@@ -4,7 +4,7 @@
 #include <iostream>
 
 namespace VM{
-    void BufferView::draw(const Coordinates &parentPosn, TextDisplay &display) // FIXME: deletion would need to clear to end of line somehow
+    void BufferView::draw(const Coordinates &parentPosn, TextDisplay &display)
     {
         size_t newCursorY = cursor.line;
         size_t newCursorX = cursor.col;
