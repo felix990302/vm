@@ -12,6 +12,7 @@ namespace VM {
     }
 
     void MutateCommand::redoCommand(Controller &controller) const {
+        controller.getBuffer().ptrCursor.setCursor(UndoableCommand::startPosn);
         doTheCommand(controller);
     }
 
