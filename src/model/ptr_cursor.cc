@@ -44,4 +44,11 @@ namespace  VM {
     bool PtrCursor::isEOF() {
         return (buffer.size()-1 == line && isLastPositionInLine());
     }
+
+    void PtrCursor::moveBeginOfLine() {
+        col = 0;
+    }
+    void PtrCursor::moveEndOfLine() {
+        col = buffer[line].size() + canPointAfterLastCharacterInLine - 1;
+    }
 }

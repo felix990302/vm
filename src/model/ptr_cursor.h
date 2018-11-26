@@ -24,6 +24,9 @@ namespace VM {
         void moveUp();
         void moveUp(size_t c);
 
+        void moveBeginOfLine();
+        void moveEndOfLine();
+
         bool isEOF();
         bool isLastPositionInLine();
     };
