@@ -9,8 +9,6 @@
 
 
 namespace VM {
-   class MutateCommand; 
-
     class InsertMode: public Mode {
         InsertModeBufferType undoBuffer;
 
