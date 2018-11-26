@@ -10,7 +10,7 @@ namespace VM {
         CommandMode &operator=(const CommandMode &other) = delete; // no assignment
 
         public:
-        bool processChar(int c) override;
+        void processChar(int c) override;
         void flush() override {/*TODO: flush current command sequence*/}
         void onExit() override {flush();}
 

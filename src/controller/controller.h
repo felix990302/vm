@@ -19,6 +19,8 @@ namespace VM {
         CommandStack undoStack;
         CommandStack redoStack;
 
+        bool programIsRunning;
+
         struct Modes {
             InsertMode insertMode;
             CommandMode commandMode;
@@ -36,7 +38,7 @@ namespace VM {
         Mode *mode;
 
         public:
-        bool getAndProcessChar(); // boolean indicator for if program should exit
+        void getAndProcessChar();
         Input* getInput() const {return input.get();}
         void changeMode(Mode *newMode) {mode = newMode;}
         Mode &getMode() {return *mode;}
@@ -44,6 +46,9 @@ namespace VM {
         FileBuffer &getBuffer() {return *fileBuffer;}
         CommandStack &getUndoStack() {return undoStack;}
         CommandStack &getRedoStack() {return redoStack;}
+
+        void setProgramIsRunning(bool b) {programIsRunning = b;}
+        operator bool() const {return programIsRunning;}
 
         Controller(std::unique_ptr<Input> input, FileBuffer *fileBuffer);
         Controller(const Controller &other) = delete;

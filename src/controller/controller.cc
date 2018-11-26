@@ -4,8 +4,8 @@
 
 
 namespace VM {
-    bool Controller::getAndProcessChar() {
-        return mode->processChar(input->getChar());
+    void Controller::getAndProcessChar() {
+        mode->processChar(input->getChar());
     }
 
     Controller::Controller(std::unique_ptr<Input> input, FileBuffer *fileBuffer):
@@ -13,6 +13,7 @@ namespace VM {
         fileBuffer{fileBuffer},
         undoStack{},
         redoStack{},
+        programIsRunning{true},
         modes{*this},
         mode{&modes.commandMode}
     {}

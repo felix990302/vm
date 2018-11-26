@@ -7,7 +7,7 @@
 
 
 namespace VM {
-    bool CommandMode::processChar(int c) { //FIXME: generalize parsing
+    void CommandMode::processChar(int c) { //FIXME: generalize parsing
         switch(c) {
             case 'f': {
                 std::unique_ptr<Command> find = std::make_unique<MoveCommand>(1, std::make_unique<FindMotion<Direction::RIGHT>>('e')); // FIXME: testing purposes only
@@ -45,7 +45,5 @@ namespace VM {
                 break;
             }
         }
-
-        return true;
     }   
 }
