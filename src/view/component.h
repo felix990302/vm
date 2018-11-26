@@ -37,6 +37,8 @@ namespace VM {
         void detachChildren(std::shared_ptr<Component> childrenComponent);
 
         virtual void draw(const Coordinates &parentPosn, TextDisplay &display);
+
+        virtual ~Component() = 0;
     };
 }
 

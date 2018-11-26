@@ -35,5 +35,5 @@ namespace VM {
         Component::posn = posn;
     }
 
-
+    Component::~Component() {}
 }

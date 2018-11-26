@@ -11,7 +11,6 @@
 
 
 namespace VM {
-
     class Component;
 
     class TextDisplay {
@@ -30,7 +29,7 @@ namespace VM {
 
         void setMainComponent(const std::shared_ptr<Component> &mainComponent);
 
-
+        virtual ~TextDisplay() = 0;
     };
 }
 #endif
