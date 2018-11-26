@@ -1,25 +1,18 @@
-#include <fstream>
 #include "file_buffer.h"
 
 
 namespace VM {
     FileBuffer::FileBuffer():
+        fileName{},
         buffer{1},
         ptrCursor{Cursor {0, 0}, buffer}
-    {
+    {}
 
-    }
-
-    FileBuffer::FileBuffer(const std::string &fileName):
-        buffer{1},
+    FileBuffer::FileBuffer(const std::string &fileName, const BufferType &bufferBase):
+        fileName{fileName},
+        buffer{bufferBase},
         ptrCursor{Cursor {0, 0}, buffer}
-    {
-        std::ifstream file {fileName};
-        std::string temp;
-        while(std::getline(file, temp)) {
-            buffer.push_back(std::move(temp)); 
-        }
-    }
+    {}
 
     void FileBuffer::type(char a) {
         ptrCursor.getLineIterator()->insert(ptrCursor.getStringIterator(), a);
@@ -35,14 +28,12 @@ namespace VM {
     }
 
     void FileBuffer::typeNewLine() {
-        std::string first = ptrCursor.getLineIterator()->substr(0, ptrCursor.col);
-        std::string second = ptrCursor.getLineIterator()->substr(ptrCursor.col);
+        std::string nextLine = ptrCursor.getLineIterator()->substr(ptrCursor.col);
 
-        *ptrCursor.getLineIterator() = second;
-        buffer.insert(ptrCursor.getLineIterator(), first);
-
+        ptrCursor.getLineIterator()->erase(ptrCursor.col);
         ptrCursor.moveDown();
-        ptrCursor.moveBeginOfLine();
+        ptrCursor.col = 0; // TODO: make this a function?
+        buffer.insert(ptrCursor.getLineIterator(), nextLine);
     }
 
     void FileBuffer::delete_forward(int numChars) {
@@ -53,13 +44,13 @@ namespace VM {
         buffer[cursor.line].erase(cursor.col, numChars);
     }
 
-    void FileBuffer::delete_backward(int numChars) {
+    void FileBuffer::delete_backward(int) {
         /*ptrCursor.charPosn -= numChars;
         ptrCursor.col -= numChars;
         ptrCursor.linePosn->erase(ptrCursor.col, numChars);*/
     }
 
-    void FileBuffer::delete_backward(int numChars, const Cursor &cursor) {
+    void FileBuffer::delete_backward(int, const Cursor &) {
         //buffer[cursor.col].erase(cursor.col-numChars, numChars);
     }
 }

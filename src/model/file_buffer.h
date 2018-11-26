@@ -10,13 +10,14 @@
 
 namespace VM {
     class FileBuffer {
+        std::string fileName;
         BufferType buffer;
 
     public:
         PtrCursor ptrCursor;
 
         FileBuffer();
-        FileBuffer(const std::string &fileName);
+        FileBuffer(const std::string &fileName, const BufferType &bufferBase);
 
         void type(char a);
         void type(char a, const Cursor &cursor);

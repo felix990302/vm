@@ -1,17 +1,22 @@
 #include "application.h"
 #include "controller/ncurses_input.h"
-#include "controller/insert_mode.h"
 #include "view/n_curses_display.h"
 
 int main(int argc, char *argv[]) {
-    VM::Application app {argc, argv};
-    app.run();
+    if(argc > 1) {
+        for(int k=1; k<argc; ++k) {
+            VM::Application app {argv[k], VM::make_bufferType(argv[k])}; // copy ellision :)
+            app.run();
+        }
+    }
+    else {
+        VM::Application app {};
+        app.run();
+    }
 }
 
 namespace VM {
-    Application::Application(int argc, char **argv):
-        argc(argc),
-        argv(argv),
+    Application::Application():
         fileBuffer(std::make_unique<FileBuffer>()),
         display(&NCursesDisplay::getMainDisplay()),
         bufferView(std::make_shared<BufferView>(fileBuffer.get())),
@@ -23,9 +28,20 @@ namespace VM {
 
     }
 
+    Application::Application(const std::string &fileName, const BufferType &buffer):
+        fileBuffer(std::make_unique<FileBuffer>(fileName, buffer)),
+        display(&NCursesDisplay::getMainDisplay()),
+        bufferView(std::make_shared<BufferView>(fileBuffer.get())),
+        controller{std::make_unique<Controller>(std::make_unique<NCursesInput>(), fileBuffer.get())},
+        input(controller->getInput())
+    {
+        display->setMainComponent(bufferView);
+        NCursesDisplay::resizeHandler(1);
+
+    }
+
     void Application::run() {
-        while(true) {
-            controller->getAndProcessChar();
+        while(controller->getAndProcessChar()) {
             display->redraw();
         }
     }

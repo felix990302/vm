@@ -16,8 +16,6 @@ namespace VM {
 
     class Application {
     private:
-        int argc;
-        char **argv;
         std::unique_ptr<FileBuffer> fileBuffer;
         TextDisplay * display;
         std::shared_ptr<BufferView> bufferView;
@@ -27,7 +25,8 @@ namespace VM {
 
 
     public:
-        Application(int argc, char *argv[]);
+        Application();
+        Application(const std::string &fileName, const BufferType &buffer);
         void run();
     };
 

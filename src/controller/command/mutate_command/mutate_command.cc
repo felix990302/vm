@@ -5,13 +5,14 @@
 
 namespace VM {
     void MutateCommand::doCommand(Controller &controller) {
-        startPosn = controller.getBuffer()->ptrCursor;
+        startPosn = controller.getBuffer().ptrCursor;
         sideEffect(controller);
         doTheCommand(controller);
-        endPosn = controller.getBuffer()->ptrCursor;
+        endPosn = controller.getBuffer().ptrCursor;
     }
 
     void MutateCommand::redoCommand(Controller &controller) const {
+        controller.getBuffer().ptrCursor.setCursor(UndoableCommand::startPosn);
         doTheCommand(controller);
     }
 

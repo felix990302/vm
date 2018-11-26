@@ -12,17 +12,17 @@ DEP_DIRS = $(sort $(dir $(DEP_FILES)))
 CXX = g++
 DEP_LOC = $(patsubst $(OBJ_DIR)/%,$(DEP_DIR)/%,$*.d)
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP_LOC)
-WFLAGS = -Wall -Werror -g
+WFLAGS = -Wall -Werror -Wextra -g
 CPPFLAGS = -std=c++14 $(WFLAGS) $(DEPFLAGS) -I $(SRC_DIR)
 CXXFLAGS = -std=c++14 $(WFLAGS)
 EXEC = vm
 
 
 
-all: ${OBJ_FILES}
+all: objects
 	${CXX} ${CXXFLAGS} -o ${EXEC} ${OBJ_FILES} -lncurses
 
-objects: ${OBJ_FILES}
+objects: configure ${OBJ_FILES}
 
 $(OBJ_FILES):
 	${CXX} $(CPPFLAGS) -c -o $@ $(patsubst $(OBJ_DIR)/%,$(SRC_DIR)/%,$*.cc) -lncurses

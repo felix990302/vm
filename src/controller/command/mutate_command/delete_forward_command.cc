@@ -5,16 +5,12 @@
 
 namespace VM {
     void DeleteForwardCommand::doTheCommand(Controller &controller) const {
-        controller.getBuffer()->delete_forward(1);
+        controller.getBuffer().delete_forward(quant);
     }
 
-    void DeleteForwardCommand::sideEffect(Controller &controller) {
-        //toMutate = *(controller.getBuffer()->ptrCursor.charPosn);
-    }
+    void DeleteForwardCommand::sideEffect(Controller &) {}
 
-    void DeleteForwardCommand::undoCommand(Controller &controller) const {
-        controller.getBuffer()->type(toMutate);
-    }
+    void DeleteForwardCommand::undoCommand(Controller &) const {} // TODO
 
     std::unique_ptr<Command> DeleteForwardCommand::clone() const {
         return std::make_unique<DeleteForwardCommand>(*this);

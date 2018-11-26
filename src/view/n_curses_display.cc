@@ -16,6 +16,11 @@ namespace VM {
         mvwaddstr(stdscr, c.y, c.x, s.c_str());
     }
 
+    void NCursesDisplay::flush(const Coordinates &c) {
+        setCursorPosition(c.y, c.x);
+        wclrtoeol(stdscr); // TODO: investigate whether to reset cursor posn
+    }
+
     void NCursesDisplay::redraw() {
         TextDisplay::redraw();
         wrefresh(stdscr);

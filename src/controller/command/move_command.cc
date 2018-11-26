@@ -1,14 +1,15 @@
 #include "move_command.h"
-#include "motion.h"
+#include "motion/motion.h"
 #include "controller/controller.h"
 #include "model/file_buffer.h"
 
 
 namespace VM {
     void MoveCommand::doCommand(Controller &controller) { // TODO: determine interface for moving cursor
-        Cursor nextCursor = controller.getBuffer()->ptrCursor;
+        PtrCursor &currentPtrCursor = controller.getBuffer().ptrCursor;
         for(size_t k=0; k<quant; ++k) {
-            nextCursor = motion->nextPosition(nextCursor);
+            currentPtrCursor.setCursor(motion->startPosition(currentPtrCursor));
+            currentPtrCursor.setCursor(motion->nextPosition(currentPtrCursor));
         }
     }
 

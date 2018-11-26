@@ -1,6 +1,6 @@
 #include "enter_insert_command.h"
 #include "controller/controller.h"
-#include "controller/insert_mode.h"
+#include "controller/mode/insert_mode.h"
 
 
 namespace VM {
