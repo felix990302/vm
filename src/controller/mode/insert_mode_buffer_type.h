@@ -3,11 +3,11 @@
 
 #include <deque>
 #include <memory>
-#include "controller/command/command.h"
+#include "controller/command/undoable_command.h"
 
 
 namespace VM {
-    typedef std::deque<std::unique_ptr<Command>> InsertModeBufferType;
+    typedef std::deque<std::unique_ptr<UndoableCommand>> InsertModeBufferType;
 }
 
 #endif

@@ -9,7 +9,8 @@
 
 namespace VM {
     class MutationCommand: public UndoableCommand {
-        std::vector<std::unique_ptr<Command>> theMutateCommands;
+        typedef std::vector<std::unique_ptr<UndoableCommand>> MutateSequence;
+        MutateSequence theMutateCommands;
 
         public:
         void doCommand(Controller &controller) override;

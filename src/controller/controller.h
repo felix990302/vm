@@ -12,7 +12,7 @@ namespace VM {
     class FileBuffer;
 
     class Controller {
-        typedef std::stack<std::unique_ptr<Command>> CommandStack;
+        typedef std::stack<std::unique_ptr<UndoableCommand>> CommandStack;
 
         std::unique_ptr<Input> input; 
         FileBuffer *fileBuffer;

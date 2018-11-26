@@ -13,7 +13,7 @@ namespace VM {
 
     void MutationCommand::redoCommand(Controller &controller) const {
         for(auto &mutate : theMutateCommands) {
-            mutate->doCommand(controller); // FIXME: should be redo
+            mutate->redoCommand(controller); // FIXME: should be redo
         }
     }
 
@@ -35,7 +35,7 @@ namespace VM {
         theMutateCommands{}
     {
         for(auto &mutate : other.theMutateCommands) {
-            theMutateCommands.emplace_back(mutate->clone());
+            theMutateCommands.emplace_back(mutate->undoableclone());
         }
     }
 

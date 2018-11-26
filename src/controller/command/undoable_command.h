@@ -14,6 +14,7 @@ namespace VM {
         virtual void undoCommand(Controller &) const = 0;
         virtual void redoCommand(Controller &) const = 0;
 
+        std::unique_ptr<UndoableCommand> undoableclone() const;
         UndoableCommand(size_t quant, Cursor startPosn=Cursor{0, 0}, Cursor endPosn=Cursor{0, 0});
         UndoableCommand(const UndoableCommand &other);
         UndoableCommand(UndoableCommand &&other);
