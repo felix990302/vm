@@ -16,6 +16,7 @@ namespace VM {
         std::unique_ptr<Motion> clone() override {
             return std::make_unique<DirectionMotion>(*this);
         }
+        DirectionMotion(int quantifier = 1) : Motion(quantifier) {}
     };
 
     template<> struct DirectionMotion<Direction::LEFT>: public Motion {
@@ -25,6 +26,7 @@ namespace VM {
         std::unique_ptr<Motion> clone() override {
             return std::make_unique<DirectionMotion>(*this);
         }
+        DirectionMotion(int quantifier = 1) : Motion(quantifier) {}
     };
 
     template<> struct DirectionMotion<Direction::UP>: public Motion {
@@ -34,6 +36,7 @@ namespace VM {
         std::unique_ptr<Motion> clone() override {
             return std::make_unique<DirectionMotion>(*this);
         }
+        DirectionMotion(int quantifier = 1) : Motion(quantifier) {}
     };
 
     template<> struct DirectionMotion<Direction::DOWN>: public Motion {
@@ -43,6 +46,7 @@ namespace VM {
         std::unique_ptr<Motion> clone() override {
             return std::make_unique<DirectionMotion>(*this);
         }
+        DirectionMotion(int quantifier = 1) : Motion(quantifier) {}
     };
 }
 

@@ -8,44 +8,111 @@
 
 namespace VM {
     bool CommandMode::processChar(int c) { //FIXME: generalize parsing
-        switch(c) {
-            case 'f': {
-                std::unique_ptr<Command> find = std::make_unique<MoveCommand>(1, std::make_unique<FindMotion<Direction::RIGHT>>('e')); // FIXME: testing purposes only
-                find->doCommand(controller);
-                break;
+        commandString.push_back(c);
+        try {
+            std::unique_ptr<Command> command = parse();
+            command->doCommand(controller);
+            commandString.clear();
+        }
+        catch (const ParserHelper::UnfinishedCommandException &) {}
+        catch (const ParserHelper::InvalidCommandException &)
+        {
+            commandString.clear();
+        }
+        return true;
+    }
+
+    std::unique_ptr<Command> CommandMode::parse() {
+
+        try {
+            return std::make_unique<MoveCommand>(1,parseMotion(commandString));
+        }
+        catch (const ParserHelper::ParsingException &) {}
+
+        int quantifier = 1;
+        ParserHelper::ParserStages stage = ParserHelper::ParserStages::EarlyStage;
+
+        for(size_t i = 0; i < commandString.length(); ++i)
+        {
+            const char &c = commandString[i];
+
+            switch (stage) { //identify next stage
+                case ParserHelper::ParserStages::EarlyStage:
+                    if(isdigit(c) && c != '0')
+                        stage = ParserHelper::ParserStages::QuantifierStage, quantifier = 0;
+                    else
+                        stage = ParserHelper::ParserStages::CommandStage;
+                    break;
+
+                case ParserHelper::ParserStages::QuantifierStage:
+                    if(!isdigit(c))
+                        stage = ParserHelper::ParserStages::CommandStage;
+                    break;
+
+                default:
+                    break;
             }
-            case 'F': {
-                std::unique_ptr<Command> find = std::make_unique<MoveCommand>(1, std::make_unique<FindMotion<Direction::LEFT>>('e')); // FIXME: testing purposes only
-                find->doCommand(controller);
-                break;
-            }
-            case 'h': {
-                std::unique_ptr<Command> left = std::make_unique<MoveCommand>(1, std::make_unique<DirectionMotion<Direction::LEFT>>());
-                left->doCommand(controller);
-                break;
-            }
-            case 'l': {
-                std::unique_ptr<Command> right = std::make_unique<MoveCommand>(1, std::make_unique<DirectionMotion<Direction::RIGHT>>());
-                right->doCommand(controller);
-                break;
-            }
-            case 'j': { // down
-                std::unique_ptr<Command> down = std::make_unique<MoveCommand>(1, std::make_unique<DirectionMotion<Direction::DOWN>>());
-                down->doCommand(controller);
-                break;
-            }
-            case 'k': { // up
-                std::unique_ptr<Command> up = std::make_unique<MoveCommand>(1, std::make_unique<DirectionMotion<Direction::UP>>());
-                up->doCommand(controller);
-                break;
-            }
-            case 'i': {
-                std::unique_ptr<Command> enterInsert = std::make_unique<EnterInsertCommand>();
-                enterInsert->doCommand(controller);
-                break;
+
+            switch (stage) { //parse character
+                case ParserHelper::ParserStages::QuantifierStage:
+                    quantifier = quantifier * 10 + (c - '0');
+                    break;
+
+                case ParserHelper::ParserStages::CommandStage:
+                    if(ParserHelper::commandParser.count(c))
+                        return  ParserHelper::commandParser[c](quantifier);
+                    else if(ParserHelper::commandWithMotionParser.count(c))
+                    {
+                        return ParserHelper::commandWithMotionParser[c](quantifier, std::move(parseMotion(commandString.substr(i+1))));
+                    }
+                    else
+                        throw ParserHelper::InvalidCommandException();
+
+                default:
+                    break;
             }
         }
+        throw ParserHelper::UnfinishedCommandException{};
+    }
 
-        return true;
-    }   
+    std::unique_ptr<Motion> CommandMode::parseMotion(const std::string &motionString) {
+        //TODO special case for whole line motion
+        ParserHelper::ParserStages stage = ParserHelper::ParserStages::EarlyStage;
+        int quantifier = 1;
+        for(const char &c : motionString)
+        {
+            switch (stage) { //identify next stage
+                case ParserHelper::ParserStages::EarlyStage:
+                    if(isdigit(c) && c != '0')
+                        stage = ParserHelper::ParserStages::QuantifierStage, quantifier = 0;
+                    else
+                        stage = ParserHelper::ParserStages::MotionStage;
+                    break;
+
+                case ParserHelper::ParserStages::QuantifierStage:
+                    if(!isdigit(c))
+                        stage = ParserHelper::ParserStages::MotionStage;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (stage) { //parse character
+                case ParserHelper::ParserStages::QuantifierStage:
+                    quantifier = quantifier * 10 + (c - '0');
+                    break;
+
+                case ParserHelper::ParserStages::MotionStage:
+                    if(ParserHelper::motionsParser.count(c))
+                        return  ParserHelper::motionsParser[c](quantifier);
+                    else
+                        throw ParserHelper::InvalidCommandException();
+
+                default:
+                    break;
+            }
+        }
+        throw ParserHelper::UnfinishedCommandException{};
+    }
 }

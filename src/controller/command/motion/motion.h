@@ -12,6 +12,9 @@ namespace VM {
         virtual Cursor startPosition(const PtrCursor &cursor); // default to doing nothing
         virtual Cursor nextPosition(const PtrCursor &cursor) = 0;
         virtual std::unique_ptr<Motion> clone() = 0;
+        int quantifier;
+        Motion (int quantifier);
+        Motion ();
     };
 }
 
