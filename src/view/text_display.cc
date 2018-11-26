@@ -19,4 +19,6 @@ namespace VM {
         TextDisplay::mainComponent = mainComponent;
         redraw();
     }
+
+    TextDisplay::~TextDisplay() {}
 }

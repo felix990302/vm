@@ -41,7 +41,8 @@ namespace VM {
     }
 
     void Application::run() {
-        while(controller->getAndProcessChar()) {
+        while(controller) {
+            controller->getAndProcessChar();
             display->redraw();
         }
     }

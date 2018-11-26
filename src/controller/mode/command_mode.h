@@ -36,7 +36,7 @@ namespace VM {
         std::unique_ptr<Motion> parseMotion(const std::string &);
 
         public:
-        bool processChar(int c) override;
+        void processChar(int c) override;
         void flush() override {/*TODO: flush current command sequence*/}
         void onExit() override {flush();}
 

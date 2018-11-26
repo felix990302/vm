@@ -33,6 +33,9 @@ namespace VM {
         void delete_backward(int numChars);
         void delete_backward(int numChars, const Cursor &cursor);
 
+        void write(const std::string &destination);
+        void write();
+
         BufferType &getBuffer() {
             return buffer;
         }

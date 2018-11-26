@@ -1,10 +1,10 @@
 #include <ncurses.h>
 #include "model/file_buffer.h"
 #include "controller/controller.h"
-#include "insert_mode.h"
 #include "controller/command/mutate_command/insert_newline_command.h"
 #include "controller/command/mutation_command.h"
 #include "controller/command/escape_command.h"
+#include "insert_mode.h"
 
 
 
@@ -15,7 +15,7 @@ namespace VM {
         }
     }
 
-    bool InsertMode::processChar(int c) {
+    void InsertMode::processChar(int c) {
         switch(c) {
             case '\n': {
                 undoBuffer.push_back(std::make_unique<InsertNewlineCommand>(1));
@@ -32,7 +32,5 @@ namespace VM {
                 undoBuffer.back()->doCommand(controller);
             }
         }
-
-        return true;
     }   
 }

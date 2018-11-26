@@ -10,11 +10,13 @@ namespace VM {
         Controller &controller;
 
         public:
-        virtual bool processChar(int c) = 0; // indicate if exit signal was received
+        virtual void processChar(int c) = 0; // indicate if exit signal was received
         virtual void flush() = 0; // flush state etc
         virtual void onExit() = 0; // exit hook
 
         Mode(Controller &controller): controller(controller) {}
+
+        virtual ~Mode() = 0;
     };
 }
 

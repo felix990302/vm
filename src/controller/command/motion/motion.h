@@ -15,6 +15,8 @@ namespace VM {
         int quantifier;
         Motion (int quantifier);
         Motion ();
+
+        virtual ~Motion() = 0;
     };
 }
 
