@@ -3,11 +3,22 @@
 #include "controller/command/enter_insert_command.h"
 #include "controller/command/move_command.h"
 #include "controller/command/motion/direction_motion.h"
+#include "controller/command/motion/find_motion.h"
 
 
 namespace VM {
     bool CommandMode::processChar(int c) { //FIXME: generalize parsing
         switch(c) {
+            case 'f': {
+                std::unique_ptr<Command> find = std::make_unique<MoveCommand>(1, std::make_unique<FindMotion<Direction::RIGHT>>('e')); // FIXME: testing purposes only
+                find->doCommand(controller);
+                break;
+            }
+            case 'F': {
+                std::unique_ptr<Command> find = std::make_unique<MoveCommand>(1, std::make_unique<FindMotion<Direction::LEFT>>('e')); // FIXME: testing purposes only
+                find->doCommand(controller);
+                break;
+            }
             case 'h': {
                 std::unique_ptr<Command> left = std::make_unique<MoveCommand>(1, std::make_unique<DirectionMotion<Direction::LEFT>>());
                 left->doCommand(controller);

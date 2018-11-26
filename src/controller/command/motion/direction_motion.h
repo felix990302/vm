@@ -7,7 +7,9 @@
 
 
 namespace VM {
-    template<Direction dir> struct DirectionMotion: public Motion { // default to RIGHT
+    template<Direction dir> struct DirectionMotion;
+
+    template<> struct DirectionMotion<Direction::RIGHT>: public Motion { // default to RIGHT
         Cursor nextPosition(const PtrCursor &cursor) override {
             return Cursor{cursor.line, cursor.col+1}; 
         }

@@ -48,11 +48,17 @@ namespace  VM {
         }
     }
 
-    std::string::iterator PtrCursor::getStringIterator() {
+    LineType::iterator PtrCursor::getStringIterator() const {
         return buffer[line].begin()+col;
     }
-    BufferType::iterator PtrCursor::getLineIterator() {
+    LineType::reverse_iterator PtrCursor::getReverseStringIterator() const {
+        return buffer[line].rbegin() + (buffer[line].size()-1 - col);
+    }
+    BufferType::iterator PtrCursor::getLineIterator() const {
         return buffer.begin()+line;
+    }
+    BufferType::reverse_iterator PtrCursor::getReverseLineIterator() const {
+        return buffer.rbegin() + (buffer.size()-1 - line);
     }
 
     bool PtrCursor::isLastPositionInLine() {

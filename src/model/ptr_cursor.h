@@ -13,8 +13,10 @@ namespace VM {
 
         PtrCursor(const Cursor &cursor, BufferType &buffer);
         PtrCursor(const Cursor &cursor, BufferType &buffer, bool canPointAfterLastCharacterInLine);
-        std::string::iterator getStringIterator();
-        BufferType::iterator getLineIterator();
+        LineType::iterator getStringIterator() const;
+        LineType::reverse_iterator getReverseStringIterator() const;
+        BufferType::iterator getLineIterator() const;
+        BufferType::reverse_iterator getReverseLineIterator() const;
         void moveRight();
         void moveRight(size_t c);
         void moveLeft();
