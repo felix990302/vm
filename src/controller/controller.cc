@@ -11,6 +11,8 @@ namespace VM {
     Controller::Controller(std::unique_ptr<Input> input, FileBuffer *fileBuffer):
         input{std::move(input)},
         fileBuffer{fileBuffer},
+        undoStack{},
+        redoStack{},
         modes{*this},
         mode{&modes.commandMode}
     {}

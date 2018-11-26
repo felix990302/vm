@@ -8,14 +8,13 @@
 namespace VM {
     class UndoableCommand: public Command {
         protected:
-        Cursor startPosn {0, 0}, endPosn {0, 0};
-
+        Cursor startPosn, endPosn;
 
         public:
-        virtual void undoCommand(Controller &) const {}; // TODO
-        virtual void redoCommand(Controller &) const {}; // TODO
+        virtual void undoCommand(Controller &) const = 0;
+        virtual void redoCommand(Controller &) const = 0;
 
-        UndoableCommand(size_t quant);
+        UndoableCommand(size_t quant, Cursor startPosn=Cursor{0, 0}, Cursor endPosn=Cursor{0, 0});
         UndoableCommand(const UndoableCommand &other);
         UndoableCommand(UndoableCommand &&other);
         virtual ~UndoableCommand() = 0;

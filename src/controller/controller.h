@@ -4,17 +4,20 @@
 #include "mode/insert_mode.h"
 #include "mode/command_mode.h"
 #include <memory>
+#include <stack>
 
 
 namespace VM {
     class Input;
-    class Mode;
-    class InsertMode;
     class FileBuffer;
 
     class Controller {
+        typedef std::stack<std::unique_ptr<Command>> CommandStack;
+
         std::unique_ptr<Input> input; 
         FileBuffer *fileBuffer;
+        CommandStack undoStack;
+        CommandStack redoStack;
 
         struct Modes {
             InsertMode insertMode;
@@ -39,6 +42,8 @@ namespace VM {
         Mode &getMode() {return *mode;}
         void changeBuffer(FileBuffer *newFileBuffer) {fileBuffer = newFileBuffer;}
         FileBuffer &getBuffer() {return *fileBuffer;}
+        CommandStack &getUndoStack() {return undoStack;}
+        CommandStack &getRedoStack() {return redoStack;}
 
         Controller(std::unique_ptr<Input> input, FileBuffer *fileBuffer);
         Controller(const Controller &other) = delete;
