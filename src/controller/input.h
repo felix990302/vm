@@ -4,6 +4,8 @@
 namespace VM {
     struct Input {
         virtual int getChar() = 0;
+
+        virtual ~Input() = 0;
     };
 }
 

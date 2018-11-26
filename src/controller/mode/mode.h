@@ -15,6 +15,8 @@ namespace VM {
         virtual void onExit() = 0; // exit hook
 
         Mode(Controller &controller): controller(controller) {}
+
+        virtual ~Mode() = 0;
     };
 }
 

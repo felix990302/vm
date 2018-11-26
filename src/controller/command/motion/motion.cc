@@ -4,4 +4,6 @@
 
 namespace VM {
     inline Cursor Motion::startPosition(const PtrCursor &cursor) {return cursor;}
+
+    Motion::~Motion() {}
 }
