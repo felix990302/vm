@@ -8,32 +8,32 @@
 
 namespace VM {
     void CommandMode::processChar(int c) { //FIXME: generalize parsing
-        commandString.push_back(c);
+        commandBuffer.push_back(c);
         try {
             std::unique_ptr<Command> command = parse();
             command->doCommand(controller);
-            commandString.clear();
+            commandBuffer.clear();
         }
         catch (const ParserHelper::UnfinishedCommandException &) {}
         catch (const ParserHelper::InvalidCommandException &)
         {
-            commandString.clear();
+            commandBuffer.clear();
         }
     }
 
     std::unique_ptr<Command> CommandMode::parse() {
 
         try {
-            return std::make_unique<MoveCommand>(1,parseMotion(commandString));
+            return std::make_unique<MoveCommand>(1,parseMotion(commandBuffer));
         }
         catch (const ParserHelper::ParsingException &) {}
 
         int quantifier = 1;
         ParserHelper::ParserStages stage = ParserHelper::ParserStages::EarlyStage;
 
-        for(size_t i = 0; i < commandString.length(); ++i)
+        for(size_t i = 0; i < commandBuffer.length(); ++i)
         {
-            const char &c = commandString[i];
+            const char &c = commandBuffer[i];
 
             switch (stage) { //identify next stage
                 case ParserHelper::ParserStages::EarlyStage:
@@ -62,7 +62,7 @@ namespace VM {
                         return  ParserHelper::commandParser[c](quantifier);
                     else if(ParserHelper::commandWithMotionParser.count(c))
                     {
-                        return ParserHelper::commandWithMotionParser[c](quantifier, parseMotion(commandString.substr(i+1))); // copy ellision
+                        return ParserHelper::commandWithMotionParser[c](quantifier, parseMotion(commandBuffer.substr(i+1))); // copy ellision
                     }
                     else
                         throw ParserHelper::InvalidCommandException();

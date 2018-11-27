@@ -15,7 +15,7 @@ namespace VM {
     class CommandMode: public Mode {
         CommandMode(const CommandMode &other) = delete; // no copies
         CommandMode &operator=(const CommandMode &other) = delete; // no assignment
-        std::string commandString;
+        std::string commandBuffer;
 
         struct ParserHelper {
             static std::map<char, std::function<std::unique_ptr<Motion>(int)>> motionsParser;
