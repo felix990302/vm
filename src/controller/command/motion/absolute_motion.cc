@@ -7,10 +7,6 @@ namespace VM {
         return Cursor {linePosn, 0};
     }
 
-    std::unique_ptr<Motion> AbsoluteMotion::clone() {
-        return std::make_unique<AbsoluteMotion>(*this);
-    }
-
     AbsoluteMotion::AbsoluteMotion(size_t linePosn):
         linePosn{linePosn}
     {}

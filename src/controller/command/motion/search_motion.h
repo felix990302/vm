@@ -10,7 +10,7 @@
 namespace VM {
     template<Direction dir> struct SearchMotion;
 
-    template<> struct SearchMotion<Direction::DOWN>: public Motion {
+    template<> struct SearchMotion<Direction::DOWN>: public ClonableMotion<Motion, SearchMotion<Direction::DOWN>> {
         std::string target;
         std::regex regexTarget {target};
         std::smatch regexMatch;
@@ -40,19 +40,15 @@ namespace VM {
             return cursor;
         }
 
-        std::unique_ptr<Motion> clone() override {
-            return std::make_unique<SearchMotion>(*this);
-        }
-
         SearchMotion(int quantifier, const std::string &target):
-            Motion{quantifier},
+            Clonable{quantifier},
             target{target},
             regexTarget{target},
             regexMatch{}
         {}
     };
 
-    template<> struct SearchMotion<Direction::UP>: public Motion {
+    template<> struct SearchMotion<Direction::UP>: public ClonableMotion<Motion, SearchMotion<Direction::UP>> {
         std::string target;
         std::regex regexTarget {target};
         std::smatch regexMatch;
@@ -98,12 +94,8 @@ namespace VM {
             return cursor;
         }
 
-        std::unique_ptr<Motion> clone() override {
-            return std::make_unique<SearchMotion>(*this);
-        }
-
         SearchMotion(int quantifier, const std::string &target):
-            Motion{quantifier},
+            Clonable{quantifier},
             target{target},
             regexTarget{target},
             regexMatch{}

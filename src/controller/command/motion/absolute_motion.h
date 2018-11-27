@@ -5,12 +5,11 @@
 
 
 namespace VM {
-    struct AbsoluteMotion: public Motion {
+    struct AbsoluteMotion: public ClonableMotion<Motion, AbsoluteMotion> {
         size_t linePosn;
 
         Cursor nextPosition(const PtrCursor &cursor) override;
 
-        std::unique_ptr<Motion> clone() override;
         AbsoluteMotion(size_t linePosn);
     };
 }
