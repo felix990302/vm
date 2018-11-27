@@ -7,7 +7,7 @@
 
 
 namespace VM {
-    bool CommandMode::processChar(int c) { //FIXME: generalize parsing
+    void CommandMode::processChar(int c) { //FIXME: generalize parsing
         commandString.push_back(c);
         try {
             std::unique_ptr<Command> command = parse();
@@ -19,7 +19,6 @@ namespace VM {
         {
             commandString.clear();
         }
-        return true;
     }
 
     std::unique_ptr<Command> CommandMode::parse() {
@@ -63,7 +62,7 @@ namespace VM {
                         return  ParserHelper::commandParser[c](quantifier);
                     else if(ParserHelper::commandWithMotionParser.count(c))
                     {
-                        return ParserHelper::commandWithMotionParser[c](quantifier, std::move(parseMotion(commandString.substr(i+1))));
+                        return ParserHelper::commandWithMotionParser[c](quantifier, parseMotion(commandString.substr(i+1))); // copy ellision
                     }
                     else
                         throw ParserHelper::InvalidCommandException();
