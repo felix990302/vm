@@ -5,11 +5,9 @@
 
 
 namespace VM {
-    class EscapeCommand: public Command {
-        void doCommand(Controller &controller) override;
-
+    class EscapeCommand: public ClonableCommand<Command, EscapeCommand> {
         public:
-        std::unique_ptr<Command> clone() const override;
+        void doCommand(Controller &controller) override;
     };
 }
 

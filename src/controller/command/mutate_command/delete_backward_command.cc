@@ -12,13 +12,9 @@ namespace VM {
 
     void DeleteBackwardCommand::undoCommand(Controller &) const {} // TODO
 
-    std::unique_ptr<Command> DeleteBackwardCommand::clone() const {
-        return std::make_unique<DeleteBackwardCommand>(*this);
-    }
+    DeleteBackwardCommand::DeleteBackwardCommand(): ClonableCommand{static_cast<size_t>(1), '\0'} {}
 
-    DeleteBackwardCommand::DeleteBackwardCommand(): MutateCommand{1, '\0'} {}
+    DeleteBackwardCommand::DeleteBackwardCommand(const DeleteBackwardCommand &other): ClonableCommand{other} {}
 
-    DeleteBackwardCommand::DeleteBackwardCommand(const DeleteBackwardCommand &other): MutateCommand{other} {}
-
-    DeleteBackwardCommand::DeleteBackwardCommand(DeleteBackwardCommand &&other): MutateCommand{std::move(other)} {}
+    DeleteBackwardCommand::DeleteBackwardCommand(DeleteBackwardCommand &&other): ClonableCommand{std::move(other)} {}
 }

@@ -17,12 +17,8 @@ namespace VM {
         }
     }
 
-    std::unique_ptr<Command> MutationCommand::clone() const {
-        return std::make_unique<MutationCommand>(*this);
-    }
-
     MutationCommand::MutationCommand(size_t quant, InsertModeBufferType &&insertModeBuffer):
-        UndoableCommand{quant},
+        ClonableCommand{quant},
         theMutateCommands{}
     {
         for(auto &command : insertModeBuffer) {
@@ -31,7 +27,7 @@ namespace VM {
     }
 
     MutationCommand::MutationCommand(const MutationCommand &other):
-        UndoableCommand{other},
+        ClonableCommand{other},
         theMutateCommands{}
     {
         for(auto &mutate : other.theMutateCommands) {
@@ -40,7 +36,7 @@ namespace VM {
     }
 
     MutationCommand::MutationCommand(MutationCommand &&other):
-        UndoableCommand{std::move(other)},
+        ClonableCommand{std::move(other)},
         theMutateCommands{std::move(other.theMutateCommands)}
     {}
 }

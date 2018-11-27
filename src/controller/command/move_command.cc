@@ -13,22 +13,18 @@ namespace VM {
         }
     }
 
-    std::unique_ptr<Command> MoveCommand::clone() const {
-        return std::make_unique<MoveCommand>(*this);
-    }
-
     MoveCommand::MoveCommand(size_t quant, std::unique_ptr<Motion> motion):
-        Command{quant},
+        ClonableCommand{quant},
         motion{std::move(motion)}
     {}
 
     MoveCommand::MoveCommand(const MoveCommand &other):
-        Command{other},
+        ClonableCommand{other},
         motion{other.motion->clone()}
     {}
 
     MoveCommand::MoveCommand(MoveCommand &&other):
-        Command{std::move(other)},
+        ClonableCommand{std::move(other)},
         motion{std::move(other.motion)}
     {}
 }

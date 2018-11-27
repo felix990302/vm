@@ -7,8 +7,4 @@ namespace VM {
         controller.getMode().onExit();
         controller.changeMode(&controller.modes.commandMode);
     }
-
-    std::unique_ptr<Command> EscapeCommand::clone() const {
-        return std::make_unique<EscapeCommand>(*this);
-    }
 }

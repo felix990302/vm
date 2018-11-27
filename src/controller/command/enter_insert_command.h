@@ -5,11 +5,9 @@
 
 
 namespace VM {
-    class EnterInsertCommand: public Command {
-        void doCommand(Controller &controller) override;
-
+    class EnterInsertCommand: public ClonableCommand<Command, EnterInsertCommand> {
         public:
-        std::unique_ptr<Command> clone() const override;
+        void doCommand(Controller &controller) override;
     };
 }
 

@@ -6,7 +6,7 @@
 
 
 namespace VM {
-    class DeleteBackwardCommand: public MutateCommand {
+    class DeleteBackwardCommand: public ClonableCommand<MutateCommand, DeleteBackwardCommand> {
         protected:
         void doTheCommand(Controller &controller) const override;
         void sideEffect(Controller &controller) override;
@@ -14,7 +14,6 @@ namespace VM {
         public:
         void undoCommand(Controller &controller) const override;
 
-        std::unique_ptr<Command> clone() const override;
         DeleteBackwardCommand();
         DeleteBackwardCommand(const DeleteBackwardCommand &other);
         DeleteBackwardCommand(DeleteBackwardCommand &&other);

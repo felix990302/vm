@@ -5,13 +5,12 @@
 
 
 namespace VM {
-    class QuitCommand: public Command {
+    class QuitCommand: public ClonableCommand<Command, QuitCommand> {
         bool shouldForce;
         
         void doCommand(Controller &controller) override;
 
         public:
-        std::unique_ptr<Command> clone() const override;
         QuitCommand(bool b): shouldForce{b} {}
     };
 }

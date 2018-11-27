@@ -6,15 +6,12 @@
 
 
 namespace VM {
-    class WriteCommand: public Command {
+    class WriteCommand: public ClonableCommand<Command, WriteCommand> {
         bool shouldQuit;
         std::string fileNameToWriteTo;
 
-        void doCommand(Controller &controller) override;
-
         public:
-        std::unique_ptr<Command> clone() const override;
-
+        void doCommand(Controller &controller) override;
         WriteCommand(bool b);
         WriteCommand(bool b, const std::string &fileNameToWriteTo);
     };
