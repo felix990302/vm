@@ -29,10 +29,10 @@ namespace VM {
 
     void ColonCommandMode::flush() {
         trim(commandString);
-
         size_t seperator = commandString.find_first_of(whitespaces);
         std::string command = commandString.substr(0, seperator);
         std::string argument = commandString.substr(seperator);
+        ltrim(argument);
 
         try {
             std::unique_ptr<Command> theCommand = parseCommand(command, argument);

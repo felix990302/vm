@@ -1,3 +1,5 @@
+#include <fstream>
+#include "write_exception.h"
 #include "file_buffer.h"
 
 
@@ -53,4 +55,17 @@ namespace VM {
     void FileBuffer::delete_backward(int, const Cursor &) {
         //buffer[cursor.col].erase(cursor.col-numChars, numChars);
     }
+
+    void FileBuffer::write(const std::string &destination) {
+        std::ofstream file {destination}; 
+        if(file) {
+            for(const auto &line : buffer) {
+                file << line << std::endl;
+            }
+        }
+        else {
+            throw FileWriteException {};
+        }
+    }
+    void FileBuffer::write() {write(fileName);}
 }
