@@ -6,8 +6,7 @@
 
 
 namespace VM {
-
-    std::map<char, std::function<std::unique_ptr<Motion>(int)>>  CommandMode::ParserHelper::motionsParser = {
+    std::unordered_map<char, std::function<std::unique_ptr<Motion>(int)>>  CommandMode::ParserHelper::motionsParser = {
             {'h', [](int quantifier){return std::make_unique<DirectionMotion<Direction::LEFT>>(quantifier);}},
             {'j', [](int quantifier){return std::make_unique<DirectionMotion<Direction::DOWN>>(quantifier);}},
             {'k', [](int quantifier){return std::make_unique<DirectionMotion<Direction::UP>>(quantifier);}},
@@ -15,8 +14,8 @@ namespace VM {
             {'f', [](int quantifier){char c = getchar(); return std::make_unique<FindMotion<Direction::RIGHT>>(quantifier, c);}}, //TODO improve
             {'F', [](int quantifier){char c = getchar(); return std::make_unique<FindMotion<Direction::LEFT>>(quantifier, c);}},
     };
-    std::map<char, std::function<std::unique_ptr<Command>(int)>>  CommandMode::ParserHelper::commandParser = {
+    std::unordered_map<char, std::function<std::unique_ptr<Command>(int)>>  CommandMode::ParserHelper::commandParser = {
             {'i', [](int){ return std::make_unique<EnterInsertCommand>();}}
     };
-    std::map<char, std::function<std::unique_ptr<Command>(int, std::unique_ptr<Motion>&&)> >  CommandMode::ParserHelper::commandWithMotionParser = {};
+    std::unordered_map<char, std::function<std::unique_ptr<Command>(int, std::unique_ptr<Motion>&&)> >  CommandMode::ParserHelper::commandWithMotionParser = {};
 }
