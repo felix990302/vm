@@ -11,17 +11,21 @@ namespace VM {
         else {
             controller.getBuffer().write(fileNameToWriteTo);
         }
+
+        if(shouldQuit) controller.quit(false);
     }
 
     std::unique_ptr<Command> WriteCommand::clone() const {
         return std::make_unique<WriteCommand>(*this);
     }
 
-    WriteCommand::WriteCommand():
+    WriteCommand::WriteCommand(bool b):
+        shouldQuit{b},
         fileNameToWriteTo{}
     {}
 
-    WriteCommand::WriteCommand(const std::string &fileNameToWriteTo):
+    WriteCommand::WriteCommand(bool b, const std::string &fileNameToWriteTo):
+        shouldQuit{b},
         fileNameToWriteTo{fileNameToWriteTo}
     {}
 }

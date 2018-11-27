@@ -7,6 +7,7 @@
 
 namespace VM {
     class WriteCommand: public Command {
+        bool shouldQuit;
         std::string fileNameToWriteTo;
 
         void doCommand(Controller &controller) override;
@@ -14,8 +15,8 @@ namespace VM {
         public:
         std::unique_ptr<Command> clone() const override;
 
-        WriteCommand();
-        WriteCommand(const std::string &fileNameToWriteTo);
+        WriteCommand(bool b);
+        WriteCommand(bool b, const std::string &fileNameToWriteTo);
     };
 }
 

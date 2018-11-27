@@ -5,8 +5,6 @@
 
 
 namespace VM {
-    class ProgramQuitException {};
-
     class QuitCommand: public Command {
         bool shouldForce;
         

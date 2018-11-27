@@ -47,7 +47,7 @@ namespace VM {
         CommandStack &getUndoStack() {return undoStack;}
         CommandStack &getRedoStack() {return redoStack;}
 
-        void setProgramIsRunning(bool b) {programIsRunning = b;}
+        void quit(bool ignoreChanges);
         operator bool() const {return programIsRunning;}
 
         Controller(std::unique_ptr<Input> input, FileBuffer *fileBuffer);
