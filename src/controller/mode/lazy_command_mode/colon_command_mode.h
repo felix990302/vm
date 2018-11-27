@@ -12,6 +12,8 @@ namespace VM {
 
         public:
         void flush() override;
+
+        ColonCommandMode(Controller &controller): LazyCommandMode{controller} {}
     };
 }
 

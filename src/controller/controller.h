@@ -1,6 +1,7 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include "mode/lazy_command_mode/colon_command_mode.h"
 #include "mode/insert_mode.h"
 #include "mode/command_mode.h"
 #include <memory>
@@ -24,10 +25,12 @@ namespace VM {
         struct Modes {
             InsertMode insertMode;
             CommandMode commandMode;
+            ColonCommandMode colonCommandMode;
             
             Modes(Controller &controller):
                 insertMode{controller},
-                commandMode{controller}
+                commandMode{controller},
+                colonCommandMode{controller}
             {}
         };
 
