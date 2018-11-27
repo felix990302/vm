@@ -18,7 +18,7 @@ namespace VM {
     }
 
     MutationCommand::MutationCommand(size_t quant, InsertModeBufferType &&insertModeBuffer):
-        ClonableCommand{quant},
+        Clonable{quant},
         theMutateCommands{}
     {
         for(auto &command : insertModeBuffer) {
@@ -27,7 +27,7 @@ namespace VM {
     }
 
     MutationCommand::MutationCommand(const MutationCommand &other):
-        ClonableCommand{other},
+        Clonable{other},
         theMutateCommands{}
     {
         for(auto &mutate : other.theMutateCommands) {
@@ -36,7 +36,7 @@ namespace VM {
     }
 
     MutationCommand::MutationCommand(MutationCommand &&other):
-        ClonableCommand{std::move(other)},
+        Clonable{std::move(other)},
         theMutateCommands{std::move(other.theMutateCommands)}
     {}
 }

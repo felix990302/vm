@@ -2,6 +2,7 @@
 #define COMMAND_H
 
 #include <memory>
+#include "utility/clonable.h"
 
 
 namespace VM {
@@ -20,14 +21,7 @@ namespace VM {
         virtual ~Command() = 0;
     };
 
-    template<typename Base, typename Sub> class ClonableCommand: public Base {
-        public:
-        std::unique_ptr<Command> clone() const override final {
-            return std::make_unique<Sub>(static_cast<const Sub &>(*this));
-        }
-
-        template<typename ...Args> ClonableCommand(Args ...args): Base{args...} {}
-    };
+    template<typename Base, typename Sub> using ClonableCommand = Clonable<Command, Base, Sub>;
 }
 
 #endif

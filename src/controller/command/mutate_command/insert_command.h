@@ -13,9 +13,9 @@ namespace VM {
         public:
         void undoCommand(Controller &controller) const override;
 
-        InsertCommand(size_t quant, char c): ClonableCommand{quant, c} {}
-        InsertCommand(const InsertCommand &other): ClonableCommand{other} {}
-        InsertCommand(InsertCommand &&other): ClonableCommand{std::move(other)} {}
+        InsertCommand(size_t quant, char c): Clonable{quant, c} {}
+        InsertCommand(const InsertCommand &other): Clonable{other} {}
+        InsertCommand(InsertCommand &&other): Clonable{std::move(other)} {}
     };
 }
 
