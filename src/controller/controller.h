@@ -42,13 +42,19 @@ namespace VM {
 
         public:
         void getAndProcessChar();
+
         Input* getInput() const {return input.get();}
+
         void changeMode(Mode *newMode) {mode = newMode;}
         Mode &getMode() {return *mode;}
+
         void changeBuffer(FileBuffer *newFileBuffer) {fileBuffer = newFileBuffer;}
         FileBuffer &getBuffer() {return *fileBuffer;}
+
         CommandStack &getUndoStack() {return undoStack;}
         CommandStack &getRedoStack() {return redoStack;}
+
+        void runCommand(std::unique_ptr<Command> command);
 
         void quit(bool ignoreChanges);
         operator bool() const {return programIsRunning;}

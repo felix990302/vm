@@ -26,5 +26,13 @@ namespace VM {
         else {
             programIsRunning = false;
         }
-    } 
+    }
+
+    void Controller::runCommand(std::unique_ptr<Command> command) {
+        command->doCommand(*this);
+
+        if(dynamic_cast<UndoableCommand *>(command.get())) {
+            undoStack.emplace(static_cast<UndoableCommand *>(command.release()));
+        }
+    }
 }
