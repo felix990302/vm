@@ -1,9 +1,10 @@
 #include <memory>
-#include "command_mode.h"
 #include "controller/command/enter_insert_command.h"
 #include "controller/command/move_command.h"
 #include "controller/command/motion/direction_motion.h"
 #include "controller/command/motion/find_motion.h"
+#include "parsing_exception.h"
+#include "command_mode.h"
 
 
 namespace VM {
@@ -14,8 +15,8 @@ namespace VM {
             command->doCommand(controller);
             commandString.clear();
         }
-        catch (const ParserHelper::UnfinishedCommandException &) {}
-        catch (const ParserHelper::InvalidCommandException &)
+        catch (const UnfinishedCommandException &) {}
+        catch (const InvalidCommandException &)
         {
             commandString.clear();
         }
@@ -26,7 +27,7 @@ namespace VM {
         try {
             return std::make_unique<MoveCommand>(1,parseMotion(commandString));
         }
-        catch (const ParserHelper::ParsingException &) {}
+        catch (const ParsingException &) {}
 
         int quantifier = 1;
         ParserHelper::ParserStages stage = ParserHelper::ParserStages::EarlyStage;
@@ -65,13 +66,13 @@ namespace VM {
                         return ParserHelper::commandWithMotionParser[c](quantifier, parseMotion(commandString.substr(i+1))); // copy ellision
                     }
                     else
-                        throw ParserHelper::InvalidCommandException();
+                        throw InvalidCommandException();
 
                 default:
                     break;
             }
         }
-        throw ParserHelper::UnfinishedCommandException{};
+        throw UnfinishedCommandException{};
     }
 
     std::unique_ptr<Motion> CommandMode::parseMotion(const std::string &motionString) {
@@ -106,12 +107,12 @@ namespace VM {
                     if(ParserHelper::motionsParser.count(c))
                         return  ParserHelper::motionsParser[c](quantifier);
                     else
-                        throw ParserHelper::InvalidCommandException();
+                        throw InvalidCommandException();
 
                 default:
                     break;
             }
         }
-        throw ParserHelper::UnfinishedCommandException{};
+        throw UnfinishedCommandException{};
     }
 }

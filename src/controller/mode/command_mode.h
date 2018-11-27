@@ -27,11 +27,7 @@ namespace VM {
                 CommandStage,
                 MotionStage
             };
-            class ParsingException {};
-            class UnfinishedCommandException : public ParsingException {};
-            class InvalidCommandException : public ParsingException {};
         };
-
         std::unique_ptr<Command> parse();
         std::unique_ptr<Motion> parseMotion(const std::string &);
 
