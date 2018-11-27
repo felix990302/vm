@@ -8,9 +8,7 @@ namespace VM {
         switch(c) {
             case '\n': { // enter
                 flush();
-                std::unique_ptr<Command> esc = std::make_unique<EscapeCommand>();
-                esc->doCommand(controller);
-                break;
+                // PURPOSELY FALL THROUGH
             }
             case 27: { // esc
                 std::unique_ptr<Command> esc = std::make_unique<EscapeCommand>();
@@ -18,13 +16,13 @@ namespace VM {
                 break;
             }
             default: {
-                inputBuffer.push_back(c);
+                commandString.push_back(c);
             }
         }
     } 
 
     void LazyCommandMode::onExit() {
-        inputBuffer.clear();
+        commandString.clear();
     }
 
     LazyCommandMode::~LazyCommandMode() {}

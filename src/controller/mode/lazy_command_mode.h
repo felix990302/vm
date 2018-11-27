@@ -7,7 +7,7 @@
 
 namespace VM {
     class LazyCommandMode: public Mode {
-        std::string inputBuffer;
+        std::string commandString;
 
         LazyCommandMode(const LazyCommandMode &other) = delete; // no copies
         LazyCommandMode &operator=(const LazyCommandMode &other) = delete; // no assignment
@@ -19,7 +19,7 @@ namespace VM {
 
         LazyCommandMode(Controller &controller):
             Mode(controller),
-            inputBuffer{}
+            commandString{}
         {}
 
         virtual ~LazyCommandMode() = 0;
