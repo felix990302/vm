@@ -6,8 +6,6 @@
 
 
 namespace VM {
-    class FileWriteException {};
-
     class WriteCommand: public Command {
         std::string fileNameToWriteTo;
 
