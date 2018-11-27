@@ -13,9 +13,9 @@ namespace VM {
         LazyCommandMode &operator=(const LazyCommandMode &other) = delete; // no assignment
 
         public:
-        void processChar(int c) override final; //TODO
-        void flush() override {}; //TODO
-        void onExit() override final {}; //TODO 
+        void processChar(int c) override final;
+        void flush() override = 0;
+        void onExit() override final;
 
         LazyCommandMode(Controller &controller):
             Mode(controller),
