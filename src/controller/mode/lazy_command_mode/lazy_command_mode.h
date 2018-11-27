@@ -2,24 +2,24 @@
 #define LAZY_COMMAND_MODE_H
 
 #include <string>
-#include "mode.h"
+#include "controller/mode/mode.h"
 
 
 namespace VM {
     class LazyCommandMode: public Mode {
-        std::string inputBuffer;
+        std::string commandString;
 
         LazyCommandMode(const LazyCommandMode &other) = delete; // no copies
         LazyCommandMode &operator=(const LazyCommandMode &other) = delete; // no assignment
 
         public:
-        void processChar(int c) override final; //TODO
-        void flush() override {}; //TODO
-        void onExit() override final {}; //TODO 
+        void processChar(int c) override final;
+        void flush() override = 0;
+        void onExit() override final;
 
         LazyCommandMode(Controller &controller):
             Mode(controller),
-            inputBuffer{}
+            commandString{}
         {}
 
         std::string getStatusBarLeft() override;
