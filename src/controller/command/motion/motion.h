@@ -9,11 +9,12 @@ namespace VM {
     class PtrCursor;
 
     struct Motion {
+        size_t quantifier;
+
         virtual Cursor startPosition(const PtrCursor &cursor); // default to doing nothing
         virtual Cursor nextPosition(const PtrCursor &cursor) = 0;
         virtual std::unique_ptr<Motion> clone() = 0;
-        int quantifier;
-        Motion (int quantifier);
+        Motion (size_t quantifier);
         Motion ();
 
         virtual ~Motion() = 0;

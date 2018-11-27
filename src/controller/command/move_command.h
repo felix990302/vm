@@ -16,6 +16,10 @@ namespace VM {
         void doCommand(Controller &controller) override;
 
         MoveCommand(size_t quant, std::unique_ptr<Motion> motion);
+        template<typename M, typename ...Args>MoveCommand(size_t quant, Args &&...args):
+            Clonable{quant},
+            motion{std::make_unique<M>(std::forward<Args>(args)...)}
+        {}
         MoveCommand(const MoveCommand &other);
         MoveCommand(MoveCommand &&other);
     };

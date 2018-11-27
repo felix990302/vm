@@ -25,7 +25,7 @@ namespace VM {
             return std::make_unique<FindMotion>(*this);
         }
 
-        FindMotion(int quantifier, char c): Motion{quantifier}, target{c} {}
+        FindMotion(size_t quantifier, char c): Motion{quantifier}, target{c} {}
     };
 
     template<> struct FindMotion<Direction::LEFT>: public Motion {
@@ -44,7 +44,7 @@ namespace VM {
             return std::make_unique<FindMotion>(*this);
         }
 
-        FindMotion(int quantifier, char c): Motion{quantifier}, target{c} {}
+        FindMotion(size_t quantifier, char c): Motion{quantifier}, target{c} {}
     };
 }
 
