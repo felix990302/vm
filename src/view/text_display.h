@@ -25,6 +25,7 @@ namespace VM {
         virtual void resizeHandler(const Coordinates &size);
         virtual void setCursorPosition(size_t y, size_t x) = 0;
 
+
         const std::shared_ptr<Component> &getMainComponent() const;
 
         void setMainComponent(const std::shared_ptr<Component> &mainComponent);

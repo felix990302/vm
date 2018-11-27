@@ -15,4 +15,8 @@ namespace VM {
     } 
 
     LazyCommandMode::~LazyCommandMode() {}
+
+    std::string LazyCommandMode::getStatusBarLeft() {
+        return ":"+inputBuffer;
+    }
 }

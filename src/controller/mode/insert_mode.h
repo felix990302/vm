@@ -17,6 +17,8 @@ namespace VM {
         void flush() override;
         void onExit() override {flush();}
 
+        std::string getStatusBarLeft() override;
+
         InsertMode(Controller &controller): Mode(controller) {}
     };
 }

@@ -22,6 +22,8 @@ namespace VM {
             inputBuffer{}
         {}
 
+        std::string getStatusBarLeft() override;
+
         virtual ~LazyCommandMode() = 0;
     };
 }

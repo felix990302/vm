@@ -40,6 +40,10 @@ namespace VM {
         void flush() override {/*TODO: flush current command sequence*/}
         void onExit() override {flush();}
 
+        std::string getStatusBarLeft() override;
+
+        std::string getStatusBarRight() override;
+
 
         CommandMode(Controller &controller): Mode(controller) {}
     };

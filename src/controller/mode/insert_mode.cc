@@ -32,5 +32,9 @@ namespace VM {
                 undoBuffer.back()->doCommand(controller);
             }
         }
-    }   
+    }
+
+    std::string InsertMode::getStatusBarLeft() {
+        return "-- INSERT --";
+    }
 }

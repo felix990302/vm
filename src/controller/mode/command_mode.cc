@@ -114,4 +114,12 @@ namespace VM {
         }
         throw ParserHelper::UnfinishedCommandException{};
     }
+
+    std::string CommandMode::getStatusBarLeft() {
+        return "";
+    }
+
+    std::string CommandMode::getStatusBarRight() {
+        return commandBuffer;
+    }
 }

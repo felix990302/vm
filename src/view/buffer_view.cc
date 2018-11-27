@@ -30,6 +30,7 @@ namespace VM{
                     display.putc(getPosn() + Coordinates{x, y}, *it.getStringIterator());
                 else {
                     display.flush(getPosn() + Coordinates{x, y});
+                    break;
                 }
             }
         }

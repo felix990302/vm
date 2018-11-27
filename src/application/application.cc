@@ -19,11 +19,11 @@ namespace VM {
     Application::Application():
         fileBuffer(std::make_unique<FileBuffer>()),
         display(&NCursesDisplay::getMainDisplay()),
-        bufferView(std::make_shared<BufferView>(fileBuffer.get())),
         controller{std::make_unique<Controller>(std::make_unique<NCursesInput>(), fileBuffer.get())},
+        mainView(std::make_shared<MainView>(fileBuffer.get(), controller.get())),
         input(controller->getInput())
     {
-        display->setMainComponent(bufferView);
+        display->setMainComponent(mainView);
         NCursesDisplay::resizeHandler(1);
 
     }
@@ -31,11 +31,11 @@ namespace VM {
     Application::Application(const std::string &fileName, const BufferType &buffer):
         fileBuffer(std::make_unique<FileBuffer>(fileName, buffer)),
         display(&NCursesDisplay::getMainDisplay()),
-        bufferView(std::make_shared<BufferView>(fileBuffer.get())),
         controller{std::make_unique<Controller>(std::make_unique<NCursesInput>(), fileBuffer.get())},
+        mainView(std::make_shared<MainView>(fileBuffer.get(), controller.get())),
         input(controller->getInput())
     {
-        display->setMainComponent(bufferView);
+        display->setMainComponent(mainView);
         NCursesDisplay::resizeHandler(1);
 
     }
