@@ -8,7 +8,8 @@ namespace VM {
         switch(c) {
             case '\n': { // enter
                 flush();
-                // PURPOSELY FALL THROUGH
+                [[gnu::fallthrough]];
+                /* fall through */
             }
             case 27: { // esc
                 std::unique_ptr<Command> esc = std::make_unique<EscapeCommand>();

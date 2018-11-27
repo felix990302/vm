@@ -2,7 +2,7 @@
 #define LAZY_COMMAND_MODE_H
 
 #include <string>
-#include "mode.h"
+#include "controller/mode/mode.h"
 
 
 namespace VM {
