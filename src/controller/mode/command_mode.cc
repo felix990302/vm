@@ -1,6 +1,6 @@
 #include <memory>
 #include "controller/controller.h"
-#include "controller/command/enter_insert_command.h"
+#include "controller/command/switch_command/enter_insert_command.h"
 #include "controller/command/move_command.h"
 #include "controller/command/motion/direction_motion.h"
 #include "controller/command/motion/find_motion.h"

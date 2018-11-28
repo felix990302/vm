@@ -1,7 +1,7 @@
 #ifndef ENTER_INSERT_COMMAND_H
 #define ENTER_INSERT_COMMAND_H
 
-#include "command.h"
+#include "controller/command/command.h"
 
 
 namespace VM {

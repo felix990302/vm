@@ -1,7 +1,7 @@
 #ifndef ESCAPE_COMMAND_H
 #define ESCAPE_COMMAND_H
 
-#include "command.h"
+#include "controller/command/command.h"
 
 
 namespace VM {

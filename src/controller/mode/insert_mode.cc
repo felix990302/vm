@@ -3,7 +3,7 @@
 #include "controller/controller.h"
 #include "controller/command/mutate_command/insert_newline_command.h"
 #include "controller/command/mutation_command.h"
-#include "controller/command/escape_command.h"
+#include "controller/command/switch_command/escape_command.h"
 #include "insert_mode.h"
 
 
