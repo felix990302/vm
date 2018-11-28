@@ -10,8 +10,6 @@ namespace VM {
         size_t col;
 
         Cursor(size_t line, size_t col);
-
-        virtual ~Cursor();
     };
 }
 

@@ -15,11 +15,13 @@ namespace VM {
         public:
         void processChar(int c) override;
         void flush() override;
-        void onExit() override {flush();}
+        void onExit() override;
+
+
 
         std::string getStatusBarLeft() override;
 
-        InsertMode(Controller &controller): Mode(controller) {}
+        InsertMode(Controller &controller);
     };
 }
 

@@ -11,7 +11,9 @@ namespace VM {
 
     template<> struct DirectionMotion<Direction::RIGHT>: public Motion { // default to RIGHT
         Cursor nextPosition(const PtrCursor &cursor) override {
-            return Cursor{cursor.line, cursor.col+1}; 
+            PtrCursor cur {cursor};
+            cur.moveRight();
+            return  cur;
         }
         std::unique_ptr<Motion> clone() override {
             return std::make_unique<DirectionMotion>(*this);
@@ -21,7 +23,9 @@ namespace VM {
 
     template<> struct DirectionMotion<Direction::LEFT>: public Motion {
         Cursor nextPosition(const PtrCursor &cursor) override {
-            return Cursor{cursor.line, cursor.col ? cursor.col-1 : cursor.col};
+            PtrCursor cur {cursor};
+            cur.moveLeft();
+            return  cur;
         }
         std::unique_ptr<Motion> clone() override {
             return std::make_unique<DirectionMotion>(*this);
@@ -31,7 +35,9 @@ namespace VM {
 
     template<> struct DirectionMotion<Direction::UP>: public Motion {
         Cursor nextPosition(const PtrCursor &cursor) override {
-            return Cursor{cursor.line ? cursor.line-1 : cursor.line, cursor.col};
+            PtrCursor cur {cursor};
+            cur.moveUp();
+            return  cur;
         }
         std::unique_ptr<Motion> clone() override {
             return std::make_unique<DirectionMotion>(*this);
@@ -41,7 +47,9 @@ namespace VM {
 
     template<> struct DirectionMotion<Direction::DOWN>: public Motion {
         Cursor nextPosition(const PtrCursor &cursor) override {
-            return Cursor{cursor.line+1, cursor.col}; 
+            PtrCursor cur {cursor};
+            cur.moveDown();
+            return  cur;
         }
         std::unique_ptr<Motion> clone() override {
             return std::make_unique<DirectionMotion>(*this);

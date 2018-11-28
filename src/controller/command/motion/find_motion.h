@@ -13,12 +13,18 @@ namespace VM {
         char target;
 
         Cursor nextPosition(const PtrCursor &cursor) override {
-            Cursor next {cursor.line, cursor.col+1};
-            for(auto it=cursor.getStringIterator()+1; it!=cursor.getLineIterator()->end(); ++it, ++next.col) {
-                if(*it == target) return next;
-            }
-            
-            return cursor;
+            PtrCursor cur {cursor};
+            cur.setType(PtrCursor::CursorMovement::InsertModeCursor);
+
+            int q = 0;
+            do {
+                cur.moveRight();
+                if(*cur) ++q;
+            } while (q !=quantifier && !cur.isEOL());
+
+            if(q!=quantifier)
+                return cursor;
+            return cur;
         }
 
         std::unique_ptr<Motion> clone() override {
@@ -32,12 +38,18 @@ namespace VM {
         char target;
 
         Cursor nextPosition(const PtrCursor &cursor) override {
-            Cursor next {cursor.line, cursor.col-1};
-            for(auto it=cursor.getReverseStringIterator()+1; it!=cursor.getLineIterator()->rend(); ++it, --next.col) {
-                if(*it == target) return next;
-            }
-            
-            return cursor;
+            PtrCursor cur {cursor};
+            cur.setType(PtrCursor::CursorMovement::InsertModeCursor);
+
+            int q = 0;
+            do {
+                cur.moveLeft();
+                if(*cur) ++q;
+            } while (q !=quantifier && cur.getCol() != 0);
+
+            if(q!=quantifier)
+                return cursor;
+            return cur;
         }
 
         std::unique_ptr<Motion> clone() override {

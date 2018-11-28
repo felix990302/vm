@@ -4,12 +4,12 @@
 
 namespace VM {
     int NCursesInput::getChar() {
-        return wgetch(stdscr);
+        return getch();
     }
 
     NCursesInput::NCursesInput() {
         cbreak();
+        keypad(stdscr, TRUE);
         noecho();
-        keypad(stdscr, FALSE);
     } 
 }

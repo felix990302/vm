@@ -9,32 +9,31 @@ namespace VM{
         size_t newCursorY = cursor.line;
         size_t newCursorX = cursor.col;
 
-        if(newCursorY > fileBuffer->ptrCursor.line)
-            newCursorY = fileBuffer->ptrCursor.line;
-        if(newCursorY + getSize().y - 1 <= fileBuffer -> ptrCursor.line)
-            newCursorY = fileBuffer -> ptrCursor.line-getSize().y + 1;
+        if(newCursorY > fileBuffer->ptrCursor.getLine())
+            newCursorY = fileBuffer->ptrCursor.getLine();
+        if(newCursorY + getSize().y - 1 <= fileBuffer -> ptrCursor.getLine())
+            newCursorY = fileBuffer -> ptrCursor.getLine()-getSize().y + 1;
 
-        if(newCursorX > fileBuffer->ptrCursor.col)
-            newCursorX = fileBuffer->ptrCursor.col;
-        if(newCursorX + getSize().x - 1 <= fileBuffer -> ptrCursor.col)
-            newCursorX = fileBuffer -> ptrCursor.col - getSize().x + 1;
+        if(newCursorX > fileBuffer->ptrCursor.getCol())
+            newCursorX = fileBuffer->ptrCursor.getCol();
+        if(newCursorX + getSize().x - 1 <= fileBuffer -> ptrCursor.getCol())
+            newCursorX = fileBuffer -> ptrCursor.getCol() - getSize().x + 1;
 
         cursor = Cursor{newCursorY, newCursorX};
 
 
         for(int y = 0; y < getSize().y; ++y) {
 
+            PtrCursor it(Cursor{cursor.line + y, cursor.col}, fileBuffer->getBuffer(), PtrCursor::CursorMovement::InsertModeCursor);
+            display.flush(getPosn() + Coordinates{0, y});
             for (int x = 0; x < getSize().x; ++x) {
-                PtrCursor it(Cursor{cursor.line + y, cursor.col + x}, fileBuffer->getBuffer(), true);
-                if (it.getStringIterator() != it.getLineIterator()->end())
-                    display.putc(getPosn() + Coordinates{x, y}, *it.getStringIterator());
-                else {
-                    display.flush(getPosn() + Coordinates{x, y});
+                display.putc(getPosn() + Coordinates{x, y}, *it);
+                if(it.isEOL())
                     break;
-                }
+                it.moveRight();
             }
         }
-        display.setCursorPosition(fileBuffer->ptrCursor.line - cursor.line, fileBuffer->ptrCursor.col - cursor.col);
+        display.setCursorPosition(fileBuffer->ptrCursor.getLine() - cursor.line, fileBuffer->ptrCursor.getCol() - cursor.col);
 
     }
     BufferView::BufferView(FileBuffer *fileBuffer) : cursor(0,0), fileBuffer(fileBuffer) {}

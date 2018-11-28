@@ -5,6 +5,7 @@
 
 namespace VM {
     void DeleteForwardCommand::doTheCommand(Controller &controller) const {
+
         controller.getBuffer().delete_forward(quant);
     }
 
@@ -17,6 +18,8 @@ namespace VM {
     }
 
     DeleteForwardCommand::DeleteForwardCommand(): MutateCommand{1, '\0'} {}
+
+    DeleteForwardCommand::DeleteForwardCommand(size_t quant) : MutateCommand{quant, '\0'} {}
 
     DeleteForwardCommand::DeleteForwardCommand(const DeleteForwardCommand &other): MutateCommand{other} {}
 

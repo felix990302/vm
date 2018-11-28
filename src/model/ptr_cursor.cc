@@ -3,79 +3,93 @@
 #include <cassert>
 
 namespace  VM {
-    PtrCursor::PtrCursor(const VM::Cursor &cursor, VM::BufferType &buffer,
-                         bool canPointAfterLastCharacterInLine)
-    : Cursor(cursor), buffer(buffer), canPointAfterLastCharacterInLine(canPointAfterLastCharacterInLine)
+    PtrCursor::PtrCursor(const VM::Cursor &cursor1, VM::BufferType &buffer,
+                         const VM::PtrCursor::CursorMovement &type = VM::PtrCursor::CursorMovement::IteratorCursor )
+    : cursor(cursor1), buffer(buffer), type(type)
     {
         assert(buffer.size()>0);
-        if(line >= buffer.size()) {
-            line = buffer.size() - 1;
-            col = buffer[line].size();
+        if(cursor.line >= buffer.size()) {
+            cursor.line = buffer.size() - 1;
+            cursor.col = buffer[cursor.line].size();
         }
-        if(col >= buffer[line].size()) col = buffer[line].size();
-        if(!canPointAfterLastCharacterInLine && col != 0) --col;
+        if(cursor.col >= buffer[cursor.line].size()) cursor.col = buffer[cursor.line].size();
+        if(!canPointAtEOL() && cursor.col != 0) --cursor.col;
     }
 
-
-    PtrCursor::PtrCursor(const VM::Cursor &cursor, VM::BufferType &buffer) :  PtrCursor(cursor,buffer, true) {} // FIXME: should depend on the mode!
-
-
-    void PtrCursor::moveLeft() {moveLeft(1);}
     void PtrCursor::moveLeft(size_t c) {
-        col = (size_t) std::max(0, (int)col - (int)c);
+        while(c > 0)
+        {
+            size_t maxMoveLeft = std::min(c, cursor.col);
+            c -= maxMoveLeft;
+            cursor.col -= maxMoveLeft;
+            if(!wrapAtEOL() || c==0 || cursor.line == 0) return;
+            moveUp();
+            moveEndOfLine();
+            --c;
+        }
     }
 
-    void PtrCursor::moveRight() {moveRight(1);}
+
     void PtrCursor::moveRight(size_t c) {
-        col = std::min(col + c, buffer[line].size() + canPointAfterLastCharacterInLine - 1 );
+        while(c > 0)
+        {
+            size_t maxMoveRight = std::min(c, buffer[cursor.line].size() + canPointAtEOL() - 1 - cursor.col);
+            c -= maxMoveRight;
+            cursor.col += maxMoveRight;
+            if(!wrapAtEOL() || c==0 || cursor.line == buffer.size()-1) return;
+            moveDown();
+            moveBeginOfLine();
+            --c;
+        }
     }
-    void PtrCursor::moveDown(size_t c) {line = std::min(buffer.size()-1, line + c);}
-    void PtrCursor::moveDown() {moveDown(1);}
-    void PtrCursor::moveUp(size_t c) {line = (size_t)std::max(0, (int) line - (int)c);}
-    void PtrCursor::moveUp() {moveUp(1);}
+
+
 
     void PtrCursor::setCursor(const Cursor &posn) {
-        if(posn.line > line) {
-            moveDown(posn.line - line);
+        VM::PtrCursor::CursorMovement tmp = type;
+        type = VM::PtrCursor::CursorMovement::IteratorCursor;
+        if(posn.line > cursor.line) {
+            moveDown(posn.line - cursor.line);
             moveRight(0);
         }
-        else if(posn.line < line) {
-            moveUp(line - posn.line);
+        else if(posn.line < cursor.line) {
+            moveUp(cursor.line - posn.line);
             moveRight(0);
         }
 
-        if(posn.col > col) {
-            moveRight(posn.col - col);
+        if(posn.col > cursor.col) {
+            moveRight(posn.col - cursor.col);
         }
-        else if(posn.col < col) {
-            moveLeft(col - posn.col);
+        else if(posn.col < cursor.col) {
+            moveLeft(cursor.col - posn.col);
         }
+        type = tmp;
     }
 
-    LineType::iterator PtrCursor::getStringIterator() const {
-        return buffer[line].begin()+col;
-    }
-    LineType::reverse_iterator PtrCursor::getReverseStringIterator() const {
-        return buffer[line].rbegin() + (buffer[line].size()-1 - col);
-    }
-    BufferType::iterator PtrCursor::getLineIterator() const {
-        return buffer.begin()+line;
-    }
-    BufferType::reverse_iterator PtrCursor::getReverseLineIterator() const {
-        return buffer.rbegin() + (buffer.size()-1 - line);
+
+
+    int PtrCursor::operator-(const PtrCursor &ptrCursor) const {
+        if(operator<(ptrCursor))
+            return ptrCursor-*this;
+
+
+        const PtrCursor &lower = ptrCursor;
+        PtrCursor higher = *this;
+
+        higher.type = PtrCursor::CursorMovement::IteratorCursor;
+        int ans = 0;
+        while (higher.cursor.line > lower.cursor.line)
+        {
+            ans += higher.cursor.col + 1;
+            higher.moveUp();
+            higher.moveEndOfLine();
+        }
+        return ans + higher.cursor.col - lower.cursor.col;
     }
 
-    bool PtrCursor::isLastPositionInLine() {
-        return buffer[line].size() - !canPointAfterLastCharacterInLine <= col;
-    }
-    bool PtrCursor::isEOF() {
-        return (buffer.size()-1 == line && isLastPositionInLine());
-    }
-
-    void PtrCursor::moveBeginOfLine() {
-        col = 0;
-    }
-    void PtrCursor::moveEndOfLine() {
-        col = buffer[line].size() + canPointAfterLastCharacterInLine - 1;
+    bool PtrCursor::operator<(const PtrCursor &ptrCursor) const {
+        if(cursor.line < ptrCursor.cursor.line) return true;
+        if(cursor.line > ptrCursor.cursor.line) return false;
+        return cursor.col<ptrCursor.cursor.col;
     }
 }

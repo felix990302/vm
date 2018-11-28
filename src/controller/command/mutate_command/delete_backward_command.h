@@ -16,6 +16,7 @@ namespace VM {
 
         std::unique_ptr<Command> clone() const override;
         DeleteBackwardCommand();
+        DeleteBackwardCommand(size_t quant);
         DeleteBackwardCommand(const DeleteBackwardCommand &other);
         DeleteBackwardCommand(DeleteBackwardCommand &&other);
     };

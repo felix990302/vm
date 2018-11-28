@@ -20,21 +20,22 @@ namespace VM {
         FileBuffer(const std::string &fileName, const BufferType &bufferBase);
 
         void type(char a);
-        void type(char a, const Cursor &cursor);
 
         void type(const std::string &s);
-        void type(const std::string &s, const Cursor &cursor);
 
         void typeNewLine();
 
-        void delete_forward(int numChars);
-        void delete_forward(int numChars, const Cursor &cursor);
+        void delete_forward(size_t numChars);
 
-        void delete_backward(int numChars);
-        void delete_backward(int numChars, const Cursor &cursor);
+        void delete_backward(size_t numChars);
 
         void write(const std::string &destination);
         void write();
+
+        std::string getSubBuffer(size_t n);
+        std::string getSubBuffer(size_t n, const PtrCursor &ptrCursor1);
+
+        void typeWithinLine(const std::string &s);
 
         BufferType &getBuffer() {
             return buffer;
