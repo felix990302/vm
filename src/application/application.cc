@@ -1,6 +1,10 @@
-#include "application.h"
 #include "controller/ncurses_input.h"
+#include "model/file_buffer.h"
+#include "controller/ncurses_input.h"
+#include "controller/controller.h"
 #include "view/n_curses_display.h"
+#include "view/main_view.h"
+#include "application.h"
 
 int main(int argc, char *argv[]) {
     if(argc > 1) {
@@ -46,4 +50,6 @@ namespace VM {
             display->redraw();
         }
     }
+
+    Application::~Application() {}
 }

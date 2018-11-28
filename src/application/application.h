@@ -2,17 +2,15 @@
 #define APPLICATION_H
 
 #include <memory>
-
-#include "view/text_display.h"
-#include "controller/input.h"
-#include "view/main_view.h"
-#include "model/file_buffer.h"
 #include "model/buffer_type.h"
-#include "controller/controller.h"
-
 
 
 namespace VM {
+    class Filebuffer;
+    class Controller;
+    class MainView;
+    class TextDisplay;
+    class Input;
 
     class Application {
     private:
@@ -22,14 +20,13 @@ namespace VM {
         std::shared_ptr<MainView> mainView;
         const Input *input;
 
-
-
     public:
         Application();
         Application(const std::string &fileName, const BufferType &buffer);
         void run();
-    };
 
+        ~Application();
+    };
 }
 
 
