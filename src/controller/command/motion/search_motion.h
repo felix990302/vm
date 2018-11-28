@@ -18,19 +18,19 @@ namespace VM {
         Cursor nextPosition(const PtrCursor &cursor) override {
             Cursor next {cursor};
 
-            std::string temp = cursor.getLineIterator()->substr(cursor.col + 1);
+            std::string temp = cursor.getLineIterator()->substr(cursor.getCol() + 1);
             if(std::regex_search(temp, regexMatch, regexTarget)) {
-                next.col = cursor.getLineIterator()->find(regexMatch[0], cursor.col+1);
+                next.col = cursor.getLineIterator()->find(regexMatch[0], cursor.getCol()+1);
                 return next;
             }
-            for(auto it=cursor.getLineIterator()+1; it!=cursor.buffer.end(); ++it, ++next.line) {
+            for(auto it=cursor.getLineIterator()+1; it!=cursor.getLineEnd(); ++it, ++next.line) {
                 if(std::regex_match(*it, regexMatch, regexTarget)) {
                     next.col = it->find(regexMatch[0]);
                     return next;
                 }
             }
             next.line = 0;
-            for(auto it=cursor.buffer.begin(); it!=cursor.getLineIterator()+1; ++it, ++next.line) {
+            for(auto it=cursor.getLineBegin(); it!=cursor.getLineIterator()+1; ++it, ++next.line) {
                 if(std::regex_match(*it, regexMatch, regexTarget)) {
                     next.col = it->find(regexMatch[0]);
                     return next;
@@ -59,15 +59,15 @@ namespace VM {
             if(std::regex_search(*cursor.getLineIterator(), regexMatch, regexTarget)) {
                 for(int k=regexMatch.size()-1; k>=0 ; --k) {
                     next.col = cursor.getReverseLineIterator()->find(regexMatch[regexMatch.size() - 1]);
-                    size_t temp = cursor.getReverseLineIterator()->find(regexMatch[k], cursor.col+1);
-                    while(temp != std::string::npos && temp < cursor.col) {
+                    size_t temp = cursor.getReverseLineIterator()->find(regexMatch[k], cursor.getCol()+1);
+                    while(temp != std::string::npos && temp < cursor.getCol()) {
                         next.col = temp;
                         temp = cursor.getReverseLineIterator()->find(regexMatch[regexMatch.size() - 1], temp+1);
                     }
-                    if(next.col < cursor.col) return next;
+                    if(next.col < cursor.getCol()) return next;
                 }
             }
-            for(auto it=cursor.getReverseLineIterator()+1; it!=cursor.buffer.rend(); ++it, --next.line) {
+            for(auto it=cursor.getReverseLineIterator()+1; it!=cursor.getLineReverseEnd(); ++it, --next.line) {
                 if(std::regex_match(*it, regexMatch, regexTarget)) {
                     next.col = it->find(regexMatch[regexMatch.size() - 1]);
                     size_t temp = it->find(regexMatch[regexMatch.size() - 1], next.col+1);
@@ -79,7 +79,7 @@ namespace VM {
                 }
             }
             next.line = 0;
-            for(auto it=cursor.buffer.rbegin(); it!=cursor.getReverseLineIterator()+1; ++it, --next.line) {
+            for(auto it=cursor.getLineReverseBegin(); it!=cursor.getReverseLineIterator()+1; ++it, --next.line) {
                 if(std::regex_match(*it, regexMatch, regexTarget)) {
                     next.col = it->find(regexMatch[regexMatch.size() - 1]);
                     size_t temp = next.col;

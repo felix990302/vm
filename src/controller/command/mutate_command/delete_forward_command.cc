@@ -14,12 +14,9 @@ namespace VM {
 
     DeleteForwardCommand::DeleteForwardCommand(): Clonable{static_cast<size_t>(1), '\0'} {}
 
-    DeleteForwardCommand::DeleteForwardCommand(): Clonable{1, '\0'} {}
-
     DeleteForwardCommand::DeleteForwardCommand(DeleteForwardCommand &&other): Clonable{std::move(other)} {}
+
     DeleteForwardCommand::DeleteForwardCommand(size_t quant) : Clonable{quant, '\0'} {}
 
     DeleteForwardCommand::DeleteForwardCommand(const DeleteForwardCommand &other): Clonable{other} {}
-
-    DeleteForwardCommand::DeleteForwardCommand(DeleteForwardCommand &&other): Clonable{std::move(other)} {}
 }

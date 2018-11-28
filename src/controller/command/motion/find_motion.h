@@ -16,7 +16,7 @@ namespace VM {
             PtrCursor cur {cursor};
             cur.setType(PtrCursor::CursorMovement::InsertModeCursor);
 
-            int q = 0;
+            size_t q = 0;
             do {
                 cur.moveRight();
                 if(*cur) ++q;
@@ -37,7 +37,7 @@ namespace VM {
             PtrCursor cur {cursor};
             cur.setType(PtrCursor::CursorMovement::InsertModeCursor);
 
-            int q = 0;
+            size_t q = 0;
             do {
                 cur.moveLeft();
                 if(*cur) ++q;

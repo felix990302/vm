@@ -14,7 +14,6 @@ namespace VM {
         public:
         void undoCommand(Controller &controller) const override;
 
-        std::unique_ptr<Command> clone() const override;
         DeleteForwardCommand();
         DeleteForwardCommand(size_t quant);
         DeleteForwardCommand(const DeleteForwardCommand &other);

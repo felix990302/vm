@@ -66,8 +66,20 @@ namespace VM {
         inline BufferType::iterator getLineIterator() const {
             return buffer.begin()+cursor.line;
         }
+        inline BufferType::iterator getLineBegin() const {
+            return buffer.begin();
+        }
+        inline BufferType::iterator getLineEnd() const {
+            return buffer.end();
+        }
         inline BufferType::reverse_iterator getReverseLineIterator() const {
             return buffer.rbegin() + (buffer.size()-1 - cursor.line);
+        }
+        inline BufferType::reverse_iterator getLineReverseBegin() const {
+            return buffer.rbegin();
+        }
+        inline BufferType::reverse_iterator getLineReverseEnd() const {
+            return buffer.rend();
         }
 
         inline bool isEOL() const{

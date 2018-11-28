@@ -21,15 +21,13 @@ namespace VM {
 
         switch(c) {
             case KEY_DC:{
-                undoBuffer.push_back(std::make_unique<DeleteForwardCommand>(1));
-                undoBuffer.back()->doCommand(controller);
+                controller.runCommand(std::make_unique<DeleteForwardCommand>(1));
                 break;
             }
             case KEY_BACKSPACE:
             case 127: //linux is weired TODO
                 {
-                undoBuffer.push_back(std::make_unique<DeleteBackwardCommand>(1));
-                undoBuffer.back()->doCommand(controller);
+                controller.runCommand(std::make_unique<DeleteBackwardCommand>(1));
                 break;
             }
             case '\n': {
