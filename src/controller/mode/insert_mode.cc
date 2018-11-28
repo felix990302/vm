@@ -56,6 +56,6 @@ namespace VM {
     }
 
     InsertMode::InsertMode(Controller &controller) : Mode(controller) {
-        controller.getBuffer().ptrCursor.setType(PtrCursor::CursorMovement::InsertModeCursor);
+        controller.getBuffer().ptrCursor.setType(PtrCursor::CursorMovement::IteratorCursor);
     }
 }

@@ -83,7 +83,7 @@ namespace VM {
         }
 
         inline bool isEOL() const{
-            return buffer[cursor.line].size() - !canPointAtEOL() <= cursor.col;
+            return buffer[cursor.line].size() <= cursor.col;
         }
         inline bool isEOF() const{
             return (buffer.size()-1 == cursor.line && isEOL());
@@ -119,7 +119,7 @@ namespace VM {
         }
 
         inline char operator*() const {
-            return canPointAtEOL()&&isEOL()?' ': *getStringIterator();
+            return canPointAtEOL()&&isEOL()?'\n': *getStringIterator();
         }
     };
 }

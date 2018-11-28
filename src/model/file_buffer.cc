@@ -62,7 +62,7 @@ namespace VM {
             ptrCursor.getLineIterator()->erase(ptrCursor.getCol(), numChars);
             numChars -= inThisLine;
 
-            if (numChars > 0 && ptrCursor.wrapAtEOL() && !ptrCursor.isEOF()) {
+            if (numChars > 0 && ptrCursor.getType() >= PtrCursor::CursorMovement::InsertModeCursor && !ptrCursor.isEOF()) {
                 ptrCursor.getLineIterator()->append(std::move(*(++ptrCursor.getLineIterator())));
                 buffer.erase(++ptrCursor.getLineIterator());
                 --numChars;
