@@ -5,6 +5,6 @@
 
 namespace VM {
     void EnterInsertCommand::doCommand(Controller &controller) {
-        controller.changeMode(&controller.modes.insertMode);
+        controller.changeMode(controller.modes.insertMode.get());
     }
 }

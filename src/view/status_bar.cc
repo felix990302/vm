@@ -1,3 +1,4 @@
+#include "controller/mode/mode.h"
 #include "controller/controller.h"
 #include "status_bar.h"
 #include <string>

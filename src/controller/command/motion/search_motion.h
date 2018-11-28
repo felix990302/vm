@@ -40,7 +40,7 @@ namespace VM {
             return cursor;
         }
 
-        SearchMotion(int quantifier, const std::string &target):
+        SearchMotion(size_t quantifier, const std::string &target):
             Clonable{quantifier},
             target{target},
             regexTarget{target},
@@ -57,7 +57,7 @@ namespace VM {
             Cursor next {cursor};
 
             if(std::regex_search(*cursor.getLineIterator(), regexMatch, regexTarget)) {
-                for(size_t k=regexMatch.size()-1; k>=0 ; --k) {
+                for(int k=regexMatch.size()-1; k>=0 ; --k) {
                     next.col = cursor.getReverseLineIterator()->find(regexMatch[regexMatch.size() - 1]);
                     size_t temp = cursor.getReverseLineIterator()->find(regexMatch[k], cursor.col+1);
                     while(temp != std::string::npos && temp < cursor.col) {
@@ -94,7 +94,7 @@ namespace VM {
             return cursor;
         }
 
-        SearchMotion(int quantifier, const std::string &target):
+        SearchMotion(size_t quantifier, const std::string &target):
             Clonable{quantifier},
             target{target},
             regexTarget{target},

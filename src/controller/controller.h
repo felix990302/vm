@@ -1,16 +1,20 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "mode/lazy_command_mode/colon_command_mode.h"
-#include "mode/insert_mode.h"
-#include "mode/command_mode.h"
 #include <memory>
 #include <stack>
+#include "controller/command/motion/direction.h"
+#include "command/undoable_command.h"
 
 
 namespace VM {
     class Input;
     class FileBuffer;
+    class Mode;
+    class InsertMode;
+    class CommandMode;
+    class ColonCommandMode;
+    template<Direction dir>class SearchCommandMode;
 
     class Controller {
         typedef std::stack<std::unique_ptr<UndoableCommand>> CommandStack;
@@ -23,15 +27,13 @@ namespace VM {
         bool programIsRunning;
 
         struct Modes {
-            InsertMode insertMode;
-            CommandMode commandMode;
-            ColonCommandMode colonCommandMode;
+            std::unique_ptr<InsertMode> insertMode;
+            std::unique_ptr<CommandMode> commandMode;
+            std::unique_ptr<ColonCommandMode> colonCommandMode;
+            std::unique_ptr<SearchCommandMode<Direction::DOWN>> searchDownMode;
+            std::unique_ptr<SearchCommandMode<Direction::UP>> searchUpMode;
             
-            Modes(Controller &controller):
-                insertMode{controller},
-                commandMode{controller},
-                colonCommandMode{controller}
-            {}
+            Modes(Controller &controller);
         };
 
         public:
@@ -62,6 +64,8 @@ namespace VM {
 
         Controller(std::unique_ptr<Input> input, FileBuffer *fileBuffer);
         Controller(const Controller &other) = delete;
+
+        ~Controller();
     };
 }
 

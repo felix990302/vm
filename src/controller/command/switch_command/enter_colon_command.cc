@@ -5,6 +5,6 @@
 
 namespace VM {
     void EnterColonCommand::doCommand(Controller &controller) {
-        controller.changeMode(&controller.modes.colonCommandMode);
+        controller.changeMode(controller.modes.colonCommandMode.get());
     }
 }
