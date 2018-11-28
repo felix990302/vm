@@ -1,5 +1,6 @@
 #include <memory>
-#include "controller/command/escape_command.h"
+#include "controller/controller.h"
+#include "controller/command/switch_command/escape_command.h"
 #include "lazy_command_mode.h"
 
 
@@ -8,12 +9,10 @@ namespace VM {
         switch(c) {
             case '\n': { // enter
                 flush();
-                [[gnu::fallthrough]];
-                /* fall through */
+                /* fallthrough */
             }
             case 27: { // esc
-                std::unique_ptr<Command> esc = std::make_unique<EscapeCommand>();
-                esc->doCommand(controller);
+                controller.runCommand(std::make_unique<EscapeCommand>());
                 break;
             }
             default: {

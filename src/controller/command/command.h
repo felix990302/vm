@@ -2,6 +2,7 @@
 #define COMMAND_H
 
 #include <memory>
+#include "utility/clonable.h"
 
 
 namespace VM {
@@ -19,6 +20,8 @@ namespace VM {
         virtual std::unique_ptr<Command> clone() const = 0;
         virtual ~Command() = 0;
     };
+
+    template<typename Base, typename Sub> using ClonableCommand = Clonable<Command, Base, Sub>;
 }
 
 #endif

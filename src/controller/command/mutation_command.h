@@ -8,7 +8,7 @@
 
 
 namespace VM {
-    class MutationCommand: public UndoableCommand {
+    class MutationCommand: public ClonableCommand<UndoableCommand, MutationCommand> {
         typedef std::vector<std::unique_ptr<UndoableCommand>> MutateSequence;
         MutateSequence theMutateCommands;
 
@@ -17,7 +17,6 @@ namespace VM {
         void undoCommand(Controller &) const override {}; // TODO
         void redoCommand(Controller &controller) const override;
 
-        std::unique_ptr<Command> clone() const override;
         MutationCommand(size_t quant, InsertModeBufferType &&insertModeBuffer);
         MutationCommand(const MutationCommand &other);
         MutationCommand(MutationCommand &&other);

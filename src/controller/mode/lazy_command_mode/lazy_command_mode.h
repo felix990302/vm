@@ -7,14 +7,14 @@
 
 namespace VM {
     class LazyCommandMode: public Mode {
-        std::string commandString;
-
         LazyCommandMode(const LazyCommandMode &other) = delete; // no copies
         LazyCommandMode &operator=(const LazyCommandMode &other) = delete; // no assignment
 
+        protected:
+        std::string commandString;
+
         public:
         void processChar(int c) override final;
-        void flush() override = 0;
         void onExit() override final;
 
         LazyCommandMode(Controller &controller):

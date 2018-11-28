@@ -9,7 +9,7 @@
 namespace VM {
     template<Direction dir> struct FindMotion;
 
-    template<> struct FindMotion<Direction::RIGHT>: public Motion {
+    template<> struct FindMotion<Direction::RIGHT>: public ClonableMotion<Motion, FindMotion<Direction::RIGHT>> {
         char target;
 
         Cursor nextPosition(const PtrCursor &cursor) override {
@@ -27,14 +27,10 @@ namespace VM {
             return cur;
         }
 
-        std::unique_ptr<Motion> clone() override {
-            return std::make_unique<FindMotion>(*this);
-        }
-
-        FindMotion(int quantifier, char c): Motion{quantifier}, target{c} {}
+        FindMotion(size_t quantifier, char c): Clonable{quantifier}, target{c} {}
     };
 
-    template<> struct FindMotion<Direction::LEFT>: public Motion {
+    template<> struct FindMotion<Direction::LEFT>: public ClonableMotion<Motion, FindMotion<Direction::LEFT>> {
         char target;
 
         Cursor nextPosition(const PtrCursor &cursor) override {
@@ -52,11 +48,7 @@ namespace VM {
             return cur;
         }
 
-        std::unique_ptr<Motion> clone() override {
-            return std::make_unique<FindMotion>(*this);
-        }
-
-        FindMotion(int quantifier, char c): Motion{quantifier}, target{c} {}
+        FindMotion(size_t quantifier, char c): Clonable{quantifier}, target{c} {}
     };
 }
 

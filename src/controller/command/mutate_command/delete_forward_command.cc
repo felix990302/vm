@@ -5,7 +5,6 @@
 
 namespace VM {
     void DeleteForwardCommand::doTheCommand(Controller &controller) const {
-
         controller.getBuffer().delete_forward(quant);
     }
 
@@ -13,15 +12,14 @@ namespace VM {
 
     void DeleteForwardCommand::undoCommand(Controller &) const {} // TODO
 
-    std::unique_ptr<Command> DeleteForwardCommand::clone() const {
-        return std::make_unique<DeleteForwardCommand>(*this);
-    }
+    DeleteForwardCommand::DeleteForwardCommand(): Clonable{static_cast<size_t>(1), '\0'} {}
 
-    DeleteForwardCommand::DeleteForwardCommand(): MutateCommand{1, '\0'} {}
+    DeleteForwardCommand::DeleteForwardCommand(): Clonable{1, '\0'} {}
 
-    DeleteForwardCommand::DeleteForwardCommand(size_t quant) : MutateCommand{quant, '\0'} {}
+    DeleteForwardCommand::DeleteForwardCommand(DeleteForwardCommand &&other): Clonable{std::move(other)} {}
+    DeleteForwardCommand::DeleteForwardCommand(size_t quant) : Clonable{quant, '\0'} {}
 
-    DeleteForwardCommand::DeleteForwardCommand(const DeleteForwardCommand &other): MutateCommand{other} {}
+    DeleteForwardCommand::DeleteForwardCommand(const DeleteForwardCommand &other): Clonable{other} {}
 
-    DeleteForwardCommand::DeleteForwardCommand(DeleteForwardCommand &&other): MutateCommand{std::move(other)} {}
+    DeleteForwardCommand::DeleteForwardCommand(DeleteForwardCommand &&other): Clonable{std::move(other)} {}
 }

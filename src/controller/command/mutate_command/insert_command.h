@@ -6,19 +6,16 @@
 
 
 namespace VM {
-    class InsertCommand: public MutateCommand {
+    class InsertCommand: public ClonableCommand<MutateCommand, InsertCommand> {
         protected:
         void doTheCommand(Controller &controller) const override;
 
         public:
         void undoCommand(Controller &controller) const override;
 
-        std::unique_ptr<Command> clone() const override {
-            return std::make_unique<InsertCommand>(*this);
-        }
-        InsertCommand(size_t quant, char c): MutateCommand{quant, c} {}
-        InsertCommand(const InsertCommand &other): MutateCommand{other} {}
-        InsertCommand(InsertCommand &&other): MutateCommand{std::move(other)} {}
+        InsertCommand(size_t quant, char c): Clonable{quant, c} {}
+        InsertCommand(const InsertCommand &other): Clonable{other} {}
+        InsertCommand(InsertCommand &&other): Clonable{std::move(other)} {}
     };
 }
 

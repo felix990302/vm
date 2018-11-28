@@ -5,11 +5,13 @@
 
 
 namespace VM {
-    std::string &ltrim(std::string &str, const std::string &chars="\t\n\v\f\r ");
+    static constexpr char whitespaces[] = "\t\n\v\f\r ";
 
-    std::string &rtrim(std::string &str, const std::string &chars="\t\n\v\f\r ");
+    std::string &ltrim(std::string &str, const std::string &chars=whitespaces);
 
-    std::string &trim(std::string &str, const std::string &chars="\t\n\v\f\r ");
+    std::string &rtrim(std::string &str, const std::string &chars=whitespaces);
+
+    std::string &trim(std::string &str, const std::string &chars=whitespaces);
 }
 
 #endif
