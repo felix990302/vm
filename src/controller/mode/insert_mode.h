@@ -7,7 +7,7 @@
 
 namespace VM {
     class InsertMode: public Mode {
-        InsertModeBufferType undoBuffer;
+        InsertModeBufferType insertBuffer;
 
         InsertMode(const InsertMode &other) = delete; // no copies
         InsertMode &operator=(const InsertMode &other) = delete; // no assignment

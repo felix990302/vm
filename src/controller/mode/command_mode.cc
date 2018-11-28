@@ -1,4 +1,5 @@
 #include <memory>
+#include "controller/controller.h"
 #include "controller/command/enter_insert_command.h"
 #include "controller/command/move_command.h"
 #include "controller/command/motion/direction_motion.h"
@@ -11,8 +12,7 @@ namespace VM {
     void CommandMode::processChar(int c) { //FIXME: generalize parsing
         commandBuffer.push_back(c);
         try {
-            std::unique_ptr<Command> command = parse();
-            command->doCommand(controller);
+            controller.runCommand(parse());
             commandBuffer.clear();
         }
         catch (const UnfinishedCommandException &) {}

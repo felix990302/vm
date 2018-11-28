@@ -67,8 +67,7 @@ namespace VM {
         ltrim(argument);
 
         try {
-            std::unique_ptr<Command> theCommand = parseCommand(command, argument);
-            theCommand->doCommand(controller);
+            controller.runCommand(parseCommand(command, argument));
         }
         catch(const InvalidCommandException&) {}
         catch(const FileWriteException&) {}

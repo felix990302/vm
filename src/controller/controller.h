@@ -55,6 +55,7 @@ namespace VM {
         CommandStack &getRedoStack() {return redoStack;}
 
         void runCommand(std::unique_ptr<Command> command);
+        void pushCommand(std::unique_ptr<UndoableCommand> undoableCommand);
 
         void quit(bool ignoreChanges);
         operator bool() const {return programIsRunning;}

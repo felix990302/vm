@@ -35,4 +35,8 @@ namespace VM {
             undoStack.emplace(static_cast<UndoableCommand *>(command.release()));
         }
     }
+
+    void Controller::pushCommand(std::unique_ptr<UndoableCommand> undoableCommand) {
+        undoStack.push(std::move(undoableCommand));
+    }
 }

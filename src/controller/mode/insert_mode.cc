@@ -10,26 +10,25 @@
 
 namespace VM {
     void InsertMode::flush() {
-        if(!undoBuffer.empty()) {
-             controller.getUndoStack().emplace(std::make_unique<MutationCommand>(1, std::move(undoBuffer)));
+        if(!insertBuffer.empty()) {
+             controller.pushCommand(std::make_unique<MutationCommand>(1, std::move(insertBuffer)));
         }
     }
 
     void InsertMode::processChar(int c) {
         switch(c) {
             case '\n': {
-                undoBuffer.push_back(std::make_unique<InsertNewlineCommand>(1));
-                undoBuffer.back()->doCommand(controller);
+                insertBuffer.push_back(std::make_unique<InsertNewlineCommand>(1));
+                insertBuffer.back()->doCommand(controller);
                 break;
             }
             case 27: { // FIXME: figure out how to handle escape
-                std::unique_ptr<Command> esc = std::make_unique<EscapeCommand>();
-                esc->doCommand(controller);
+                controller.runCommand(std::make_unique<EscapeCommand>()); // or else flushing might not be recorded
                 break;
             }
             default: {
-                undoBuffer.push_back(std::make_unique<InsertCommand>(1, c));
-                undoBuffer.back()->doCommand(controller);
+                insertBuffer.push_back(std::make_unique<InsertCommand>(1, c));
+                insertBuffer.back()->doCommand(controller);
             }
         }
     }
