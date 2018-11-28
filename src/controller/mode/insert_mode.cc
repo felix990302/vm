@@ -18,7 +18,7 @@ namespace VM {
     }
 
     void InsertMode::processChar(int c) {
-
+        controller.getBuffer().ptrCursor.setType(PtrCursor::CursorMovement::IteratorCursor);
         switch(c) {
             case KEY_DC:{
                 controller.runCommand(std::make_unique<DeleteForwardCommand>(1));
@@ -56,6 +56,5 @@ namespace VM {
     }
 
     InsertMode::InsertMode(Controller &controller) : Mode(controller) {
-        controller.getBuffer().ptrCursor.setType(PtrCursor::CursorMovement::IteratorCursor);
     }
 }

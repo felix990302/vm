@@ -90,6 +90,7 @@ namespace VM {
         std::string ans;
         while((n-ans.size()) > (cur.getLineIterator()->size() - cur.getCol())) ans += cur.getLineIterator()->substr(cur.getCol()) + "\n";
         ans += cur.getLineIterator()->substr(cur.getCol(), n-ans.size());
+
         return ans;
     }
 
