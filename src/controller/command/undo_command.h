@@ -2,7 +2,6 @@
 #define UNDO_COMMAND_H
 
 #include "command.h"
-#include "model/cursor.h"
 
 
 namespace VM {
