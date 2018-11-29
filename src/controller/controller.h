@@ -4,6 +4,7 @@
 #include <memory>
 #include <stack>
 #include "controller/command/motion/direction.h"
+#include "model/buffer_type.h"
 #include "command/undoable_command.h"
 
 
@@ -36,8 +37,16 @@ namespace VM {
             Modes(Controller &controller);
         };
 
+        struct ClipBoard {
+            bool shouldPasteInline;
+            BufferType theClipBoard;
+
+            ClipBoard(bool b=true);
+        };
+
         public:
         Modes modes;
+        ClipBoard clipBoard;
 
         private:
         Mode *mode;

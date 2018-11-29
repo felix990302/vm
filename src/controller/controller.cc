@@ -16,6 +16,11 @@ namespace VM {
         searchDownMode{std::make_unique<SearchCommandMode<Direction::DOWN>>(controller)},
         searchUpMode{std::make_unique<SearchCommandMode<Direction::UP>>(controller)}
     {}
+
+    Controller::ClipBoard::ClipBoard(bool b):
+        shouldPasteInline{b},
+        theClipBoard{}
+    {}
     
     void Controller::getAndProcessChar() {
         mode->processChar(input->getChar());
@@ -28,6 +33,7 @@ namespace VM {
         redoStack{},
         programIsRunning{true},
         modes{*this},
+        clipBoard{},
         mode{modes.commandMode.get()}
     {}
 
