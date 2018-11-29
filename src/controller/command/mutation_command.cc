@@ -29,7 +29,7 @@ namespace VM {
         theMutateCommands{}
     {
         for(auto &command : insertModeBuffer) {
-            theMutateCommands.emplace_back(std::move(command));      
+            theMutateCommands.push_back(std::move(command));      
         }
     }
 
@@ -38,7 +38,7 @@ namespace VM {
         theMutateCommands{}
     {
         for(auto &mutate : other.theMutateCommands) {
-            theMutateCommands.emplace_back(mutate->undoableclone());
+            theMutateCommands.push_back(mutate->undoableclone());
         }
     }
 

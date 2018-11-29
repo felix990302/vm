@@ -4,14 +4,15 @@
 
 namespace VM {
     void UndoCommand::doCommand(Controller &controller) {
-        for(size_t k=0; k<quant; ++k)
-            if(!controller.getUndoStack().empty()) {
-                controller.getUndoStack().top()->undoCommand(controller); 
-                controller.getRedoStack().emplace(
-                        controller.getRedoStack().top().release()
-                );
-                controller.getUndoStack().pop();
+        if(!controller.getUndoStack().empty()) {
+            for(size_t k=0; k<quant; ++k) {
+                controller.getUndoStack().front()->undoCommand(controller);
             }
+            controller.getRedoStack().emplace_front(
+                    controller.getUndoStack().front().release()
+            );
+            controller.getUndoStack().pop_front();
+        }
     }
 
     UndoCommand::UndoCommand(size_t quant): Clonable{quant} {}

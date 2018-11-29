@@ -2,7 +2,7 @@
 #define CONTROLLER_H
 
 #include <memory>
-#include <stack>
+#include <deque>
 #include "controller/command/motion/direction.h"
 #include "model/buffer_type.h"
 #include "command/undoable_command.h"
@@ -19,7 +19,7 @@ namespace VM {
     template<Direction dir>class SearchCommandMode;
 
     class Controller {
-        typedef std::stack<std::unique_ptr<UndoableCommand>> CommandStack;
+        typedef std::deque<std::unique_ptr<UndoableCommand>> CommandStack;
 
         std::unique_ptr<Input> input; 
         FileBuffer *fileBuffer;
@@ -68,7 +68,7 @@ namespace VM {
         CommandStack &getRedoStack() {return redoStack;}
 
         void runCommand(std::unique_ptr<Command> command);
-        void pushCommand(std::unique_ptr<UndoableCommand> undoableCommand);
+        void pushCommand(std::unique_ptr<UndoableCommand> &&undoableCommand);
 
         void quit(bool ignoreChanges);
         operator bool() const {return programIsRunning;}

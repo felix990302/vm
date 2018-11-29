@@ -15,6 +15,7 @@ namespace VM {
         if(!insertBuffer.empty()) {
              controller.pushCommand(std::make_unique<MutationCommand>(1, std::move(insertBuffer)));
         }
+        insertBuffer.clear();
     }
 
     void InsertMode::processChar(int c) {

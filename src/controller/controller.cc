@@ -50,12 +50,14 @@ namespace VM {
         command->doCommand(*this);
 
         if(dynamic_cast<UndoableCommand *>(command.get())) {
-            undoStack.emplace(static_cast<UndoableCommand *>(command.release()));
+            undoStack.emplace_front(static_cast<UndoableCommand *>(command.release()));
+            redoStack.clear();
         }
     }
 
-    void Controller::pushCommand(std::unique_ptr<UndoableCommand> undoableCommand) {
-        undoStack.push(std::move(undoableCommand));
+    void Controller::pushCommand(std::unique_ptr<UndoableCommand> &&undoableCommand) {
+        undoStack.push_front(std::move(undoableCommand));
+        redoStack.clear();
     }
 
     Controller::~Controller() {}

@@ -18,9 +18,9 @@ namespace VM {
         std::string commandBuffer;
 
         struct ParserHelper {
-            static std::unordered_map<char, std::function<std::unique_ptr<Motion>(int)>> motionsParser;
-            static std::unordered_map<char, std::function<std::unique_ptr<Command>(int)>> commandParser;
-            static std::unordered_map<char, std::function<std::unique_ptr<Command>(int, std::unique_ptr<Motion>&&)> > commandWithMotionParser;
+            static std::unordered_map<int, std::function<std::unique_ptr<Motion>(int)>> motionsParser;
+            static std::unordered_map<int, std::function<std::unique_ptr<Command>(int)>> commandParser;
+            static std::unordered_map<int, std::function<std::unique_ptr<Command>(int, std::unique_ptr<Motion>&&)> > commandWithMotionParser;
             enum class ParserStages{
                 EarlyStage,
                 QuantifierStage,
