@@ -7,15 +7,14 @@
 
 namespace VM {
     class DeleteBackwardCommand: public ClonableCommand<MutateCommand, DeleteBackwardCommand> {
-        protected:
-        void doTheCommand(Controller &controller) const override;
-        void sideEffect(Controller &controller) override;
+        void commandHelper(Controller &controller) const;
+        void doTheCommand(Controller &controller) override;
+        void undoTheCommand(Controller &controller) const override;
+        void redoTheCommand(Controller &controller) const override;
 
         public:
-        void undoCommand(Controller &controller) const override;
 
-        DeleteBackwardCommand();
-        DeleteBackwardCommand(size_t quant);
+        DeleteBackwardCommand(size_t quant=1);
         DeleteBackwardCommand(const DeleteBackwardCommand &other);
         DeleteBackwardCommand(DeleteBackwardCommand &&other);
     };

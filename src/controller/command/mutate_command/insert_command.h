@@ -7,11 +7,12 @@
 
 namespace VM {
     class InsertCommand: public ClonableCommand<MutateCommand, InsertCommand> {
-        protected:
-        void doTheCommand(Controller &controller) const override;
+        void commandHelper(Controller &controller) const;
+        void doTheCommand(Controller &controller) override;
+        void undoTheCommand(Controller &controller) const override;
+        void redoTheCommand(Controller &controller) const override;
 
         public:
-        void undoCommand(Controller &controller) const override;
 
         InsertCommand(size_t quant, char c): Clonable{quant, c} {}
         InsertCommand(const InsertCommand &other): Clonable{other} {}

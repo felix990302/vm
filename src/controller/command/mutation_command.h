@@ -13,9 +13,9 @@ namespace VM {
         MutateSequence theMutateCommands;
 
         public:
-        void doCommand(Controller &controller) override;
-        void undoCommand(Controller &) const override {}; // TODO
-        void redoCommand(Controller &controller) const override;
+        void doTheCommand(Controller &controller) override;
+        void undoTheCommand(Controller &) const override;
+        void redoTheCommand(Controller &controller) const override;
 
         MutationCommand(size_t quant, InsertModeBufferType &&insertModeBuffer);
         MutationCommand(const MutationCommand &other);

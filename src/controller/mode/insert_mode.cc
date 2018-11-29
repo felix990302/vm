@@ -1,7 +1,7 @@
 #include <ncurses.h>
 #include "model/file_buffer.h"
 #include "controller/controller.h"
-#include "controller/command/mutate_command/insert_newline_command.h"
+#include "controller/command/mutate_command/insert_command.h"
 #include "controller/command/mutate_command/delete_backward_command.h"
 #include "controller/command/mutate_command/delete_forward_command.h"
 #include "controller/command/mutation_command.h"
@@ -30,11 +30,6 @@ namespace VM {
                 controller.runCommand(std::make_unique<DeleteBackwardCommand>(1));
                 break;
             }
-            case '\n': {
-                insertBuffer.push_back(std::make_unique<InsertNewlineCommand>(1));
-                insertBuffer.back()->doCommand(controller);
-                break;
-            }
             case 27: { // FIXME: figure out how to handle escape
                 controller.runCommand(std::make_unique<EscapeCommand>()); // or else flushing might not be recorded
                 break;
@@ -55,6 +50,5 @@ namespace VM {
         flush();
     }
 
-    InsertMode::InsertMode(Controller &controller) : Mode(controller) {
-    }
+    InsertMode::InsertMode(Controller &controller) : Mode(controller) {}
 }

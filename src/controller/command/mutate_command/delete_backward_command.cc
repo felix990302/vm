@@ -4,15 +4,22 @@
 
 
 namespace VM {
-    void DeleteBackwardCommand::doTheCommand(Controller &controller) const {
+    inline void DeleteBackwardCommand::commandHelper(Controller &controller) const {
         controller.getBuffer().delete_backward(quant);
     }
 
-    void DeleteBackwardCommand::sideEffect(Controller &) {} // TODO
+    void DeleteBackwardCommand::doTheCommand(Controller &controller) {
+        toMutate = *controller.getBuffer().ptrCursor;
+        commandHelper(controller);
+    }
 
-    void DeleteBackwardCommand::undoCommand(Controller &) const {} // TODO
+    void DeleteBackwardCommand::undoTheCommand(Controller &controller) const {
+        controller.getBuffer().type(toMutate);
+    }
 
-    DeleteBackwardCommand::DeleteBackwardCommand(): Clonable{static_cast<size_t>(1), '\0'} {}
+    void DeleteBackwardCommand::redoTheCommand(Controller &controller) const {
+        commandHelper(controller);
+    }
 
     DeleteBackwardCommand::DeleteBackwardCommand(const DeleteBackwardCommand &other): Clonable{other} {}
 

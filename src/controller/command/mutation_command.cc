@@ -3,17 +3,21 @@
 #include "mutation_command.h"
 
 namespace VM {
-    void MutationCommand::doCommand(Controller &controller) {
-        UndoableCommand::startPosn = controller.getBuffer().ptrCursor;
+    void MutationCommand::doTheCommand(Controller &controller) {
         for(auto &mutate : theMutateCommands) {
             mutate->doCommand(controller);
         }
-        UndoableCommand::endPosn = controller.getBuffer().ptrCursor;
     }
 
-    void MutationCommand::redoCommand(Controller &controller) const {
+    void MutationCommand::undoTheCommand(Controller &controller) const {
+        for(auto it=theMutateCommands.rbegin(); it!=theMutateCommands.rend(); ++it) {
+            (*it)->undoCommand(controller);
+        }
+    }
+
+    void MutationCommand::redoTheCommand(Controller &controller) const {
         for(auto &mutate : theMutateCommands) {
-            mutate->redoCommand(controller); // FIXME: should be redo
+            mutate->redoCommand(controller);
         }
     }
 

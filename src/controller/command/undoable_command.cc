@@ -1,7 +1,24 @@
+#include "controller/controller.h"
+#include "model/ptr_cursor.h"
+#include "model/file_buffer.h"
 #include "undoable_command.h"
 
 
 namespace VM {
+    void UndoableCommand::doCommand(Controller & controller) {
+        startPosn = controller.getBuffer().ptrCursor;
+        doTheCommand(controller);
+        endPosn = controller.getBuffer().ptrCursor;
+    }
+    void UndoableCommand::undoCommand(Controller &controller) const {
+        controller.getBuffer().ptrCursor.setCursor(endPosn);
+        undoTheCommand(controller);
+    }
+    void UndoableCommand::redoCommand(Controller &controller) const {
+        controller.getBuffer().ptrCursor.setCursor(startPosn);
+        redoTheCommand(controller);
+    }
+
     // FIXME: find another non-sketchy way to clone
     std::unique_ptr<UndoableCommand> UndoableCommand::undoableclone() const {
         return std::unique_ptr<UndoableCommand>(
