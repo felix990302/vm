@@ -65,7 +65,7 @@ namespace VM {
         trim(commandString);
         size_t seperator = commandString.find_first_of(whitespaces);
         std::string command = commandString.substr(0, seperator);
-        std::string argument = commandString.substr(seperator);
+        std::string argument = seperator < commandString.size() ? commandString.substr(seperator) : "";
         ltrim(argument);
 
         try {

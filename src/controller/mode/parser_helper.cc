@@ -1,6 +1,7 @@
 #include "controller/command/dot_command.h"
 #include "controller/command/undo_command.h"
 #include "controller/command/redo_command.h"
+#include "controller/command/switch_command/enter_colon_command.h"
 #include "controller/command/switch_command/enter_insert_command.h"
 #include "command_mode.h"
 #include "controller/command/motion/direction_motion.h"
@@ -21,7 +22,8 @@ namespace VM {
             {'i', [](int){ return std::make_unique<EnterInsertCommand>();}},
             {'u', [](int i){ return std::make_unique<UndoCommand>(i);}},
             {'r'-96, [](int i){ return std::make_unique<RedoCommand>(i);}},
-            {'.', [](int i){ return std::make_unique<DotCommand>(i);}}
+            {'.', [](int i){ return std::make_unique<DotCommand>(i);}},
+            {':', [](int){ return std::make_unique<EnterColonCommand>();}}
     };
     std::unordered_map<int, std::function<std::unique_ptr<Command>(int, std::unique_ptr<Motion>&&)> >  CommandMode::ParserHelper::commandWithMotionParser = {};
 }

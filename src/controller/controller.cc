@@ -38,7 +38,7 @@ namespace VM {
     {}
 
     void Controller::quit(bool ignoreChanges) {
-        if(!redoStack.empty() && !ignoreChanges) {
+        if(!undoStack.empty() && !ignoreChanges) {
             throw ProgramQuitException {};
         }
         else {
