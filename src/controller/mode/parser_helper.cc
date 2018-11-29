@@ -19,7 +19,7 @@ namespace VM {
     std::unordered_map<int, std::function<std::unique_ptr<Command>(int)>>  CommandMode::ParserHelper::commandParser = {
             {'i', [](int){ return std::make_unique<EnterInsertCommand>();}},
             {'u', [](int i){ return std::make_unique<UndoCommand>(i);}},
-            {'r', [](int i){ return std::make_unique<RedoCommand>(i);}}
+            {'r'-96, [](int i){ return std::make_unique<RedoCommand>(i);}}
     };
     std::unordered_map<int, std::function<std::unique_ptr<Command>(int, std::unique_ptr<Motion>&&)> >  CommandMode::ParserHelper::commandWithMotionParser = {};
 }
