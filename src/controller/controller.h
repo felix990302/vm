@@ -39,15 +39,10 @@ namespace VM {
         };
 
         struct ClipBoard {
-            // NOTE: we adhere to the convention that
-            // first string in vector is always inserted inline at or before the cursor
-            // any other lines will be inserted after
-            // if we want to insert 1 char inline: just put it in first string
-            // if we want to insert after the current line, put first string as "" (empty string)
-            // the convention is similar for the big Paste
+            bool shouldPasteInline;
             BufferType theClipBoard;
 
-            ClipBoard();
+            ClipBoard(bool b=true);
         };
 
         public:

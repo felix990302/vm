@@ -17,7 +17,8 @@ namespace VM {
         searchUpMode{std::make_unique<SearchCommandMode<Direction::UP>>(controller)}
     {}
 
-    Controller::ClipBoard::ClipBoard():
+    Controller::ClipBoard::ClipBoard(bool b):
+        shouldPasteInline{b},
         theClipBoard{}
     {}
     
