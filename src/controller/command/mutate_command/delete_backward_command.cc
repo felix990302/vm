@@ -5,7 +5,8 @@
 
 namespace VM {
     inline void DeleteBackwardCommand::commandHelper(Controller &controller) const {
-        controller.getBuffer().delete_backward(quant);
+        for(size_t k=0; k<quant; ++k)
+            controller.getBuffer().delete_backward(quant);
     }
 
     void DeleteBackwardCommand::doTheCommand(Controller &controller) {
@@ -14,7 +15,8 @@ namespace VM {
     }
 
     void DeleteBackwardCommand::undoTheCommand(Controller &controller) const {
-        controller.getBuffer().type(toMutate);
+        for(size_t k=0; k<quant; ++k)
+            controller.getBuffer().type(toMutate);
     }
 
     void DeleteBackwardCommand::redoTheCommand(Controller &controller) const {

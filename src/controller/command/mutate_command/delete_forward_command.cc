@@ -5,7 +5,8 @@
 
 namespace VM {
     inline void DeleteForwardCommand::commandHelper(Controller &controller) const {
-        controller.getBuffer().delete_forward(quant);
+        for(size_t k=0; k<quant; ++k)
+            controller.getBuffer().delete_forward(quant);
     }
 
     void DeleteForwardCommand::doTheCommand(Controller &controller) {
@@ -14,15 +15,15 @@ namespace VM {
     }
 
     void DeleteForwardCommand::undoTheCommand(Controller &controller) const {
-        controller.getBuffer().type(toMutate);
-        --controller.getBuffer().ptrCursor;
+        for(size_t k=0; k<quant; ++k) {
+            controller.getBuffer().type(toMutate);
+            --controller.getBuffer().ptrCursor;
+        }
     }
 
     void DeleteForwardCommand::redoTheCommand(Controller &controller) const {
         commandHelper(controller);
     }
-
-    DeleteForwardCommand::DeleteForwardCommand(): Clonable{static_cast<size_t>(1), '\0'} {}
 
     DeleteForwardCommand::DeleteForwardCommand(DeleteForwardCommand &&other): Clonable{std::move(other)} {}
 

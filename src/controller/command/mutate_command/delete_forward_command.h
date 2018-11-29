@@ -13,8 +13,7 @@ namespace VM {
         void redoTheCommand(Controller &controller) const override;
 
         public:
-        DeleteForwardCommand();
-        DeleteForwardCommand(size_t quant);
+        DeleteForwardCommand(size_t quant=1);
         DeleteForwardCommand(const DeleteForwardCommand &other);
         DeleteForwardCommand(DeleteForwardCommand &&other);
     };
