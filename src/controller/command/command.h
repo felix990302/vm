@@ -11,10 +11,12 @@ namespace VM {
 
     class Command {
         protected:
-        const size_t quant;
+        size_t quant;
 
         public:
         virtual void doCommand(Controller &controller) = 0;
+        size_t getQuant() {return quant;}
+        void setQuant(size_t newQ) {quant = newQ;}
 
         Command(size_t quant=1);
         virtual std::unique_ptr<Command> clone() const = 0;

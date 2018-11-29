@@ -12,6 +12,8 @@ namespace VM {
         RedoCommand(size_t quant);
         RedoCommand(const RedoCommand &other);
         RedoCommand(RedoCommand &&other);
+
+        ~RedoCommand();
     };
 }
 

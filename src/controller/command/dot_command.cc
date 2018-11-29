@@ -1,11 +1,15 @@
+#include "controller/command/undoable_command.h"
 #include "controller/controller.h"
 #include "dot_command.h"
 
 
 namespace VM {
     void DotCommand::doCommand(Controller &controller) {
-        for(size_t k=0; k<quant; ++k)
-            controller.runCommand(controller.getRedoStack().front()->undoableclone());
+        if(!controller.getUndoStack().empty()) {
+            std::unique_ptr<UndoableCommand> toRepeat = controller.getUndoStack().front()->undoableclone();
+            toRepeat->setQuant(toRepeat->getQuant() * quant);
+            controller.runUndoableCommand(std::move(toRepeat));
+        }
     }
 
     DotCommand::DotCommand(size_t quant): Clonable{quant} {}

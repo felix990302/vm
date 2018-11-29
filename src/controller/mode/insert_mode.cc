@@ -22,13 +22,15 @@ namespace VM {
         controller.getBuffer().ptrCursor.setType(PtrCursor::CursorMovement::IteratorCursor);
         switch(c) {
             case KEY_DC:{
-                controller.runCommand(std::make_unique<DeleteForwardCommand>(1));
+                insertBuffer.push_back(std::make_unique<DeleteForwardCommand>(1));
+                insertBuffer.back()->doCommand(controller);
                 break;
             }
             case KEY_BACKSPACE:
             case 127: //linux is weired TODO
                 {
-                controller.runCommand(std::make_unique<DeleteBackwardCommand>(1));
+                insertBuffer.push_back(std::make_unique<DeleteBackwardCommand>(1));
+                insertBuffer.back()->doCommand(controller);
                 break;
             }
             case 27: { // FIXME: figure out how to handle escape

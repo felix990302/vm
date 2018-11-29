@@ -5,7 +5,6 @@
 #include <deque>
 #include "controller/command/motion/direction.h"
 #include "model/buffer_type.h"
-#include "command/undoable_command.h"
 
 
 namespace VM {
@@ -13,6 +12,8 @@ namespace VM {
     class FileBuffer;
     class Mode;
     class Motion;
+    class Command;
+    class UndoableCommand;
     class InsertMode;
     class CommandMode;
     class ColonCommandMode;
@@ -68,6 +69,7 @@ namespace VM {
         CommandStack &getRedoStack() {return redoStack;}
 
         void runCommand(std::unique_ptr<Command> command);
+        void runUndoableCommand(std::unique_ptr<UndoableCommand> command);
         void pushCommand(std::unique_ptr<UndoableCommand> &&undoableCommand);
 
         void quit(bool ignoreChanges);
