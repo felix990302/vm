@@ -10,6 +10,10 @@
 
 namespace VM {
     template<Direction dir> class SearchCommandMode: public LazyCommandMode {
+        char getStatusBarLeftIndicatorChar() override {
+            return dir==Direction::DOWN ? '/' : '?';
+        }
+
         public:
         void flush() override {
            controller.runCommand(

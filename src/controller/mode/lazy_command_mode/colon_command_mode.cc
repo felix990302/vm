@@ -59,6 +59,8 @@ namespace VM {
         throw InvalidCommandException{};
     }
 
+    char ColonCommandMode::getStatusBarLeftIndicatorChar() {return ':';}
+
     void ColonCommandMode::flush() {
         trim(commandString);
         size_t seperator = commandString.find_first_of(whitespaces);

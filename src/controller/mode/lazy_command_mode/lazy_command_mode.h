@@ -10,6 +10,8 @@ namespace VM {
         LazyCommandMode(const LazyCommandMode &other) = delete; // no copies
         LazyCommandMode &operator=(const LazyCommandMode &other) = delete; // no assignment
 
+        virtual char getStatusBarLeftIndicatorChar() = 0;
+
         protected:
         std::string commandString;
 
@@ -22,7 +24,7 @@ namespace VM {
             commandString{}
         {}
 
-        std::string getStatusBarLeft() override;
+        std::string getStatusBarLeft() override final;
 
         virtual ~LazyCommandMode() = 0;
     };
