@@ -12,6 +12,7 @@ namespace VM {
     class Input;
     class FileBuffer;
     class Mode;
+    class Motion;
     class InsertMode;
     class CommandMode;
     class ColonCommandMode;
@@ -47,6 +48,7 @@ namespace VM {
         public:
         Modes modes;
         ClipBoard clipBoard;
+        std::unique_ptr<Motion> prevMotion;
 
         private:
         Mode *mode;
