@@ -4,13 +4,14 @@
 
 namespace VM {
     void RedoCommand::doCommand(Controller &controller) {
-        if(!controller.getRedoStack().empty()) {
-            controller.getRedoStack().top()->redoCommand(controller); 
-            controller.getUndoStack().emplace(
-                    controller.getRedoStack().top().release()
-            );
-            controller.getRedoStack().pop();
-        }
+        for(size_t k=0; k<quant; ++k)
+            if(!controller.getRedoStack().empty()) {
+                controller.getRedoStack().top()->redoCommand(controller); 
+                controller.getUndoStack().emplace(
+                        controller.getRedoStack().top().release()
+                );
+                controller.getRedoStack().pop();
+            }
     }
 
     RedoCommand::RedoCommand(size_t quant): Clonable{quant} {}

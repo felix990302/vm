@@ -4,21 +4,24 @@
 
 namespace VM {
     void MutationCommand::doTheCommand(Controller &controller) {
-        for(auto &mutate : theMutateCommands) {
-            mutate->doCommand(controller);
-        }
+        for(size_t k=0; k<quant; ++k)
+            for(auto &mutate : theMutateCommands) {
+                mutate->doCommand(controller);
+            }
     }
 
     void MutationCommand::undoTheCommand(Controller &controller) const {
-        for(auto it=theMutateCommands.rbegin(); it!=theMutateCommands.rend(); ++it) {
-            (*it)->undoCommand(controller);
-        }
+        for(size_t k=0; k<quant; ++k)
+            for(auto it=theMutateCommands.rbegin(); it!=theMutateCommands.rend(); ++it) {
+                (*it)->undoCommand(controller);
+            }
     }
 
     void MutationCommand::redoTheCommand(Controller &controller) const {
-        for(auto &mutate : theMutateCommands) {
-            mutate->redoCommand(controller);
-        }
+        for(size_t k=0; k<quant; ++k)
+            for(auto &mutate : theMutateCommands) {
+                mutate->redoCommand(controller);
+            }
     }
 
     MutationCommand::MutationCommand(size_t quant, InsertModeBufferType &&insertModeBuffer):

@@ -4,7 +4,8 @@
 
 namespace VM {
     void DotCommand::doCommand(Controller &controller) {
-        controller.runCommand(controller.getRedoStack().top()->undoableclone());
+        for(size_t k=0; k<quant; ++k)
+            controller.runCommand(controller.getRedoStack().top()->undoableclone());
     }
 
     DotCommand::DotCommand(size_t quant): Clonable{quant} {}
