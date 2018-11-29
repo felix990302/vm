@@ -100,6 +100,10 @@ namespace VM {
             return cursor.line;
         }
 
+        inline size_t getBufferSize() const {
+            return buffer.size();
+        }
+
         inline size_t getCol() const {
             return cursor.col;
         }
