@@ -33,7 +33,7 @@ namespace VM {
         void write();
 
         std::string getSubBuffer(size_t n);
-        std::string getSubBuffer(size_t n, const PtrCursor &ptrCursor1);
+        std::string getSubBuffer(size_t n, const PtrCursor &ptrCursor1); // not an accident
 
         void typeWithinLine(const std::string &s);
 

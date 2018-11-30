@@ -12,14 +12,14 @@ namespace VM {
                 /* fallthrough */
             }
             case 27: { // esc
-                controller.runCommand(std::make_unique<EscapeCommand>());
+                controller.runSimpleCommand(std::make_unique<EscapeCommand>());
                 break;
             }
             default: {
                 commandString.push_back(c);
             }
         }
-    } 
+    }
 
     void LazyCommandMode::onExit() {
         commandString.clear();

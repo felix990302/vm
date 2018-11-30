@@ -59,11 +59,11 @@ namespace VM {
                     break;
 
                 case ParserHelper::ParserStages::CommandStage:
-                    if(ParserHelper::commandParser.count(c))
-                        return  ParserHelper::commandParser[c](quantifier);
-                    else if(ParserHelper::commandWithMotionParser.count(c))
+                    if(parserHelper.commandParser.count(c))
+                        return  parserHelper.commandParser[c](quantifier);
+                    else if(parserHelper.commandWithMotionParser.count(c))
                     {
-                        return ParserHelper::commandWithMotionParser[c](quantifier, parseMotion(commandBuffer.substr(i+1))); // copy ellision
+                        return parserHelper.commandWithMotionParser[c](quantifier, parseMotion(commandBuffer.substr(i+1))); // copy ellision
                     }
                     else
                         throw InvalidCommandException();
@@ -104,8 +104,8 @@ namespace VM {
                     break;
 
                 case ParserHelper::ParserStages::MotionStage:
-                    if(ParserHelper::motionsParser.count(c))
-                        return  ParserHelper::motionsParser[c](quantifier);
+                    if(parserHelper.motionsParser.count(c))
+                        return  parserHelper.motionsParser[c](quantifier);
                     else
                         throw InvalidCommandException();
 

@@ -18,20 +18,24 @@ namespace VM {
         std::string commandBuffer;
 
         struct ParserHelper {
-            static std::unordered_map<int, std::function<std::unique_ptr<Motion>(int)>> motionsParser;
-            static std::unordered_map<int, std::function<std::unique_ptr<Command>(int)>> commandParser;
-            static std::unordered_map<int, std::function<std::unique_ptr<Command>(int, std::unique_ptr<Motion>&&)> > commandWithMotionParser;
+            std::unordered_map<int, std::function<std::unique_ptr<Motion>(int)>> motionsParser;
+            std::unordered_map<int, std::function<std::unique_ptr<Command>(int)>> commandParser;
+            std::unordered_map<int, std::function<std::unique_ptr<Command>(int, std::unique_ptr<Motion>&&)> > commandWithMotionParser;
             enum class ParserStages{
                 EarlyStage,
                 QuantifierStage,
                 CommandStage,
                 MotionStage
             };
+
+            ParserHelper();
         };
         std::unique_ptr<Command> parse();
         std::unique_ptr<Motion> parseMotion(const std::string &);
 
         public:
+        ParserHelper parserHelper;
+
         void processChar(int c) override;
         void flush() override {/*TODO: flush current command sequence*/}
         void onExit() override {flush();}
@@ -41,7 +45,10 @@ namespace VM {
         std::string getStatusBarRight() override;
 
 
-        CommandMode(Controller &controller): Mode(controller) {}
+        CommandMode(Controller &controller):
+            Mode(controller),
+            parserHelper{}
+        {}
     };
 }
 

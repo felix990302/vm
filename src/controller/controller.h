@@ -49,7 +49,6 @@ namespace VM {
         public:
         Modes modes;
         ClipBoard clipBoard;
-        std::unique_ptr<Motion> prevMotion;
 
         private:
         Mode *mode;
@@ -70,6 +69,7 @@ namespace VM {
 
         void runCommand(std::unique_ptr<Command> command);
         void runUndoableCommand(std::unique_ptr<UndoableCommand> command);
+        void runSimpleCommand(std::unique_ptr<Command> command);
         void pushCommand(std::unique_ptr<UndoableCommand> &&undoableCommand);
 
         void quit(bool ignoreChanges);

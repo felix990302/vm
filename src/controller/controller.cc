@@ -61,6 +61,10 @@ namespace VM {
         redoStack.clear();
     }
 
+    void Controller::runSimpleCommand(std::unique_ptr<Command> command) {
+        command->doCommand(*this);
+    }
+
     void Controller::pushCommand(std::unique_ptr<UndoableCommand> &&undoableCommand) {
         undoStack.push_front(std::move(undoableCommand));
         redoStack.clear();

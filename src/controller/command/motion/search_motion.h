@@ -13,21 +13,38 @@ namespace VM {
         std::string target;
 
         Cursor nextPosition(const PtrCursor &cursor) override {
-            Cursor next {cursor};
+            size_t count = 0;
+            for(size_t k=0; k<quantifier; ++k) {
+                Cursor marker{cursor};
+                marker.col = cursor.getLineIterator()->find(target, marker.col+1);
+                while(marker.col != std::string::npos) {
+                    if(++count == quantifier) return marker;
+                    marker.col = cursor.getLineIterator()->find(target, marker.col+1);
+                };
+                
+                marker = Cursor{cursor.getLine()+1, 0};
+                for(auto it=cursor.getLineIterator()+1; it!=cursor.getLineEnd(); ++it, ++marker.line) {
+                    marker.col = it->find(target, 0);
+                    while(marker.col != std::string::npos) {
+                        if(++count == quantifier) return marker;
+                        marker.col = it->find(target, marker.col+1);
+                    };
+                }
 
-            next.col = cursor.getLineIterator()->find(target, cursor.getCol()+1);
-            if(next.col != std::string::npos) return next;
+                marker = Cursor{0, 0};
+                for(auto it=cursor.getLineBegin(); it!=cursor.getLineIterator(); ++it, ++marker.line) {
+                    marker.col = it->find(target, 0);
+                    while(marker.col != std::string::npos) {
+                        if(++count == quantifier) return marker;
+                        marker.col = it->find(target, marker.col+1);
+                    };
+                }
 
-            ++next.line;
-            for(auto it=cursor.getLineIterator()+1; it!=cursor.getLineEnd(); ++it, ++next.line) {
-                next.col = it->find(target);
-                if(next.col != std::string::npos) return next;
-            }
-
-            next.line = 0;
-            for(auto it=cursor.getLineBegin(); it!=cursor.getLineIterator()+1; ++it, ++next.line) {
-                next.col = it->find(target);
-                if(next.col != std::string::npos) return next;
+                marker.col = cursor.getLineIterator()->find(target, 0);
+                while(marker.col < cursor.getCol()) {
+                    if(++count == quantifier) return marker;
+                    marker.col = cursor.getLineIterator()->find(target, marker.col+1);
+                };
             }
 
             return cursor;
@@ -43,21 +60,38 @@ namespace VM {
         std::string target;
 
         Cursor nextPosition(const PtrCursor &cursor) override {
-            Cursor next {cursor};
+            size_t count = 0;
+            for(size_t k=0; k<quantifier; ++k) {
+                Cursor marker{cursor};
+                marker.col = cursor.getReverseLineIterator()->rfind(target, marker.col-1);
+                while(marker.col != std::string::npos) {
+                    if(++count == quantifier) return marker;
+                    marker.col = cursor.getReverseLineIterator()->rfind(target, marker.col-1);
+                };
+                
+                marker = Cursor{cursor.getLine()-1, std::string::npos};
+                for(auto it=cursor.getReverseLineIterator()+1; it!=cursor.getLineReverseEnd(); ++it, --marker.line) {
+                    marker.col = it->rfind(target, std::string::npos);
+                    while(marker.col != std::string::npos) {
+                        if(++count == quantifier) return marker;
+                        marker.col = it->rfind(target, marker.col-1);
+                    };
+                }
 
-            next.col = cursor.getLineIterator()->rfind(target, cursor.getCol()-1);
-            if(next.col != std::string::npos) return next;
+                marker = Cursor{cursor.getBufferSize()-1, std::string::npos};
+                for(auto it=cursor.getLineReverseBegin(); it!=cursor.getReverseLineIterator(); ++it, --marker.line) {
+                    marker.col = it->rfind(target, std::string::npos);
+                    while(marker.col != std::string::npos) {
+                        if(++count == quantifier) return marker;
+                        marker.col = it->rfind(target, marker.col-1);
+                    };
+                }
 
-            --next.line;
-            for(auto it=cursor.getReverseLineIterator()+1; it!=cursor.getLineReverseEnd(); ++it, --next.line) {
-                next.col = it->rfind(target);
-                if(next.col != std::string::npos) return next;
-            }
-
-            next.line = cursor.getBufferSize()-1;
-            for(auto it=cursor.getLineReverseBegin(); it!=cursor.getReverseLineIterator()+1; ++it, --next.line) {
-                next.col = it->rfind(target);
-                if(next.col != std::string::npos) return next;
+                marker.col = cursor.getReverseLineIterator()->rfind(target, std::string::npos);
+                while(marker.col > cursor.getCol() && marker.col < cursor.getReverseLineIterator()->size()) {
+                    if(++count == quantifier) return marker;
+                    marker.col = cursor.getReverseLineIterator()->rfind(target, marker.col-1);
+                };
             }
 
             return cursor;
