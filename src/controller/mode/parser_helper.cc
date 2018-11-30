@@ -7,9 +7,9 @@
 #include "controller/command/switch_command/enter_colon_command.h"
 #include "controller/command/switch_command/enter_insert_command.h"
 #include "controller/command/motion/direction_motion.h"
-#include "controller/command/motion/find_motion.h"
-#include "controller/command/motion/eol_motion.h"
-#include "controller/command/motion/word_motion/word_motion.h"
+#include "controller/command/motion/line_motion/find_motion.h"
+#include "controller/command/motion/line_motion/eol_motion.h"
+#include "controller/command/motion/word_motion.h"
 #include "command_mode.h"
 
 

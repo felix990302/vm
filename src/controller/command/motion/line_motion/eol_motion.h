@@ -1,7 +1,7 @@
 #ifndef EOL_MOTION_H
 #define EOL_MOTION_H
 
-#include "motion.h"
+#include "controller/command/motion/motion.h"
 
 
 namespace VM {

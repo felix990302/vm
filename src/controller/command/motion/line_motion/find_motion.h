@@ -2,8 +2,8 @@
 #define FIND_MOTION_H
 
 #include "model/ptr_cursor.h"
-#include "direction.h"
-#include "motion.h"
+#include "controller/command/motion/direction.h"
+#include "controller/command/motion/motion.h"
 
 
 namespace VM {

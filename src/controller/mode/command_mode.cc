@@ -3,7 +3,7 @@
 #include "controller/command/switch_command/enter_insert_command.h"
 #include "controller/command/move_command.h"
 #include "controller/command/motion/direction_motion.h"
-#include "controller/command/motion/find_motion.h"
+#include "controller/command/motion/line_motion/find_motion.h"
 #include "parsing_exception.h"
 #include "command_mode.h"
 
