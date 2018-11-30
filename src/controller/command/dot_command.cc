@@ -7,7 +7,7 @@ namespace VM {
     void DotCommand::doCommand(Controller &controller) {
         if(!controller.getUndoStack().empty()) {
             std::unique_ptr<UndoableCommand> toRepeat = controller.getUndoStack().front()->undoableclone();
-            toRepeat->setQuant(toRepeat->getQuant() * quant);
+            if(quant > 1) toRepeat->setQuant(quant);
             controller.runUndoableCommand(std::move(toRepeat));
         }
     }
