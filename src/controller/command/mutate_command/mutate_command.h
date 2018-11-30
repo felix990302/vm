@@ -9,7 +9,7 @@
 namespace VM {
     class MutateCommand: public UndoableCommand {
         protected:
-        char toMutate;
+        std::string toMutate;
 
         public:
         MutateCommand(size_t quant, char c);

@@ -1,3 +1,5 @@
+#include "controller/command/mutate_command/delete_forward_command.h"
+#include "controller/command/mutate_command/delete_backward_command.h"
 #include "controller/command/dot_command.h"
 #include "controller/command/undo_command.h"
 #include "controller/command/redo_command.h"
@@ -29,6 +31,8 @@ namespace VM {
             {':', [](int){ return std::make_unique<EnterColonCommand>();}},
             {'/', [](int){ return std::make_unique<EnterSearchCommand<Direction::DOWN>>();}},
             {'?', [](int){ return std::make_unique<EnterSearchCommand<Direction::UP>>();}},
+            {'x', [](int i){ return std::make_unique<DeleteForwardCommand>(i);}},
+            {'X', [](int i){ return std::make_unique<DeleteBackwardCommand>(i);}},
         },
         commandWithMotionParser{}
     {}
