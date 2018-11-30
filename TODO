@@ -42,7 +42,7 @@ Keys needed to do:
 - $ (done)
 - 0 (first character) (done)
 - . (done)
-- ; (repeats last f some number of times / this is bad)
+- ; (repeats last f some number of times / this is bad) (done) lambda is awesome <3
 - / (mostly done)
 - ? (like /)
 - % (move to matching parantheses)
