@@ -6,6 +6,7 @@
 #include "controller/command/switch_command/enter_insert_command.h"
 #include "controller/command/motion/direction_motion.h"
 #include "controller/command/motion/find_motion.h"
+#include "controller/command/motion/eol_motion.h"
 #include "command_mode.h"
 
 
@@ -18,6 +19,7 @@ namespace VM {
             {'l', [](int quantifier){return std::make_unique<DirectionMotion<Direction::RIGHT>>(quantifier);}},
             {'f', [](int quantifier){char c = getchar(); return std::make_unique<FindMotion<Direction::RIGHT>>(quantifier, c);}}, //TODO improve
             {'F', [](int quantifier){char c = getchar(); return std::make_unique<FindMotion<Direction::LEFT>>(quantifier, c);}},
+            {'$', [](int quantifier){return std::make_unique<EOLMotion>(quantifier);}},
         },
         commandParser {
             {'i', [](int){ return std::make_unique<EnterInsertCommand>();}},
@@ -26,7 +28,7 @@ namespace VM {
             {'.', [](int i){ return std::make_unique<DotCommand>(i);}},
             {':', [](int){ return std::make_unique<EnterColonCommand>();}},
             {'/', [](int){ return std::make_unique<EnterSearchCommand<Direction::DOWN>>();}},
-            {'?', [](int){ return std::make_unique<EnterSearchCommand<Direction::UP>>();}}
+            {'?', [](int){ return std::make_unique<EnterSearchCommand<Direction::UP>>();}},
         },
         commandWithMotionParser{}
     {}

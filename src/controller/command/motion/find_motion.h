@@ -9,7 +9,7 @@
 namespace VM {
     template<Direction dir> struct FindMotion;
 
-    template<> struct FindMotion<Direction::RIGHT>: public ClonableMotion<Motion, FindMotion<Direction::RIGHT>> {
+    template<> struct FindMotion<Direction::RIGHT>: public ClonableMotion<Motion, FindMotion<Direction::RIGHT>> { 
         char target;
 
         Cursor nextPosition(const PtrCursor &cursor) override {
