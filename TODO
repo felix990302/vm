@@ -40,7 +40,7 @@ Keys needed to do:
 - X (done)
 - ^ (motion beggining of line first nonempty character) 
 - $ (done)
-- 0 (first character)
+- 0 (first character) (done)
 - . (done)
 - ; (repeats last f some number of times / this is bad)
 - / (mostly done)
