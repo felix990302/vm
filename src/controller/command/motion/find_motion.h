@@ -13,18 +13,15 @@ namespace VM {
         char target;
 
         Cursor nextPosition(const PtrCursor &cursor) override {
-            PtrCursor cur {cursor};
-            cur.setType(PtrCursor::CursorMovement::InsertModeCursor);
+            Cursor position {cursor};
+            size_t count = 0;
+            
+            ++position.col;
+            for(auto it=cursor.getStringIterator()+1;it!=cursor.getLineIterator()->end(); ++it, ++position.col) {
+                if(*it==target && ++count==quantifier) return position;
+            }
 
-            size_t q = 0;
-            do {
-                cur.moveRight();
-                if(*cur) ++q;
-            } while (q !=quantifier && !cur.isEOL());
-
-            if(q!=quantifier)
-                return cursor;
-            return cur;
+            return cursor;
         }
 
         FindMotion(size_t quantifier, char c): Clonable{quantifier}, target{c} {}
@@ -34,18 +31,15 @@ namespace VM {
         char target;
 
         Cursor nextPosition(const PtrCursor &cursor) override {
-            PtrCursor cur {cursor};
-            cur.setType(PtrCursor::CursorMovement::InsertModeCursor);
+            Cursor position {cursor};
+            size_t count = 0;
+            
+            --position.col;
+            for(auto it=cursor.getReverseStringIterator()+1; it!=cursor.getReverseLineIterator()->rend(); ++it, --position.col) {
+                if(*it==target && ++count==quantifier) return position;
+            }
 
-            size_t q = 0;
-            do {
-                cur.moveLeft();
-                if(*cur) ++q;
-            } while (q !=quantifier && cur.getCol() != 0);
-
-            if(q!=quantifier)
-                return cursor;
-            return cur;
+            return cursor;
         }
 
         FindMotion(size_t quantifier, char c): Clonable{quantifier}, target{c} {}
