@@ -25,8 +25,24 @@ namespace VM {
             {'$', [](int quantifier){return std::make_unique<EOLMotion>(quantifier);}},
             {'0', [](int quantifier){return std::make_unique<BegLineMotion>(quantifier);}},
             {'^', [](int quantifier){return std::make_unique<FirstCharMotion>(quantifier);}},
-            {'f', [](int quantifier){char c = getchar(); return std::make_unique<FindMotion<Direction::RIGHT>>(quantifier, c);}}, //TODO improve
-            {'F', [](int quantifier){char c = getchar(); return std::make_unique<FindMotion<Direction::LEFT>>(quantifier, c);}},
+            {'f', [motionsParser = std::ref(motionsParser)](int quantifier){
+                char target = getchar();
+                motionsParser.get().erase(';');
+                motionsParser.get().emplace(';', std::function<std::unique_ptr<Motion>(int)>([oldQuant=quantifier, target=target](int quantifier){
+                    if(quantifier == 1) return std::make_unique<FindMotion<Direction::RIGHT>>(oldQuant, target);
+                    return std::make_unique<FindMotion<Direction::RIGHT>>(quantifier, target);
+                }));
+                return std::make_unique<FindMotion<Direction::RIGHT>>(quantifier, target);
+            }}, //TODO improve
+            {'F', [motionsParser = std::ref(motionsParser)](int quantifier){
+                char target = getchar();
+                motionsParser.get().erase(';');
+                motionsParser.get().emplace(';', std::function<std::unique_ptr<Motion>(int)>([oldQuant=quantifier, target=target](int quantifier){
+                    if(quantifier == 1) return std::make_unique<FindMotion<Direction::LEFT>>(oldQuant, target);
+                    return std::make_unique<FindMotion<Direction::LEFT>>(quantifier, target);
+                }));
+                return std::make_unique<FindMotion<Direction::LEFT>>(quantifier, target);
+            }},
             {'b', [](int quantifier){return std::make_unique<WordMotion<Direction::LEFT>>(quantifier);}},
             {'w', [](int quantifier){return std::make_unique<WordMotion<Direction::RIGHT>>(quantifier);}},
         },
