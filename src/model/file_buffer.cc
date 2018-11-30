@@ -27,16 +27,7 @@ namespace VM {
     }
 
     void FileBuffer::type(const std::string &s) {
-        size_t beginningOfLine=0;
-        for(size_t i = 0; i < s.size(); ++i)
-        {
-            if(s[i]=='\n')
-            {
-                typeWithinLine(s.substr(beginningOfLine, i - beginningOfLine));
-                typeNewLine();
-                beginningOfLine = i + 1;
-            }
-        }
+        for(size_t k=0; k<s.size(); ++k) type(s[k]);
     }
 
 

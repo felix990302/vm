@@ -14,7 +14,7 @@ namespace VM {
 
         public:
 
-        InsertCommand(size_t quant, char c): Clonable{quant, c} {}
+        InsertCommand(char c): Clonable{static_cast<size_t>(1), c} {}
         InsertCommand(const InsertCommand &other): Clonable{other} {}
         InsertCommand(InsertCommand &&other): Clonable{std::move(other)} {}
     };

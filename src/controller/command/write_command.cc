@@ -12,7 +12,7 @@ namespace VM {
             controller.getBuffer().write(fileNameToWriteTo);
         }
 
-        if(shouldQuit) controller.quit(false);
+        if(shouldQuit) controller.quit(true);
     }
 
     WriteCommand::WriteCommand(bool b):

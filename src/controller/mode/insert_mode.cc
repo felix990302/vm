@@ -38,7 +38,7 @@ namespace VM {
                 break;
             }
             default: {
-                insertBuffer.push_back(std::make_unique<InsertCommand>(1, c));
+                insertBuffer.push_back(std::make_unique<InsertCommand>(c));
                 insertBuffer.back()->doCommand(controller);
             }
         }

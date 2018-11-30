@@ -5,7 +5,7 @@
 
 namespace VM {
     inline void InsertCommand::commandHelper(Controller &controller) const {
-        for(size_t k=0; k<quant; ++k) controller.getBuffer().type(toMutate);
+        controller.getBuffer().type(toMutate[0]);
     }
 
     void InsertCommand::doTheCommand(Controller &controller) {
@@ -13,7 +13,7 @@ namespace VM {
     }
 
     void InsertCommand::undoTheCommand(Controller &controller) const {
-        for(size_t k=0; k<quant; ++k) controller.getBuffer().delete_backward(quant);
+        controller.getBuffer().delete_backward(1);
     }
 
     void InsertCommand::redoTheCommand(Controller &controller) const {

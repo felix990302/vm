@@ -8,7 +8,7 @@ namespace VM {
     }
 
     NCursesInput::NCursesInput() {
-        cbreak();
+        raw();
         keypad(stdscr, TRUE);
         noecho();
     } 
