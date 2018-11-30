@@ -41,8 +41,11 @@ namespace VM {
                 }
 
                 marker.col = cursor.getLineIterator()->find(target, 0);
-                while(marker.col < cursor.getCol()) {
-                    if(++count == quantifier) return marker;
+                while(marker.col <= cursor.getCol()) {
+                    if(++count == quantifier) {
+                        if(marker.col == cursor.getCol()) --count;
+                        else return marker;
+                    }
                     marker.col = cursor.getLineIterator()->find(target, marker.col+1);
                 };
             }
@@ -88,8 +91,11 @@ namespace VM {
                 }
 
                 marker.col = cursor.getReverseLineIterator()->rfind(target, std::string::npos);
-                while(marker.col > cursor.getCol() && marker.col < cursor.getReverseLineIterator()->size()) {
-                    if(++count == quantifier) return marker;
+                while(marker.col >= cursor.getCol() && marker.col < cursor.getReverseLineIterator()->size()) {
+                    if(++count == quantifier) {
+                        if(marker.col == cursor.getCol()) --count;
+                        else return marker;
+                    }
                     marker.col = cursor.getReverseLineIterator()->rfind(target, marker.col-1);
                 };
             }
