@@ -13,7 +13,7 @@ Keys needed to do:
 - c[motion]
 - dd
 - d[anymotion]
-- f
+- f (done)
 - h j k l (done)
 - i (mostly done)
 - n (done)
@@ -29,7 +29,7 @@ Keys needed to do:
 - y (copy/yank)
 
 - A (go to end of line and insert mode)
-- F (find back)
+- F (find back) (done)
 - I (insert mode at the beggining of the line)
 - J (go to end of line and delete new line character)
 - N (mostly done find backwards)
