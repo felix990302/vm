@@ -17,7 +17,7 @@ Keys needed to do:
 - s (remove character and go to insert mode/ it is very tricky with quantifier) 
 - u (undo) (mostly done)
 - w (motion) to some definition of word (can be multiline)
-- x (delete one char forward)
+- x (done)
 - yy
 - y (copy/yank)
 
@@ -30,11 +30,11 @@ Keys needed to do:
 - P (paste before cursor)
 - R (replace mode)
 - S (delete line and go to insert mode)
-- X (like backspace)
+- X (done)
 - ^ (motion beggining of line first nonempty character) 
-- $ (last character in line)
+- $ (done)
 - 0 (first character)
-- . (redo)
+- . (done)
 - ; (repeats last f some number of times / this is bad)
 - / (mostly done)
 - ? (like /)
@@ -43,7 +43,7 @@ Keys needed to do:
 - ^b ^d ^f  ^u -scrolling
 - ^g some information
 
-- : line number
+- : line number (done)
 
 - @ (run macro)
 - ^b ()
