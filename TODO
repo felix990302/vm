@@ -1,0 +1,56 @@
+Keys needed to do:
+- Macros
+- a
+- b
+- cc 
+- c[motion]
+- dd
+- d[anymotion]
+- f
+- h j k l (done)
+- i (mostly done)
+- n (done)
+- o (append new line after current one, basicly insert mode but move down first) - hard
+- p (paste after cursor)
+- q (record macro)
+- r (replace a single character)
+- s (remove character and go to insert mode/ it is very tricky with quantifier) 
+- u (undo) (mostly done)
+- w (motion) to some definition of word (can be multiline)
+- x (delete one char forward)
+- yy
+- y (copy/yank)
+
+- A (go to end of line and insert mode)
+- F (find back)
+- I (insert mode at the beggining of the line)
+- J (go to end of line and delete new line character)
+- N (mostly done find backwards)
+- O (like o but opens line up)
+- P (paste before cursor)
+- R (replace mode)
+- S (delete line and go to insert mode)
+- X (like backspace)
+- ^ (motion beggining of line first nonempty character) 
+- $ (last character in line)
+- 0 (first character)
+- . (redo)
+- ; (repeats last f some number of times / this is bad)
+- / (mostly done)
+- ? (like /)
+- % (move to matching parantheses)
+
+- ^b ^d ^f  ^u -scrolling
+- ^g some information
+
+- : line number
+
+- @ (run macro)
+- ^b ()
+
+
+
+
+
+
+
