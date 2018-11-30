@@ -12,13 +12,14 @@ namespace VM {
 
     template<> class PasteCommand<Direction::RIGHT>: public ClonableCommand<UndoableCommand, PasteCommand<Direction::RIGHT>> {
         BufferType toPaste;
+        bool shouldPasteInline;
 
         void commandHelper(Controller &controller) const {
             std::string restOfLine {""};
             PtrCursor &cursor = controller.getBuffer().ptrCursor;
             BufferType &buffer = controller.getBuffer().getBuffer();
 
-            if(controller.clipBoard.shouldPasteInline) {
+            if(shouldPasteInline) {
                 restOfLine = cursor.getLineIterator()->substr(cursor.getCol()+1);
                 cursor.getLineIterator()->erase(cursor.getCol()+1);
                 cursor.getLineIterator()->append(toPaste.front());
@@ -40,6 +41,7 @@ namespace VM {
 
         void doTheCommand(Controller &controller) override {
             toPaste = controller.clipBoard.theClipBoard;
+            shouldPasteInline = controller.clipBoard.shouldPasteInline;
             commandHelper(controller);
         }
 
@@ -56,20 +58,21 @@ namespace VM {
         }
 
         public:
-        PasteCommand(size_t quant): Clonable{quant}, toPaste{} {}
+        PasteCommand(size_t quant): Clonable{quant}, toPaste{}, shouldPasteInline{true} {}
         PasteCommand(const PasteCommand &other): Clonable{other}, toPaste{other.toPaste} {}
         PasteCommand(PasteCommand &&other):Clonable{std::move(other)}, toPaste{std::move(other.toPaste)} {};
     };
 
     template<> class PasteCommand<Direction::LEFT>: public ClonableCommand<UndoableCommand, PasteCommand<Direction::LEFT>> {
         BufferType toPaste;
+        bool shouldPasteInline;
 
         void commandHelper(Controller &controller) const {
             std::string begOfLine {""};
             PtrCursor &cursor = controller.getBuffer().ptrCursor;
             BufferType &buffer = controller.getBuffer().getBuffer();
 
-            if(controller.clipBoard.shouldPasteInline) {
+            if(shouldPasteInline) {
                 begOfLine = cursor.getLineIterator()->substr(0, cursor.getCol()+1);
                 cursor.getLineIterator()->erase(0, cursor.getCol()+1);
                 cursor.getLineIterator()->insert(0, toPaste.back());
@@ -91,6 +94,7 @@ namespace VM {
 
         void doTheCommand(Controller &controller) override {
             toPaste = controller.clipBoard.theClipBoard;
+            shouldPasteInline = controller.clipBoard.shouldPasteInline;
             commandHelper(controller);
         }
 
@@ -107,7 +111,7 @@ namespace VM {
         }
 
         public:
-        PasteCommand(size_t quant): Clonable{quant}, toPaste{} {}
+        PasteCommand(size_t quant): Clonable{quant}, toPaste{}, shouldPasteInline{true} {}
         PasteCommand(const PasteCommand &other): Clonable{other}, toPaste{other.toPaste} {}
         PasteCommand(PasteCommand &&other):Clonable{std::move(other)}, toPaste{std::move(other.toPaste)} {};
     };
