@@ -8,7 +8,7 @@ High Level:
 Keys needed to do:
 - Macros
 - a
-- b
+- b (done)
 - cc 
 - c[motion]
 - dd
@@ -17,13 +17,13 @@ Keys needed to do:
 - h j k l (done)
 - i (mostly done)
 - n (done)
-- o (append new line after current one, basicly insert mode but move down first) - hard
+- o (append new line after current one, basically insert mode but move down first) - hard
 - p (paste after cursor)
 - q (record macro)
 - r (replace a single character)
 - s (remove character and go to insert mode/ it is very tricky with quantifier) 
 - u (undo) (mostly done)
-- w (motion) to some definition of word (can be multiline)
+- w (motion) to some definition of word (can be multiline) (done)
 - x (done)
 - yy
 - y (copy/yank)
