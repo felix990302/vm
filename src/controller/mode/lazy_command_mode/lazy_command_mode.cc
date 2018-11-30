@@ -2,6 +2,7 @@
 #include "controller/controller.h"
 #include "controller/command/switch_command/escape_command.h"
 #include "lazy_command_mode.h"
+#include "ncurses.h"
 
 
 namespace VM {
@@ -13,6 +14,12 @@ namespace VM {
             }
             case 27: { // esc
                 controller.runSimpleCommand(std::make_unique<EscapeCommand>());
+                break;
+            }
+            case KEY_BACKSPACE:
+            case 127: //linux is weired TODO
+            {
+                if(commandString.size())commandString.pop_back();
                 break;
             }
             default: {
