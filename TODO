@@ -1,3 +1,10 @@
+High Level:
+- quantifier for modes
+- commands with motions embedded :(
+- display line numbers on the left margin
+    - and ~ if no line exists
+- display information on right status bar
+
 Keys needed to do:
 - Macros
 - a
@@ -47,10 +54,3 @@ Keys needed to do:
 
 - @ (run macro)
 - ^b ()
-
-
-
-
-
-
-
