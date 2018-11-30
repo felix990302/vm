@@ -26,6 +26,12 @@ namespace VM{
 
             PtrCursor it(Cursor{cursor.line + y, cursor.col}, fileBuffer->getBuffer(), PtrCursor::CursorMovement::InsertModeCursor);
             display.flush(getPosn() + Coordinates{0, y});
+            if(cursor.line + y != it.getLine())
+            {
+                if(cursor.col == 0)
+                    display.puts(getPosn() + Coordinates{0,y}, "~\n");
+                continue;
+            }
             for (int x = 0; x < getSize().x; ++x) {
                 display.putc(getPosn() + Coordinates{x, y}, *it);
                 if(it.isEOL())
