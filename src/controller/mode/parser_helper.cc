@@ -10,6 +10,7 @@
 #include "controller/command/motion/line_motion/find_motion.h"
 #include "controller/command/motion/line_motion/eol_motion.h"
 #include "controller/command/motion/line_motion/beg_line_motion.h"
+#include "controller/command/motion/line_motion/first_char_motion.h"
 #include "controller/command/motion/word_motion.h"
 #include "command_mode.h"
 
@@ -23,6 +24,7 @@ namespace VM {
             {'l', [](int quantifier){return std::make_unique<DirectionMotion<Direction::RIGHT>>(quantifier);}},
             {'$', [](int quantifier){return std::make_unique<EOLMotion>(quantifier);}},
             {'0', [](int quantifier){return std::make_unique<BegLineMotion>(quantifier);}},
+            {'^', [](int quantifier){return std::make_unique<FirstCharMotion>(quantifier);}},
             {'f', [](int quantifier){char c = getchar(); return std::make_unique<FindMotion<Direction::RIGHT>>(quantifier, c);}}, //TODO improve
             {'F', [](int quantifier){char c = getchar(); return std::make_unique<FindMotion<Direction::LEFT>>(quantifier, c);}},
             {'b', [](int quantifier){return std::make_unique<WordMotion<Direction::LEFT>>(quantifier);}},

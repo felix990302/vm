@@ -38,7 +38,7 @@ Keys needed to do:
 - R (replace mode)
 - S (delete line and go to insert mode)
 - X (done)
-- ^ (motion beggining of line first nonempty character) 
+- ^ (motion beggining of line first nonempty character) (done)
 - $ (done)
 - 0 (first character) (done)
 - . (done)
