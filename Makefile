@@ -9,10 +9,10 @@ DEP_FILES = $(patsubst $(SRC_DIR)/%,$(DEP_DIR)/%,$(SRC_FILES:.cc=.d))
 OBJ_DIRS = $(sort $(dir $(OBJ_FILES)))
 DEP_DIRS = $(sort $(dir $(DEP_FILES)))
 
-CXX = g++
+CXX = g++-5
 DEP_LOC = $(patsubst $(OBJ_DIR)/%,$(DEP_DIR)/%,$*.d)
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP_LOC)
-WFLAGS = -Wall -Wextra -g
+WFLAGS = -Wall -Wextra -Werror -g
 CPPFLAGS = -std=c++14 $(WFLAGS) $(DEPFLAGS) -I $(SRC_DIR)
 CXXFLAGS = -std=c++14 $(WFLAGS)
 EXEC = vm
