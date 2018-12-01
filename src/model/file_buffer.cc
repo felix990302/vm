@@ -71,11 +71,6 @@ namespace VM {
         delete_forward(reallyRemoved);
     }
 
-    void FileBuffer::deleteLine(size_t numLines) {
-        buffer.erase(ptrCursor.getLineIterator(), ptrCursor.getLineIterator()+numLines);
-        ptrCursor.moveBeginOfLine();
-    }
-
     std::string FileBuffer::getSubBuffer(size_t n) {
         return getSubBuffer(n, ptrCursor);
     }
