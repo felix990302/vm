@@ -22,8 +22,8 @@ Keys needed to do:
 - q (record macro)
     - r (replace a single character) done
 - s (remove character and go to insert mode/ it is very tricky with quantifier) 
-- u (undo) (mostly done)
-- w (motion) to some definition of word (can be multiline) (done)
+    - u (undo) (mostly done)
+    - w (motion) to some definition of word (can be multiline) (done)
     - x (done)
 - yy 
 - y (copy/yank)
