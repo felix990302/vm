@@ -7,50 +7,49 @@ High Level:
 
 Keys needed to do:
 - Macros
-- a
-- b (done)
+- a 
+    - b (done)
 - cc 
-- c[motion]
+- c[motion] (what's difference between c and d?)
 - dd
-- d[anymotion]
-- f (done)
-- h j k l (done)
-- i (mostly done)
-- n (done)
+    - d[anymotion] (done)
+    - f (done)
+    - h j k l (done)
+    - i (mostly done)
+    - n (done)
 - o (append new line after current one, basically insert mode but move down first) - hard
 - p (paste after cursor)
 - q (record macro)
-- r (replace a single character) done
+    - r (replace a single character) done
 - s (remove character and go to insert mode/ it is very tricky with quantifier) 
 - u (undo) (mostly done)
 - w (motion) to some definition of word (can be multiline) (done)
-- x (done)
-- yy
+    - x (done)
+- yy 
 - y (copy/yank)
 
 - A (go to end of line and insert mode)
-- F (find back) (done)
+    - F (find back) (done)
 - I (insert mode at the beggining of the line)
 - J (go to end of line and delete new line character)
-- N (mostly done find backwards) (done)
+    - N (mostly done find backwards) (done)
 - O (like o but opens line up)
 - P (paste before cursor)
 - R (replace mode)
 - S (delete line and go to insert mode)
-- X (done)
-- ^ (motion beggining of line first nonempty character) (done)
-- $ (done)
-- 0 (first character) (done)
-- . (done)
-- ; (repeats last f some number of times / this is bad) (done) lambda is awesome <3
-- / (mostly done)
-- ? (like /)
+    - X (done)
+    - ^ (motion beggining of line first nonempty character) (done)
+    - $ (done)
+    - 0 (first character) (done)
+    - . (done)
+    - ; (repeats last f some number of times / this is bad) (done) lambda is awesome <3
+    - / (mostly done)
+    - ? (like /)
 - % (move to matching parantheses)
 
 - ^b ^d ^f  ^u -scrolling
 - ^g some information
 
-- : line number (done)
+    - : line number (done)
 
 - @ (run macro)
-- ^b ()

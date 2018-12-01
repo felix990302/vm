@@ -67,8 +67,8 @@ namespace VM {
                     {':', [](int) { return std::make_unique<EnterColonCommand>(); }},
                     {'/', [](int) { return std::make_unique<EnterSearchCommand<Direction::DOWN>>(); }},
                     {'?', [](int) { return std::make_unique<EnterSearchCommand<Direction::UP>>(); }},
-                    {'x', [](int i) { return std::make_unique<DeleteForwardCommand>(i); }},
-                    {'X', [](int i) { return std::make_unique<DeleteBackwardCommand>(i); }},
+                    {'x', [](int i) { return std::make_unique<DeleteCommand>(1, std::make_unique<WordMotion<Direction::RIGHT>> (i)); }},
+                    {'X', [](int i) { return std::make_unique<DeleteCommand>(1, std::make_unique<WordMotion<Direction::LEFT>> (i)); }},
             },
             commandWithMotionParser{
                     {'d', [](int i, std::unique_ptr<Motion> && m) { return std::make_unique<DeleteCommand>(i, std::move(m)); }},
