@@ -29,6 +29,8 @@ namespace VM {
 
         void delete_backward(size_t numChars);
 
+        void deleteLine(size_t numLines=1);
+
         void write(const std::string &destination);
         void write();
 
