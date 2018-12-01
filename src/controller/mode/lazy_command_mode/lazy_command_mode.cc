@@ -19,7 +19,8 @@ namespace VM {
             case KEY_BACKSPACE:
             case 127: //linux is weired TODO
             {
-                if(commandString.size())commandString.pop_back();
+                if(commandString.size()) commandString.pop_back();
+                else controller.runSimpleCommand(std::make_unique<EscapeCommand>());
                 break;
             }
             default: {
