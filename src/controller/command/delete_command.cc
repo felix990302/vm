@@ -7,6 +7,7 @@ namespace VM {
 
 
     void DeleteCommand::doTheCommand(Controller &controller) {
+        buffer.clear();
         PtrCursor begin {controller.getBuffer().ptrCursor};
         motion->quantifier *= quant;
         quant = 1;
@@ -50,14 +51,9 @@ namespace VM {
         controller.getBuffer().delete_forward(buffer.size());
     }
 
-    DeleteCommand::DeleteCommand(size_t quant, std::unique_ptr<Motion> motion) : Clonable {quant}, beginPosition {0,0} , motion {std::move(motion)} {
-    }
+    DeleteCommand::DeleteCommand(size_t quant, std::unique_ptr<Motion> motion) : Clonable {quant}, beginPosition {0,0}, motion {std::move(motion)} {}
 
-    DeleteCommand::DeleteCommand(const DeleteCommand &other) : Clonable {other.quant}, beginPosition{other.beginPosition}, motion{motion->clone()}  {
+    DeleteCommand::DeleteCommand(const DeleteCommand &other) : Clonable {other.quant}, beginPosition{other.beginPosition}, buffer{other.buffer}, isMultiline{other.isMultiline}, motion{motion->clone()}  {}
 
-    }
-
-    DeleteCommand::DeleteCommand(DeleteCommand &&other) : Clonable {other.quant}, beginPosition{other.beginPosition}, motion{std::move(other.motion)} {
-
-    }
+    DeleteCommand::DeleteCommand(DeleteCommand &&other) : Clonable {other.quant}, beginPosition{other.beginPosition}, buffer{other.buffer}, isMultiline{other.isMultiline}, motion{std::move(other.motion)} {}
 }

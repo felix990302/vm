@@ -7,6 +7,7 @@
 #include "controller/command/redo_command.h"
 #include "controller/command/delete_command.h"
 #include "controller/command/clipboard_command/paste_command.h"
+#include "controller/command/clipboard_command/yank_command.h"
 
 #include "controller/command/switch_command/enter_search_command.h"
 #include "controller/command/switch_command/enter_colon_command.h"
@@ -84,5 +85,6 @@ namespace VM {
             commandWithMotionParser{
                     {'d', [](int i, std::unique_ptr<Motion> && m) { return std::make_unique<DeleteCommand>(i, std::move(m)); }},
                     {'c', [](int i, std::unique_ptr<Motion> && m) { return std::make_unique<DeleteCommand>(i, std::move(m)); }},
+                    {'y', [](int i, std::unique_ptr<Motion> && m) { return std::make_unique<YankCommand>(i, std::move(m)); }},
             } {}
 }
