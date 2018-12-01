@@ -6,9 +6,8 @@
 namespace VM {
     void DeleteForwardCommand::doTheCommand(Controller &controller) {
         PtrCursor &cursor = controller.getBuffer().ptrCursor;
-        size_t toDelete = std::min(quant, cursor.getLineIterator()->size()-cursor.getCol());
-        toMutate = cursor.getLineIterator()->substr(cursor.getCol(), toDelete);
-        controller.getBuffer().delete_forward(toDelete);
+        toMutate = cursor.getLineIterator()->substr(cursor.getCol(), quant);
+        controller.getBuffer().delete_forward(quant);
     }
 
     void DeleteForwardCommand::undoTheCommand(Controller &controller) const {

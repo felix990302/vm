@@ -19,8 +19,8 @@ namespace VM{
 
         if(newCursorX > fileBuffer->ptrCursor.getCol())
             newCursorX = fileBuffer->ptrCursor.getCol();
-        if(newCursorX + getSize().x - 1 <= fileBuffer -> ptrCursor.getCol())
-            newCursorX = fileBuffer -> ptrCursor.getCol() - getSize().x + 1;
+        if(newCursorX + getSize().x - lineNumberWidth - 1 <= fileBuffer -> ptrCursor.getCol())
+            newCursorX = fileBuffer -> ptrCursor.getCol() - getSize().x + lineNumberWidth + 1;
 
         cursor = Cursor{newCursorY, newCursorX};
 
@@ -28,8 +28,8 @@ namespace VM{
         for(int y = 0; y < getSize().y; ++y) {
 
             PtrCursor it(Cursor{cursor.line + y, cursor.col}, fileBuffer->getBuffer(), PtrCursor::CursorMovement::InsertModeCursor);
-            display.flush(getPosn() + Coordinates{lineNumberWidth, y});
-            for (int x = 0; x < getSize().x; ++x) {
+            display.flush(getPosn() + Coordinates{0, y});
+            for (int x = 0; x < getSize().x - lineNumberWidth; ++x) {
                 display.putc(getPosn() + Coordinates{lineNumberWidth + x, y}, *it);
                 if(it.isEOL())
                     break;
@@ -45,7 +45,8 @@ namespace VM{
             else
                 if(showLinesNumbers)
                     ss  << std::setw(lineNumberWidth - 1) << std::right  << cursor.line + y + 1 << " ";
-            display.puts(Coordinates{0,y}, ss.str());
+            if(ss.str().size())
+                display.puts(Coordinates{0,y}, ss.str());
         }
         display.setCursorPosition(fileBuffer->ptrCursor.getLine() - cursor.line, lineNumberWidth + fileBuffer->ptrCursor.getCol() - cursor.col);
 

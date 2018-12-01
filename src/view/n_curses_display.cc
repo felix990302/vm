@@ -5,7 +5,7 @@
 namespace VM {
     NCursesDisplay::NCursesDisplay() : TextDisplay() {
         initscr();
-        signal(SIGWINCH, NCursesDisplay::resizeHandler);
+        //signal(SIGWINCH, NCursesDisplay::resizeHandler);
     }
 
     void NCursesDisplay::putc(const Coordinates &c, char ch) {
