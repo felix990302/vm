@@ -46,6 +46,7 @@ namespace VM {
     }
 
     void DeleteCommand::redoTheCommand(Controller &controller) const {
+        controller.getBuffer().ptrCursor.setCursor(beginPosition);
         controller.getBuffer().ptrCursor.setType(PtrCursor::CursorMovement::IteratorCursor);
         controller.getBuffer().ptrCursor.setCursor(beginPosition);
         controller.getBuffer().delete_forward(buffer.size());
