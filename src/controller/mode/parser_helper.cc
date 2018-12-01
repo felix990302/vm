@@ -83,5 +83,6 @@ namespace VM {
             },
             commandWithMotionParser{
                     {'d', [](int i, std::unique_ptr<Motion> && m) { return std::make_unique<DeleteCommand>(i, std::move(m)); }},
+                    {'c', [](int i, std::unique_ptr<Motion> && m) { return std::make_unique<DeleteCommand>(i, std::move(m)); }},
             } {}
 }
