@@ -69,7 +69,7 @@ namespace VM {
                     {'w', [](int quantifier) { return std::make_unique<WordMotion<Direction::RIGHT>>(quantifier); }},
             },
             commandParser{
-                    {'i', [](int) { return std::make_unique<EnterInsertCommand>(); }},
+                    {'i', [](int i) { return std::make_unique<EnterInsertCommand>(i); }},
                     {'O', [](int i) { return std::make_unique<OpenLineInsertCommand<Direction::UP>>(i); }},
                     {'o', [](int i) { return std::make_unique<OpenLineInsertCommand<Direction::DOWN>>(i); }},
                     {'u', [](int i) { return std::make_unique<UndoCommand>(i); }},
