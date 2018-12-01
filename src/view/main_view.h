@@ -14,9 +14,11 @@ namespace VM {
         std::shared_ptr<BufferView> bufferView;
         std::shared_ptr<StatusBar> statusBar;
 
+
     public:
         MainView(FileBuffer *fileBuffer, Controller *controller);
         void setSize(const Coordinates &size) override;
+        BufferView &getBufferView() { return *bufferView;}
     };
 
 }

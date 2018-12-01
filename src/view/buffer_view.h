@@ -13,9 +13,13 @@ namespace VM {
     private:
         Cursor cursor;
         FileBuffer *fileBuffer;
+        bool showLinesNumbers = false;
     public:
+
         BufferView (FileBuffer * fileBuffer);
         void draw(const Coordinates &parentPosn, TextDisplay &display) override;
+        void setLineNumbersOn() {showLinesNumbers = true;}
+        void setLineNumbersOff() {showLinesNumbers = false;}
     };
 }
 

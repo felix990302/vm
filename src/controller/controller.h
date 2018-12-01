@@ -17,6 +17,7 @@ namespace VM {
     class InsertMode;
     class CommandMode;
     class ColonCommandMode;
+    class BufferView;
     template<Direction dir>class SearchCommandMode;
 
     class Controller {
@@ -24,6 +25,7 @@ namespace VM {
 
         std::unique_ptr<Input> input; 
         FileBuffer *fileBuffer;
+        BufferView *bufferView;
         CommandStack undoStack;
         CommandStack redoStack;
 

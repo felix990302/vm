@@ -4,7 +4,10 @@
 
 namespace VM {
     int NCursesInput::getChar() {
-        return getch();
+        int c = getch();
+        c=c;
+        return c;
+//        return getch(); //TODO debug only
     }
 
     NCursesInput::NCursesInput() {
