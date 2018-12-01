@@ -5,7 +5,7 @@
 namespace  VM {
     PtrCursor::PtrCursor(const VM::Cursor &cursor1, VM::BufferType &buffer,
                          const VM::PtrCursor::CursorMovement &type = VM::PtrCursor::CursorMovement::IteratorCursor )
-    : cursor(cursor1), buffer(buffer), type(type)
+    : cursor(cursor1), buffer(&buffer), type(type)
     {
         assert(buffer.size()>0);
         if(cursor.line >= buffer.size()) {
@@ -33,10 +33,10 @@ namespace  VM {
     void PtrCursor::moveRight(size_t c) {
         while(c > 0)
         {
-            size_t maxMoveRight = std::min(c, buffer[cursor.line].size() + canPointAtEOL() - 1 - cursor.col);
+            size_t maxMoveRight = std::min(c, (*buffer)[cursor.line].size() + canPointAtEOL() - 1 - cursor.col);
             c -= maxMoveRight;
             cursor.col += maxMoveRight;
-            if(!wrapAtEOL() || c==0 || cursor.line == buffer.size()-1) return;
+            if(!wrapAtEOL() || c==0 || cursor.line == buffer->size()-1) return;
             moveDown();
             moveBeginOfLine();
             --c;
@@ -92,4 +92,25 @@ namespace  VM {
         if(cursor.line > ptrCursor.cursor.line) return false;
         return cursor.col<ptrCursor.cursor.col;
     }
+
+    PtrCursor::PtrCursor(const PtrCursor &other) : cursor {other.cursor}, buffer{other.buffer}, type{other.type} {}
+
+    PtrCursor::PtrCursor(const PtrCursor &&other) : cursor {std::move (other.cursor)}, buffer{other.buffer}, type{std::move(other.type)} {}
+
+    PtrCursor &PtrCursor::operator=(const PtrCursor &other) {
+        cursor = other.cursor;
+        buffer = other.buffer;
+        type = other.type;
+        return *this;
+    }
+
+    PtrCursor &PtrCursor::operator=(PtrCursor &&other) {
+        cursor = std::move(other.cursor);
+        buffer = other.buffer;
+        type = other.type;
+        return *this;
+    }
+
+
+
 }

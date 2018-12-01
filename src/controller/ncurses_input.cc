@@ -5,8 +5,10 @@
 namespace VM {
     int NCursesInput::getChar() {
         int c = getch();
-        if(c == KEY_RESIZE)
+        while(c == KEY_RESIZE) {
             NCursesDisplay::resizeHandler(0);
+            c = getch();
+        }
         c=c;
         return c;
 //        return getch(); //TODO debug only

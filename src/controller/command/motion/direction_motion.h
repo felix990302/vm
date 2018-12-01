@@ -30,6 +30,10 @@ namespace VM {
     };
 
     template<> struct DirectionMotion<Direction::UP>: public ClonableMotion<Motion, DirectionMotion<Direction::UP>> {
+        bool isMultiline() const override {
+            return true;
+        }
+
         Cursor nextPosition(const PtrCursor &cursor) override {
             PtrCursor cur {cursor};
             for(size_t k=0; k<quantifier; ++k)
@@ -40,6 +44,10 @@ namespace VM {
     };
 
     template<> struct DirectionMotion<Direction::DOWN>: public ClonableMotion<Motion, DirectionMotion<Direction::DOWN>> {
+        bool isMultiline() const override {
+            return true;
+        }
+
         Cursor nextPosition(const PtrCursor &cursor) override {
             PtrCursor cur {cursor};
             for(size_t k=0; k<quantifier; ++k)

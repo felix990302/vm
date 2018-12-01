@@ -16,7 +16,7 @@ namespace VM {
         };
     private:
         Cursor cursor;
-        VM::BufferType &buffer;
+        VM::BufferType *buffer;
 
         CursorMovement type;
 
@@ -25,6 +25,11 @@ namespace VM {
         bool canPointAtEOL() const { return (int) type >= 1 || (getLineIterator()->size() == 0);} //TODO: This is bug factorys
 
         PtrCursor(const Cursor &cursor, BufferType &buffer, const CursorMovement &type);
+        PtrCursor(const PtrCursor &other);
+        PtrCursor(const PtrCursor &&other);
+
+        PtrCursor &operator= (const PtrCursor &other);
+        PtrCursor &operator= (PtrCursor &&other);
 
 
         inline void moveRight() {moveRight(1);}
@@ -38,7 +43,7 @@ namespace VM {
             if(getLineIterator()->size() != 0 && isEOL() && !canPointAtEOL()) --cursor.col;
         }
 
-        inline void moveDown(size_t c) {cursor.line = std::min(buffer.size()-1, cursor.line + c);enforceLineBoundaries();}
+        inline void moveDown(size_t c) {cursor.line = std::min(buffer->size()-1, cursor.line + c);enforceLineBoundaries();}
         inline void moveDown() {moveDown(1);}
         inline void moveUp(size_t c) {cursor.line = (size_t)std::max(0, (int) cursor.line - (int)c);enforceLineBoundaries();}
         inline void moveUp() {moveUp(1);}
@@ -58,42 +63,42 @@ namespace VM {
         operator Cursor() const { return cursor; }
 
         inline LineType::iterator getStringIterator() const {
-            return buffer[cursor.line].begin()+cursor.col;
+            return (*buffer)[cursor.line].begin()+cursor.col;
         }
         inline LineType::reverse_iterator getReverseStringIterator() const {
-            return buffer[cursor.line].rbegin() + (buffer[cursor.line].size()-1 - cursor.col);
+            return (*buffer)[cursor.line].rbegin() + ((*buffer)[cursor.line].size()-1 - cursor.col);
         }
         inline BufferType::iterator getLineIterator() const {
-            return buffer.begin()+cursor.line;
+            return buffer->begin()+cursor.line;
         }
         inline BufferType::iterator getLineBegin() const {
-            return buffer.begin();
+            return buffer->begin();
         }
         inline BufferType::iterator getLineEnd() const {
-            return buffer.end();
+            return buffer->end();
         }
         inline BufferType::reverse_iterator getReverseLineIterator() const {
-            return buffer.rbegin() + (buffer.size()-1 - cursor.line);
+            return buffer->rbegin() + (buffer->size()-1 - cursor.line);
         }
         inline BufferType::reverse_iterator getLineReverseBegin() const {
-            return buffer.rbegin();
+            return buffer->rbegin();
         }
         inline BufferType::reverse_iterator getLineReverseEnd() const {
-            return buffer.rend();
+            return buffer->rend();
         }
 
         inline bool isEOL() const{
-            return buffer[cursor.line].size() <= cursor.col;
+            return (*buffer)[cursor.line].size() <= cursor.col;
         }
         inline bool isEOF() const{
-            return (buffer.size()-1 == cursor.line && isEOL());
+            return (buffer->size()-1 == cursor.line && isEOL());
         }
 
         inline void moveBeginOfLine() {
             cursor.col = 0;
         }
         inline void moveEndOfLine() {
-            cursor.col = buffer[cursor.line].size() + canPointAtEOL() - 1;
+            cursor.col = (*buffer)[cursor.line].size() + canPointAtEOL() - 1;
         }
 
         inline size_t getLine() const {
@@ -101,7 +106,7 @@ namespace VM {
         }
 
         inline size_t getBufferSize() const {
-            return buffer.size();
+            return buffer->size();
         }
 
         inline size_t getCol() const {

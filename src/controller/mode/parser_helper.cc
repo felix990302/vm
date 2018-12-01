@@ -12,51 +12,63 @@
 #include "controller/command/motion/line_motion/beg_line_motion.h"
 #include "controller/command/motion/line_motion/first_char_motion.h"
 #include "controller/command/motion/word_motion.h"
+#include "controller/command/delete_command.h"
 #include "command_mode.h"
 
 
 namespace VM {
-    CommandMode::ParserHelper::ParserHelper():
-        motionsParser {
-            {'h', [](int quantifier){return std::make_unique<DirectionMotion<Direction::LEFT>>(quantifier);}},
-            {'j', [](int quantifier){return std::make_unique<DirectionMotion<Direction::DOWN>>(quantifier);}},
-            {'k', [](int quantifier){return std::make_unique<DirectionMotion<Direction::UP>>(quantifier);}},
-            {'l', [](int quantifier){return std::make_unique<DirectionMotion<Direction::RIGHT>>(quantifier);}},
-            {'$', [](int quantifier){return std::make_unique<EOLMotion>(quantifier);}},
-            {'0', [](int quantifier){return std::make_unique<BegLineMotion>(quantifier);}},
-            {'^', [](int quantifier){return std::make_unique<FirstCharMotion>(quantifier);}},
-            {'f', [motionsParser = std::ref(motionsParser)](int quantifier){
-                char target = getchar();
-                motionsParser.get().erase(';');
-                motionsParser.get().emplace(';', std::function<std::unique_ptr<Motion>(int)>([oldQuant=quantifier, target=target](int quantifier){
-                    if(quantifier == 1) return std::make_unique<FindMotion<Direction::RIGHT>>(oldQuant, target);
-                    return std::make_unique<FindMotion<Direction::RIGHT>>(quantifier, target);
-                }));
-                return std::make_unique<FindMotion<Direction::RIGHT>>(quantifier, target);
-            }}, //TODO improve
-            {'F', [motionsParser = std::ref(motionsParser)](int quantifier){
-                char target = getchar();
-                motionsParser.get().erase(';');
-                motionsParser.get().emplace(';', std::function<std::unique_ptr<Motion>(int)>([oldQuant=quantifier, target=target](int quantifier){
-                    if(quantifier == 1) return std::make_unique<FindMotion<Direction::LEFT>>(oldQuant, target);
-                    return std::make_unique<FindMotion<Direction::LEFT>>(quantifier, target);
-                }));
-                return std::make_unique<FindMotion<Direction::LEFT>>(quantifier, target);
-            }},
-            {'b', [](int quantifier){return std::make_unique<WordMotion<Direction::LEFT>>(quantifier);}},
-            {'w', [](int quantifier){return std::make_unique<WordMotion<Direction::RIGHT>>(quantifier);}},
-        },
-        commandParser {
-            {'i', [](int){ return std::make_unique<EnterInsertCommand>();}},
-            {'u', [](int i){ return std::make_unique<UndoCommand>(i);}},
-            {'r'-96, [](int i){ return std::make_unique<RedoCommand>(i);}},
-            {'.', [](int i){ return std::make_unique<DotCommand>(i);}},
-            {':', [](int){ return std::make_unique<EnterColonCommand>();}},
-            {'/', [](int){ return std::make_unique<EnterSearchCommand<Direction::DOWN>>();}},
-            {'?', [](int){ return std::make_unique<EnterSearchCommand<Direction::UP>>();}},
-            {'x', [](int i){ return std::make_unique<DeleteForwardCommand>(i);}},
-            {'X', [](int i){ return std::make_unique<DeleteBackwardCommand>(i);}},
-        },
-        commandWithMotionParser{}
-    {}
+    CommandMode::ParserHelper::ParserHelper() :
+            motionsParser{
+                    {'h', [](int quantifier) {
+                        return std::make_unique<DirectionMotion<Direction::LEFT>>(quantifier);
+                    }},
+                    {'j', [](int quantifier) {
+                        return std::make_unique<DirectionMotion<Direction::DOWN>>(quantifier);
+                    }},
+                    {'k', [](int quantifier) { return std::make_unique<DirectionMotion<Direction::UP>>(quantifier); }},
+                    {'l', [](int quantifier) {
+                        return std::make_unique<DirectionMotion<Direction::RIGHT>>(quantifier);
+                    }},
+                    {'$', [](int quantifier) { return std::make_unique<EOLMotion>(quantifier); }},
+                    {'0', [](int quantifier) { return std::make_unique<BegLineMotion>(quantifier); }},
+                    {'^', [](int quantifier) { return std::make_unique<FirstCharMotion>(quantifier); }},
+                    {'f', [motionsParser = std::ref(motionsParser)](int quantifier) {
+                        char target = getchar();
+                        motionsParser.get().erase(';');
+                        motionsParser.get().emplace(';', std::function<std::unique_ptr<Motion>(int)>(
+                                [oldQuant = quantifier, target = target](int quantifier) {
+                                    if (quantifier == 1)
+                                        return std::make_unique<FindMotion<Direction::RIGHT>>(oldQuant, target);
+                                    return std::make_unique<FindMotion<Direction::RIGHT>>(quantifier, target);
+                                }));
+                        return std::make_unique<FindMotion<Direction::RIGHT>>(quantifier, target);
+                    }}, //TODO improve
+                    {'F', [motionsParser = std::ref(motionsParser)](int quantifier) {
+                        char target = getchar();
+                        motionsParser.get().erase(';');
+                        motionsParser.get().emplace(';', std::function<std::unique_ptr<Motion>(int)>(
+                                [oldQuant = quantifier, target = target](int quantifier) {
+                                    if (quantifier == 1)
+                                        return std::make_unique<FindMotion<Direction::LEFT>>(oldQuant, target);
+                                    return std::make_unique<FindMotion<Direction::LEFT>>(quantifier, target);
+                                }));
+                        return std::make_unique<FindMotion<Direction::LEFT>>(quantifier, target);
+                    }},
+                    {'b', [](int quantifier) { return std::make_unique<WordMotion<Direction::LEFT>>(quantifier); }},
+                    {'w', [](int quantifier) { return std::make_unique<WordMotion<Direction::RIGHT>>(quantifier); }},
+            },
+            commandParser{
+                    {'i', [](int) { return std::make_unique<EnterInsertCommand>(); }},
+                    {'u', [](int i) { return std::make_unique<UndoCommand>(i); }},
+                    {'r' - 96, [](int i) { return std::make_unique<RedoCommand>(i); }},
+                    {'.', [](int i) { return std::make_unique<DotCommand>(i); }},
+                    {':', [](int) { return std::make_unique<EnterColonCommand>(); }},
+                    {'/', [](int) { return std::make_unique<EnterSearchCommand<Direction::DOWN>>(); }},
+                    {'?', [](int) { return std::make_unique<EnterSearchCommand<Direction::UP>>(); }},
+                    {'x', [](int i) { return std::make_unique<DeleteForwardCommand>(i); }},
+                    {'X', [](int i) { return std::make_unique<DeleteBackwardCommand>(i); }},
+            },
+            commandWithMotionParser{
+                    {'d', [](int i, std::unique_ptr<Motion> && m) { return std::make_unique<DeleteCommand>(i, std::move(m)); }},
+            } {}
 }
