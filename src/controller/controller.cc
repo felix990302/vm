@@ -29,13 +29,13 @@ namespace VM {
     Controller::Controller(std::unique_ptr<Input> input, FileBuffer *fileBuffer, BufferView *bufferView):
         input{std::move(input)},
         fileBuffer{fileBuffer},
+        bufferView {bufferView},
         undoStack{},
         redoStack{},
         programIsRunning{true},
         modes{*this},
         clipBoard{},
-        mode{modes.commandMode.get()},
-        bufferView {bufferView}
+        mode{modes.commandMode.get()}
     {}
 
     void Controller::quit(bool ignoreChanges) {
