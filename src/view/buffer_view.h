@@ -18,8 +18,7 @@ namespace VM {
 
         BufferView (FileBuffer * fileBuffer);
         void draw(const Coordinates &parentPosn, TextDisplay &display) override;
-        void setLineNumbersOn() {showLinesNumbers = true;}
-        void setLineNumbersOff() {showLinesNumbers = false;}
+        void setLineNumbers(bool onOrOf) {showLinesNumbers = onOrOf;}
     };
 }
 

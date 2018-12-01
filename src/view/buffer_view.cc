@@ -44,7 +44,7 @@ namespace VM{
                 ss << "~";
             else
                 if(showLinesNumbers)
-                    ss  << std::setw(lineNumberWidth - 1) << std::right  << cursor.line + y << " ";
+                    ss  << std::setw(lineNumberWidth - 1) << std::right  << cursor.line + y + 1 << " ";
             display.puts(Coordinates{0,y}, ss.str());
         }
         display.setCursorPosition(fileBuffer->ptrCursor.getLine() - cursor.line, lineNumberWidth + fileBuffer->ptrCursor.getCol() - cursor.col);

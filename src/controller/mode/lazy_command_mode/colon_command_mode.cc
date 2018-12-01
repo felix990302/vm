@@ -9,6 +9,7 @@
 #include "controller/command/quit_command.h"
 #include "controller/command/move_command.h"
 #include "controller/command/motion/absolute_motion.h"
+#include "controller/command/set_lines_command.h"
 #include "colon_command_mode.h"
 
 
@@ -31,6 +32,12 @@ namespace VM {
             }
         }
         else if(command == "r") {}
+        else if(command == "set") {
+            if(argument=="number")
+                return std::make_unique<SetLinesCommand>(true);
+            else if(argument == "nonumber")
+                return std::make_unique<SetLinesCommand>(false);
+        }
         else if(argument.empty()) {
             if(command == "q") {
                 return std::make_unique<QuitCommand>(false);

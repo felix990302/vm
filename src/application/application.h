@@ -6,7 +6,7 @@
 
 
 namespace VM {
-    class Filebuffer;
+    class FileBuffer;
     class Controller;
     class MainView;
     class TextDisplay;

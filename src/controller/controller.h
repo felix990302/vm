@@ -26,6 +26,9 @@ namespace VM {
         std::unique_ptr<Input> input; 
         FileBuffer *fileBuffer;
         BufferView *bufferView;
+
+
+    private:
         CommandStack undoStack;
         CommandStack redoStack;
 
@@ -76,8 +79,10 @@ namespace VM {
 
         void quit(bool ignoreChanges);
         operator bool() const {return programIsRunning;}
+        BufferView &getBufferView() { return  *bufferView;}
+        void setBufferView(BufferView *bufferView1) { bufferView = bufferView1;}
 
-        Controller(std::unique_ptr<Input> input, FileBuffer *fileBuffer);
+        Controller(std::unique_ptr<Input> input, FileBuffer *fileBuffer, BufferView *bufferView);
         Controller(const Controller &other) = delete;
 
         ~Controller();

@@ -26,7 +26,7 @@ namespace VM {
         mode->processChar(input->getChar());
     }
 
-    Controller::Controller(std::unique_ptr<Input> input, FileBuffer *fileBuffer):
+    Controller::Controller(std::unique_ptr<Input> input, FileBuffer *fileBuffer, BufferView *bufferView):
         input{std::move(input)},
         fileBuffer{fileBuffer},
         undoStack{},
@@ -34,7 +34,8 @@ namespace VM {
         programIsRunning{true},
         modes{*this},
         clipBoard{},
-        mode{modes.commandMode.get()}
+        mode{modes.commandMode.get()},
+        bufferView {bufferView}
     {}
 
     void Controller::quit(bool ignoreChanges) {
