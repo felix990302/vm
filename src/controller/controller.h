@@ -45,10 +45,9 @@ namespace VM {
         };
 
         struct ClipBoard {
-            bool shouldPasteInline;
-            BufferType theClipBoard;
-
-            ClipBoard(bool b=true);
+            bool multiLine;
+            LineType theClipBoard;
+            ClipBoard(bool b=false);
         };
 
         public:

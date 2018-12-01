@@ -79,7 +79,13 @@ namespace VM {
         cur.setType(PtrCursor::CursorMovement::IteratorCursor);
 
         std::string ans;
-        while((n-ans.size()) > (cur.getLineIterator()->size() - cur.getCol())) ans += cur.getLineIterator()->substr(cur.getCol()) + "\n";
+        while((n-ans.size()) > (cur.getLineIterator()->size() - cur.getCol())) {
+            ans += cur.getLineIterator()->substr(cur.getCol()) + "\n";
+            if(cur.getLine() + 1 == buffer.size())
+                return  ans;
+            cur.moveDown();
+            cur.moveBeginOfLine();
+        }
         ans += cur.getLineIterator()->substr(cur.getCol(), n-ans.size());
 
         return ans;

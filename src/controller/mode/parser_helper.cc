@@ -6,6 +6,7 @@
 #include "controller/command/undo_command.h"
 #include "controller/command/redo_command.h"
 #include "controller/command/delete_command.h"
+#include "controller/command/clipboard_command/paste_command.h"
 
 #include "controller/command/switch_command/enter_search_command.h"
 #include "controller/command/switch_command/enter_colon_command.h"
@@ -19,6 +20,7 @@
 #include "controller/command/motion/line_motion/eol_motion.h"
 #include "controller/command/motion/line_motion/beg_line_motion.h"
 #include "controller/command/motion/line_motion/first_char_motion.h"
+
 
 #include "command_mode.h"
 
@@ -76,6 +78,8 @@ namespace VM {
                     {'?', [](int) { return std::make_unique<EnterSearchCommand<Direction::UP>>(); }},
                     {'x', [](int i) { return std::make_unique<DeleteCommand>(1, std::make_unique<WordMotion<Direction::RIGHT>> (i)); }},
                     {'X', [](int i) { return std::make_unique<DeleteCommand>(1, std::make_unique<WordMotion<Direction::LEFT>> (i)); }},
+                    {'p', [](int quantifier) { return std::make_unique<PasteCommand>(quantifier, true); }},
+                    {'P', [](int quantifier) { return std::make_unique<PasteCommand>(quantifier, false); }},
             },
             commandWithMotionParser{
                     {'d', [](int i, std::unique_ptr<Motion> && m) { return std::make_unique<DeleteCommand>(i, std::move(m)); }},

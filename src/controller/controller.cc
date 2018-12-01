@@ -18,7 +18,7 @@ namespace VM {
     {}
 
     Controller::ClipBoard::ClipBoard(bool b):
-        shouldPasteInline{b},
+        multiLine{b},
         theClipBoard{}
     {}
     

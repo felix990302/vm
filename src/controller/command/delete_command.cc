@@ -10,6 +10,7 @@ namespace VM {
         PtrCursor begin {controller.getBuffer().ptrCursor};
         motion->quantifier *= quant;
         quant = 1;
+        begin.setType(PtrCursor::CursorMovement::InsertModeCursor);
         PtrCursor end {motion->nextPosition(begin), controller.getBuffer().getBuffer(), PtrCursor::CursorMovement::IteratorCursor};
         begin.setType(PtrCursor::CursorMovement::IteratorCursor);
 
@@ -23,7 +24,6 @@ namespace VM {
             for(auto it = begin.getLineIterator(); it <= end.getLineIterator(); ++it)
                 buffer += *it + "\n";
             controller.getBuffer().ptrCursor.setCursor(beginPosition);
-
         }
         else
         {
@@ -33,6 +33,9 @@ namespace VM {
 
         }
         controller.getBuffer().delete_forward(buffer.size());
+
+        controller.clipBoard.multiLine = isMultiline;
+        controller.clipBoard.theClipBoard = buffer;
     }
 
     void DeleteCommand::undoTheCommand(Controller &controller) const {

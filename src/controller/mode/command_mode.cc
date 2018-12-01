@@ -6,10 +6,12 @@
 #include "controller/command/motion/line_motion/find_motion.h"
 #include "parsing_exception.h"
 #include "command_mode.h"
+#include "model/file_buffer.h"
 
 
 namespace VM {
     void CommandMode::processChar(int c) { //FIXME: generalize parsing
+        controller.getBuffer().ptrCursor.setType(PtrCursor::CursorMovement::NormalModeCursor);
         commandBuffer.push_back(c);
         try {
             controller.runCommand(parse());
