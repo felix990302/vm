@@ -11,6 +11,7 @@
 #include "controller/command/switch_command/enter_search_command.h"
 #include "controller/command/switch_command/enter_colon_command.h"
 #include "controller/command/switch_command/enter_insert_command.h"
+#include "controller/command/switch_command/open_line_insert_command.h"
 
 #include "controller/command/motion/direction_motion.h"
 #include "controller/command/motion/word_motion.h"
@@ -69,6 +70,8 @@ namespace VM {
             },
             commandParser{
                     {'i', [](int) { return std::make_unique<EnterInsertCommand>(); }},
+                    {'O', [](int i) { return std::make_unique<OpenLineInsertCommand<Direction::UP>>(i); }},
+                    {'o', [](int i) { return std::make_unique<OpenLineInsertCommand<Direction::DOWN>>(i); }},
                     {'u', [](int i) { return std::make_unique<UndoCommand>(i); }},
                     {'r' - 96, [](int i) { return std::make_unique<RedoCommand>(i); }},
                     {'r', [](int){char c=getchar(); return std::make_unique<ReplaceCommand>(c);}},

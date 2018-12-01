@@ -4,6 +4,9 @@
 
 namespace VM {
     void MutationCommand::doTheCommand(Controller &controller) {
+        PtrCursor &cursor = controller.getBuffer().ptrCursor;
+        auto temp = cursor.getType();
+        cursor.setType(PtrCursor::CursorMovement::IteratorCursor);
         for(auto &mutate : theMutateCommands) {
             mutate->doCommand(controller);
         }
@@ -13,19 +16,28 @@ namespace VM {
                 theMutateCommands.push_back(theMutateCommands[ind]->undoableclone());
                 theMutateCommands.back()->doCommand(controller);
             }
-        } 
+        }
+        cursor.setType(temp);
     }
 
     void MutationCommand::undoTheCommand(Controller &controller) const {
+        PtrCursor &cursor = controller.getBuffer().ptrCursor;
+        auto temp = cursor.getType();
+        cursor.setType(PtrCursor::CursorMovement::IteratorCursor);
         for(auto it=theMutateCommands.rbegin(); it!=theMutateCommands.rend(); ++it) {
             (*it)->undoCommand(controller);
         }
+        cursor.setType(temp);
     }
 
     void MutationCommand::redoTheCommand(Controller &controller) const {
+        PtrCursor &cursor = controller.getBuffer().ptrCursor;
+        auto temp = cursor.getType();
+        cursor.setType(PtrCursor::CursorMovement::IteratorCursor);
         for(auto &mutate : theMutateCommands) {
             mutate->redoCommand(controller);
         }
+        cursor.setType(temp);
     }
 
     MutationCommand::MutationCommand(size_t quant, InsertModeBufferType &&insertModeBuffer):

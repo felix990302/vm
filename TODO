@@ -17,7 +17,7 @@ Keys needed to do:
     - h j k l (done)
     - i (mostly done)
     - n (done)
-- o (append new line after current one, basically insert mode but move down first) - hard
+- o (append new line after current one, basically insert mode but move down first) - hard (done)
 - p (paste after cursor)
 - q (record macro)
     - r (replace a single character) done
@@ -33,7 +33,7 @@ Keys needed to do:
 - I (insert mode at the beggining of the line)
 - J (go to end of line and delete new line character)
     - N (mostly done find backwards) (done)
-- O (like o but opens line up)
+- O (like o but opens line up) (done)
 - P (paste before cursor)
 - R (replace mode)
 - S (delete line and go to insert mode)
