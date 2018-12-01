@@ -1,19 +1,25 @@
 #include "controller/command/mutate_command/delete_forward_command.h"
 #include "controller/command/mutate_command/delete_backward_command.h"
+#include "controller/command/mutate_command/replace_command.h"
+
 #include "controller/command/dot_command.h"
 #include "controller/command/undo_command.h"
 #include "controller/command/redo_command.h"
+#include "controller/command/delete_command.h"
+
 #include "controller/command/switch_command/enter_search_command.h"
 #include "controller/command/switch_command/enter_colon_command.h"
 #include "controller/command/switch_command/enter_insert_command.h"
+
 #include "controller/command/motion/direction_motion.h"
+#include "controller/command/motion/word_motion.h"
+#include "controller/command/motion/match_brace_motion.h"
+
 #include "controller/command/motion/line_motion/find_motion.h"
 #include "controller/command/motion/line_motion/eol_motion.h"
 #include "controller/command/motion/line_motion/beg_line_motion.h"
 #include "controller/command/motion/line_motion/first_char_motion.h"
-#include "controller/command/motion/word_motion.h"
-#include "controller/command/delete_command.h"
-#include "controller/command/mutate_command/replace_command.h"
+
 #include "command_mode.h"
 
 
@@ -55,6 +61,7 @@ namespace VM {
                                 }));
                         return std::make_unique<FindMotion<Direction::LEFT>>(quantifier, target);
                     }},
+                    {'%', [](int quantifier) { return std::make_unique<MatchBraceMotion>(quantifier); }},
                     {'b', [](int quantifier) { return std::make_unique<WordMotion<Direction::LEFT>>(quantifier); }},
                     {'w', [](int quantifier) { return std::make_unique<WordMotion<Direction::RIGHT>>(quantifier); }},
             },

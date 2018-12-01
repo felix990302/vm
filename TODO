@@ -45,7 +45,7 @@ Keys needed to do:
     - ; (repeats last f some number of times / this is bad) (done) lambda is awesome <3
     - / (mostly done)
     - ? (like /)
-- % (move to matching parantheses)
+- % (move to matching parantheses) (done)
 
 - ^b ^d ^f  ^u -scrolling
 - ^g some information
