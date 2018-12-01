@@ -6,6 +6,7 @@
 #include "controller/command/mutate_command/delete_forward_command.h"
 #include "controller/command/mutation_command.h"
 #include "controller/command/switch_command/escape_command.h"
+#include "exit_handler/exit_handler.h"
 #include "insert_mode.h"
 
 
@@ -13,7 +14,7 @@
 namespace VM {
     void InsertMode::flush() {
         if(!insertBuffer.empty()) {
-             controller.pushCommand(std::make_unique<MutationCommand>(1, std::move(insertBuffer)));
+             exitHandler->postExit(controller, std::make_unique<MutationCommand>(1, std::move(insertBuffer)));
         }
         insertBuffer.clear();
     }
@@ -58,5 +59,11 @@ namespace VM {
         flush();
     }
 
+    void InsertMode::setExitHandler(std::unique_ptr<ExitHandler> handler) {
+        exitHandler = std::move(handler);
+    }
+
     InsertMode::InsertMode(Controller &controller) : Mode(controller) {}
+
+    InsertMode::~InsertMode() {}
 }

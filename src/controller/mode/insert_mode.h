@@ -6,8 +6,12 @@
 
 
 namespace VM {
+    class ExitHandler;
+
     class InsertMode: public Mode {
         InsertModeBufferType insertBuffer;
+        std::unique_ptr<ExitHandler> exitHandler;
+
 
         InsertMode(const InsertMode &other) = delete; // no copies
         InsertMode &operator=(const InsertMode &other) = delete; // no assignment
@@ -17,11 +21,14 @@ namespace VM {
         void flush() override;
         void onExit() override;
 
-
+        void setExitHandler(std::unique_ptr<ExitHandler> handler);
+        InsertModeBufferType &getInserBuffer() {return insertBuffer;}
 
         std::string getStatusBarLeft() override;
 
         InsertMode(Controller &controller);
+
+        ~InsertMode();
     };
 }
 

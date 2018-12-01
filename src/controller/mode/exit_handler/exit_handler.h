@@ -10,12 +10,12 @@ namespace VM {
     class Controller;
     class MutationCommand;
 
-    class ExitHandler {
+    struct ExitHandler {
         size_t quantifier;
 
-        public:
         virtual void postExit(Controller &controller, std::unique_ptr<MutationCommand> sequence) = 0;
 
+        ExitHandler(size_t quantifer=1);
         virtual ~ExitHandler() = 0;
     };
 }
