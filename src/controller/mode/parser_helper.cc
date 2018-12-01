@@ -12,6 +12,8 @@
 #include "controller/command/motion/line_motion/beg_line_motion.h"
 #include "controller/command/motion/line_motion/first_char_motion.h"
 #include "controller/command/motion/word_motion.h"
+#include "controller/command/delete_command.h"
+#include "controller/command/mutate_command/replace_command.h"
 #include "command_mode.h"
 
 

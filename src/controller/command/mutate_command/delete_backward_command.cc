@@ -12,12 +12,13 @@ namespace VM {
     }
 
     void DeleteBackwardCommand::undoTheCommand(Controller &controller) const {
-        for(auto c : toMutate)
-            controller.getBuffer().type(c);
+        /*for(auto c : toMutate)
+            controller.getBuffer().type(c);*/
+        controller.getBuffer().type(toMutate);
     }
 
     void DeleteBackwardCommand::redoTheCommand(Controller &controller) const {
-        controller.getBuffer().delete_backward(toMutate.size());
+        controller.getBuffer().delete_backward(1);
     }
 
     DeleteBackwardCommand::DeleteBackwardCommand(const DeleteBackwardCommand &other): Clonable{other} {}
