@@ -13,10 +13,12 @@ namespace VM {
     void UndoableCommand::undoCommand(Controller &controller) const {
         controller.getBuffer().ptrCursor.setCursor(endPosn);
         undoTheCommand(controller);
+        controller.getBuffer().ptrCursor.setCursor(startPosn);
     }
     void UndoableCommand::redoCommand(Controller &controller) const {
         controller.getBuffer().ptrCursor.setCursor(startPosn);
         redoTheCommand(controller);
+        controller.getBuffer().ptrCursor.setCursor(endPosn);
     }
 
     // FIXME: find another non-sketchy way to clone

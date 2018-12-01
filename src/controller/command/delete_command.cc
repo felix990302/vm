@@ -12,6 +12,7 @@ namespace VM {
         quant = 1;
         PtrCursor end {motion->nextPosition(begin), controller.getBuffer().getBuffer(), PtrCursor::CursorMovement::IteratorCursor};
         begin.setType(PtrCursor::CursorMovement::IteratorCursor);
+
         if(end < begin) std::swap(begin,end);
         beginPosition = begin.getCursor();
         isMultiline = motion->isMultiline();
@@ -21,7 +22,6 @@ namespace VM {
             beginPosition.col = 0;
             for(auto it = begin.getLineIterator(); it <= end.getLineIterator(); ++it)
                 buffer += *it + "\n";
-
             controller.getBuffer().ptrCursor.setCursor(beginPosition);
 
         }
@@ -36,12 +36,14 @@ namespace VM {
     }
 
     void DeleteCommand::undoTheCommand(Controller &controller) const {
+        controller.getBuffer().ptrCursor.setType(PtrCursor::CursorMovement::IteratorCursor);
         controller.getBuffer().type(buffer);
         if(controller.getBuffer().ptrCursor.isEOF()) controller.getBuffer().delete_backward(1);
     }
 
     void DeleteCommand::redoTheCommand(Controller &controller) const {
         controller.getBuffer().ptrCursor.setType(PtrCursor::CursorMovement::IteratorCursor);
+        controller.getBuffer().ptrCursor.setCursor(beginPosition);
         controller.getBuffer().delete_forward(buffer.size());
     }
 

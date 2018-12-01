@@ -10,7 +10,7 @@ namespace VM {
 
     class DeleteCommand : public ClonableCommand <UndoableCommand, DeleteCommand>{
         std::string buffer;
-        Cursor beginPosition;
+        Cursor beginPosition; // this position is acutally the position where we strt deleting, begining of line for multiline commands
         bool isMultiline;
 
         std::unique_ptr<Motion> motion;
