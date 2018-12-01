@@ -5,7 +5,7 @@
 
 namespace VM {
     inline void InsertCommand::commandHelper(Controller &controller) const {
-        controller.getBuffer().type(toMutate[0]);
+        controller.getBuffer().type(toMutate);
     }
 
     void InsertCommand::doTheCommand(Controller &controller) {
