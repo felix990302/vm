@@ -14,6 +14,7 @@
 #include "controller/command/switch_command/enter_insert_command.h"
 #include "controller/command/switch_command/open_line_insert_command.h"
 #include "controller/command/switch_command/eol_enter_insert_command.h"
+#include "controller/command/switch_command/bol_enter_insert_command.h"
 #include "controller/command/switch_command/right_enter_insert_command.h"
 
 #include "controller/command/motion/direction_motion.h"
@@ -73,6 +74,7 @@ namespace VM {
             },
             commandParser{
                     {'i', [](int i) { return std::make_unique<EnterInsertCommand>(i); }},
+                    {'I', [](int i) { return std::make_unique<BOLEnterInsertCommand>(i); }},
                     {'O', [](int i) { return std::make_unique<OpenLineInsertCommand<Direction::UP>>(i); }},
                     {'o', [](int i) { return std::make_unique<OpenLineInsertCommand<Direction::DOWN>>(i); }},
                     {'A', [](int i) { return std::make_unique<EOLEnterInsertCommand>(i); }},
