@@ -13,6 +13,9 @@
 #include "controller/command/switch_command/enter_colon_command.h"
 #include "controller/command/switch_command/enter_insert_command.h"
 #include "controller/command/switch_command/open_line_insert_command.h"
+#include "controller/command/switch_command/eol_enter_insert_command.h"
+#include "controller/command/switch_command/bol_enter_insert_command.h"
+#include "controller/command/switch_command/right_enter_insert_command.h"
 
 #include "controller/command/motion/direction_motion.h"
 #include "controller/command/motion/word_motion.h"
@@ -70,9 +73,12 @@ namespace VM {
                     {'w', [](int quantifier) { return std::make_unique<WordMotion<Direction::RIGHT>>(quantifier); }},
             },
             commandParser{
-                    {'i', [](int) { return std::make_unique<EnterInsertCommand>(); }},
+                    {'i', [](int i) { return std::make_unique<EnterInsertCommand>(i); }},
+                    {'I', [](int i) { return std::make_unique<BOLEnterInsertCommand>(i); }},
                     {'O', [](int i) { return std::make_unique<OpenLineInsertCommand<Direction::UP>>(i); }},
                     {'o', [](int i) { return std::make_unique<OpenLineInsertCommand<Direction::DOWN>>(i); }},
+                    {'A', [](int i) { return std::make_unique<EOLEnterInsertCommand>(i); }},
+                    {'a', [](int i) { return std::make_unique<RightEnterInsertCommand>(i); }},
                     {'u', [](int i) { return std::make_unique<UndoCommand>(i); }},
                     {'r' - 96, [](int i) { return std::make_unique<RedoCommand>(i); }},
                     {'r', [](int){char c=getchar(); return std::make_unique<ReplaceCommand>(c);}},
