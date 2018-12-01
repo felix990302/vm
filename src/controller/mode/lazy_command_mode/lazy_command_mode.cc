@@ -10,7 +10,7 @@ namespace VM {
         switch(c) {
             case '\n': { // enter
                 flush();
-                /* fallthrough */
+                [[fallthrough]]; 
             }
             case 27: { // esc
                 controller.runSimpleCommand(std::make_unique<EscapeCommand>());

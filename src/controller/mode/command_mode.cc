@@ -7,6 +7,7 @@
 #include "parsing_exception.h"
 #include "command_mode.h"
 #include "model/file_buffer.h"
+#include "controller/command/motion/line_motion/whole_line_motion.h"
 
 
 namespace VM {
@@ -27,7 +28,7 @@ namespace VM {
     std::unique_ptr<Command> CommandMode::parse() {
 
         try {
-            return std::make_unique<MoveCommand>(1,parseMotion(commandBuffer));
+            return std::make_unique<MoveCommand>(1,parseMotion(commandBuffer,'\0'));
         }
         catch (const ParsingException &) {}
 
@@ -65,7 +66,7 @@ namespace VM {
                         return  parserHelper.commandParser[c](quantifier);
                     else if(parserHelper.commandWithMotionParser.count(c))
                     {
-                        return parserHelper.commandWithMotionParser[c](quantifier, parseMotion(commandBuffer.substr(i+1))); // copy ellision
+                        return parserHelper.commandWithMotionParser[c](quantifier, parseMotion(commandBuffer.substr(i+1), c)); // copy ellision
                     }
                     else
                         throw InvalidCommandException();
@@ -77,7 +78,9 @@ namespace VM {
         throw UnfinishedCommandException{};
     }
 
-    std::unique_ptr<Motion> CommandMode::parseMotion(const std::string &motionString) {
+    std::unique_ptr<Motion> CommandMode::parseMotion(const std::string &motionString, char command) {
+        if(motionString.length() == 1 && command == motionString[0] && motionString.find_first_of("ycd")==0)
+            return std::make_unique<WholeLineMotion>();
         //TODO special case for whole line motion
         ParserHelper::ParserStages stage = ParserHelper::ParserStages::EarlyStage;
         int quantifier = 1;

@@ -31,7 +31,7 @@ namespace VM {
             ParserHelper();
         };
         std::unique_ptr<Command> parse();
-        std::unique_ptr<Motion> parseMotion(const std::string &);
+        std::unique_ptr<Motion> parseMotion(const std::string &, char);
 
         public:
         ParserHelper parserHelper;
