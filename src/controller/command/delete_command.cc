@@ -36,13 +36,11 @@ namespace VM {
     }
 
     void DeleteCommand::undoTheCommand(Controller &controller) const {
-        controller.getBuffer().ptrCursor.setCursor(beginPosition);
         controller.getBuffer().type(buffer);
         if(controller.getBuffer().ptrCursor.isEOF()) controller.getBuffer().delete_backward(1);
     }
 
     void DeleteCommand::redoTheCommand(Controller &controller) const {
-        controller.getBuffer().ptrCursor.setCursor(beginPosition);
         controller.getBuffer().ptrCursor.setType(PtrCursor::CursorMovement::IteratorCursor);
         controller.getBuffer().delete_forward(buffer.size());
     }
