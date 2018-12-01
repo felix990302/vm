@@ -19,18 +19,23 @@ namespace VM {
     }
 
     void InsertMode::processChar(int c) {
-        controller.getBuffer().ptrCursor.setType(PtrCursor::CursorMovement::IteratorCursor);
+        PtrCursor &cursor = controller.getBuffer().ptrCursor;
+        cursor.setType(PtrCursor::CursorMovement::IteratorCursor);
         switch(c) {
             case KEY_DC:{
-                insertBuffer.push_back(std::make_unique<DeleteForwardCommand>(1));
-                insertBuffer.back()->doCommand(controller);
+                if(cursor.getLineIterator()!=cursor.getLineEnd()-1 || cursor.getStringIterator()!=cursor.getLineIterator()->end()) {
+                    insertBuffer.push_back(std::make_unique<DeleteForwardCommand>(1));
+                    insertBuffer.back()->doCommand(controller);
+                } 
                 break;
             }
             case KEY_BACKSPACE:
             case 127: //linux is weired TODO
                 {
-                insertBuffer.push_back(std::make_unique<DeleteBackwardCommand>(1));
-                insertBuffer.back()->doCommand(controller);
+                if(controller.getBuffer().ptrCursor.getLine()>0 || controller.getBuffer().ptrCursor.getCol()>0) {
+                    insertBuffer.push_back(std::make_unique<DeleteBackwardCommand>(1));
+                    insertBuffer.back()->doCommand(controller);
+                }
                 break;
             }
             case 27: { // FIXME: figure out how to handle escape
