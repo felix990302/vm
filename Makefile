@@ -13,7 +13,7 @@ CXX = g++-5
 DEP_LOC = $(patsubst $(OBJ_DIR)/%,$(DEP_DIR)/%,$*.d)
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP_LOC)
 WFLAGS = -Wall -Wextra -Werror -g
-CPPFLAGS = -std=c++14 $(WFLAGS) $(DEPFLAGS) -I $(SRC_DIR)
+CPPFLAGS = -std=c++14 $(WFLAGS) $(DEPFLAGS) -Og -I $(SRC_DIR)
 CXXFLAGS = -std=c++14 $(WFLAGS)
 EXEC = vm
 
