@@ -20,7 +20,7 @@ Keys needed to do:
 - o (append new line after current one, basically insert mode but move down first) - hard
 - p (paste after cursor)
 - q (record macro)
-- r (replace a single character)
+- r (replace a single character) done
 - s (remove character and go to insert mode/ it is very tricky with quantifier) 
 - u (undo) (mostly done)
 - w (motion) to some definition of word (can be multiline) (done)
@@ -32,7 +32,7 @@ Keys needed to do:
 - F (find back) (done)
 - I (insert mode at the beggining of the line)
 - J (go to end of line and delete new line character)
-- N (mostly done find backwards)
+- N (mostly done find backwards) (done)
 - O (like o but opens line up)
 - P (paste before cursor)
 - R (replace mode)

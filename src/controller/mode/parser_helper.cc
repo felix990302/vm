@@ -1,5 +1,6 @@
 #include "controller/command/mutate_command/delete_forward_command.h"
 #include "controller/command/mutate_command/delete_backward_command.h"
+#include "controller/command/mutate_command/replace_command.h"
 #include "controller/command/dot_command.h"
 #include "controller/command/undo_command.h"
 #include "controller/command/redo_command.h"
@@ -50,6 +51,7 @@ namespace VM {
             {'i', [](int){ return std::make_unique<EnterInsertCommand>();}},
             {'u', [](int i){ return std::make_unique<UndoCommand>(i);}},
             {'r'-96, [](int i){ return std::make_unique<RedoCommand>(i);}},
+            {'r', [](int){char c=getchar(); return std::make_unique<ReplaceCommand>(c);}},
             {'.', [](int i){ return std::make_unique<DotCommand>(i);}},
             {':', [](int){ return std::make_unique<EnterColonCommand>();}},
             {'/', [](int){ return std::make_unique<EnterSearchCommand<Direction::DOWN>>();}},

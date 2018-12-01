@@ -5,19 +5,21 @@
 
 namespace VM {
     void DeleteBackwardCommand::doTheCommand(Controller &controller) {
-        PtrCursor &cursor = controller.getBuffer().ptrCursor;
-        size_t toDelete = std::min(quant, cursor.getCol());
-        toMutate = cursor.getLineIterator()->substr(cursor.getCol()-toDelete, toDelete);
-        controller.getBuffer().delete_backward(toDelete);
+        const PtrCursor &cursor = controller.getBuffer().ptrCursor;
+        if(cursor.getCol() == 0) toMutate = '\n';
+        else toMutate = *(cursor.getStringIterator()-1);
+        controller.getBuffer().delete_backward(1);
     }
 
     void DeleteBackwardCommand::undoTheCommand(Controller &controller) const {
-        for(auto c : toMutate)
-            controller.getBuffer().type(c);
+        controller.getBuffer().type(toMutate);
     }
 
     void DeleteBackwardCommand::redoTheCommand(Controller &controller) const {
-        controller.getBuffer().delete_backward(toMutate.size());
+        auto temp = controller.getBuffer().ptrCursor.getType();
+        controller.getBuffer().ptrCursor.setType(PtrCursor::CursorMovement::IteratorCursor);
+        controller.getBuffer().delete_backward(1);
+        controller.getBuffer().ptrCursor.setType(temp);
     }
 
     DeleteBackwardCommand::DeleteBackwardCommand(const DeleteBackwardCommand &other): Clonable{other} {}

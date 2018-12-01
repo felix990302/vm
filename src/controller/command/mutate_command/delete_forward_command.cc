@@ -6,19 +6,21 @@
 namespace VM {
     void DeleteForwardCommand::doTheCommand(Controller &controller) {
         PtrCursor &cursor = controller.getBuffer().ptrCursor;
-        toMutate = cursor.getLineIterator()->substr(cursor.getCol(), quant);
-        controller.getBuffer().delete_forward(quant);
+        if(cursor.getStringIterator() == cursor.getLineIterator()->end()) toMutate = '\n';
+        else toMutate = *(cursor.getStringIterator());
+        controller.getBuffer().delete_forward(1);
     }
 
     void DeleteForwardCommand::undoTheCommand(Controller &controller) const {
-        for(auto it=toMutate.rbegin(); it!=toMutate.rend(); ++it) {
-            controller.getBuffer().type(*it);
-            --controller.getBuffer().ptrCursor;
-        }
+        controller.getBuffer().type(toMutate);
+        --controller.getBuffer().ptrCursor;
     }
 
     void DeleteForwardCommand::redoTheCommand(Controller &controller) const {
-        controller.getBuffer().delete_forward(toMutate.size());
+        auto temp = controller.getBuffer().ptrCursor.getType();
+        controller.getBuffer().ptrCursor.setType(PtrCursor::CursorMovement::IteratorCursor);
+        controller.getBuffer().delete_forward(1);
+        controller.getBuffer().ptrCursor.setType(temp);
     }
 
     DeleteForwardCommand::DeleteForwardCommand(DeleteForwardCommand &&other): Clonable{std::move(other)} {}

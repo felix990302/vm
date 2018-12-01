@@ -23,7 +23,13 @@ namespace VM {
             controller.modes.commandMode->parserHelper.motionsParser.erase('n');
             controller.modes.commandMode->parserHelper.motionsParser.emplace('n',
                     std::function<std::unique_ptr<Motion>(int)>([commandString = commandString] (int n) {
-                        return std::make_unique<SearchMotion<dir>>(n * 1, commandString);
+                        return std::make_unique<SearchMotion<dir>>(n, commandString);
+                    })
+            );
+            controller.modes.commandMode->parserHelper.motionsParser.erase('N');
+            controller.modes.commandMode->parserHelper.motionsParser.emplace('N',
+                    std::function<std::unique_ptr<Motion>(int)>([commandString = commandString] (int n) {
+                        return std::make_unique<SearchMotion<dir==Direction::DOWN ? Direction::UP : Direction::DOWN>>(n, commandString);
                     })
             );
         }
