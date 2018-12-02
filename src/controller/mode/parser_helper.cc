@@ -16,6 +16,7 @@
 #include "controller/command/switch_command/eol_enter_insert_command.h"
 #include "controller/command/switch_command/bol_enter_insert_command.h"
 #include "controller/command/switch_command/right_enter_insert_command.h"
+#include "controller/command/switch_command/delete_line_insert_command.h"
 
 #include "controller/command/motion/direction_motion.h"
 #include "controller/command/motion/word_motion.h"
@@ -79,6 +80,7 @@ namespace VM {
                     {'o', [](int i) { return std::make_unique<OpenLineInsertCommand<Direction::DOWN>>(i); }},
                     {'A', [](int i) { return std::make_unique<EOLEnterInsertCommand>(i); }},
                     {'a', [](int i) { return std::make_unique<RightEnterInsertCommand>(i); }},
+                    {'S', [](int i) { return std::make_unique<DeleteLineInsertCommand>(i); }},
                     {'u', [](int i) { return std::make_unique<UndoCommand>(i); }},
                     {'r' - 96, [](int i) { return std::make_unique<RedoCommand>(i); }},
                     {'r', [](int){char c=getchar(); return std::make_unique<ReplaceCommand>(c);}},
