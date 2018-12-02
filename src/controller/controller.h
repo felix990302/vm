@@ -5,6 +5,7 @@
 #include <deque>
 #include "controller/command/motion/direction.h"
 #include "model/buffer_type.h"
+#include <map>
 
 
 namespace VM {
@@ -32,6 +33,7 @@ namespace VM {
     private:
         CommandStack undoStack;
         CommandStack redoStack;
+        map<char, >
 
         bool programIsRunning;
 
