@@ -11,7 +11,7 @@ namespace VM {
 
         EnterInsertCommand(size_t quant): Clonable{quant} {}
         EnterInsertCommand(const EnterInsertCommand &other): Clonable{other} {}
-        EnterInsertCommand(EnterInsertCommand &other): Clonable{std::move(other)} {}
+        EnterInsertCommand(EnterInsertCommand &&other): Clonable{std::move(other)} {}
     };
 }
 
