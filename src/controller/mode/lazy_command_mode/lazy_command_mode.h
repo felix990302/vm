@@ -26,6 +26,8 @@ namespace VM {
 
         std::string getStatusBarLeft() override final;
 
+        int getStatusBarCursor() override;
+
         virtual ~LazyCommandMode() = 0;
     };
 }

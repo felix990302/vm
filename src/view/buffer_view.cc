@@ -8,7 +8,7 @@
 namespace VM{
     void BufferView::draw(const Coordinates &, TextDisplay &display)
     {
-        int lineNumberWidth = showLinesNumbers * (std::max(std::to_string(fileBuffer->getBuffer().size()).size(), (size_t) 3) + 1);
+        int lineNumberWidth = getLineNumberWidth();
         size_t newCursorY = cursor.line;
         size_t newCursorX = cursor.col;
 
@@ -48,7 +48,7 @@ namespace VM{
             if(ss.str().size())
                 display.puts(Coordinates{0,y}, ss.str());
         }
-        display.setCursorPosition(fileBuffer->ptrCursor.getLine() - cursor.line, lineNumberWidth + fileBuffer->ptrCursor.getCol() - cursor.col);
+
 
     }
     BufferView::BufferView(FileBuffer *fileBuffer) : cursor(0,0), fileBuffer(fileBuffer) {}
@@ -92,5 +92,17 @@ namespace VM{
             fileBuffer->ptrCursor.moveUp(-change);
         else
             fileBuffer->ptrCursor.moveDown( change);
+    }
+
+    bool BufferView::setCursor(const Coordinates &parentPosn, TextDisplay &display) {
+        int lineNumberWidth = getLineNumberWidth();
+        display.setCursorPosition(
+                parentPosn.y + fileBuffer->ptrCursor.getLine() - cursor.line,
+                parentPosn.x + lineNumberWidth + fileBuffer->ptrCursor.getCol() - cursor.col);
+        return true;
+    }
+
+    int BufferView::getLineNumberWidth() {
+        return showLinesNumbers * (std::max(std::to_string(fileBuffer->getBuffer().size()).size(), (size_t) 3) + 1);
     }
 }

@@ -17,9 +17,11 @@ namespace VM {
 
         virtual std::string getStatusBarLeft();
         virtual std::string getStatusBarRight();
-
+        virtual int getStatusBarCursor();
 
         Mode(Controller &controller): controller(controller) {}
+
+
 
         virtual ~Mode() = 0;
     };

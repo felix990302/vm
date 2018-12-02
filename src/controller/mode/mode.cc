@@ -11,4 +11,8 @@ namespace VM {
     std::string Mode::getStatusBarRight() {
         return "";
     }
+
+    int Mode::getStatusBarCursor() {
+        return -1;
+    }
 }

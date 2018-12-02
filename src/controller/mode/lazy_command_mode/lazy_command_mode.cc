@@ -38,4 +38,10 @@ namespace VM {
     std::string LazyCommandMode::getStatusBarLeft() {
         return getStatusBarLeftIndicatorChar() + commandString;
     }
+
+    int LazyCommandMode::getStatusBarCursor() {
+        return commandString.size();
+    }
+
+
 }

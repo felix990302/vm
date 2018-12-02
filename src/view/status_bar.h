@@ -14,7 +14,9 @@ namespace VM {
     public:
         StatusBar(FileBuffer *, Controller *);
         void draw(const Coordinates &parentPosn, TextDisplay &display) override;
+        bool setCursor(const Coordinates &parentPosn, TextDisplay &display);
     };
+
 
 }
 

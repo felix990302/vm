@@ -21,6 +21,8 @@ namespace VM {
         void setLineNumbers(bool onOrOf) {showLinesNumbers = onOrOf;}
         void moveScreen(bool up);
         void moveHalfScreen(bool up);
+        bool setCursor(const Coordinates &parentPosn, TextDisplay &display);
+        int getLineNumberWidth();
     };
 }
 

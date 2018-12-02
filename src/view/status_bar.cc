@@ -24,4 +24,12 @@ namespace VM {
         display.puts(parentPosn + getPosn(),output);
         //TODO : make it nicer
     }
+
+    bool StatusBar::setCursor(const Coordinates &parentPosn, TextDisplay &display) {
+            int cur = controller->getMode().getStatusBarCursor();
+            if(cur == -1)
+                return false;
+            display.setCursorPosition(parentPosn.y + getPosn().y, getPosn().x + parentPosn.x + cur + 1);
+            return true;
+    }
 }

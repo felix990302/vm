@@ -26,7 +26,7 @@ namespace VM {
         }
         else if(command == "w") {
             if(argument.empty()) {
-                return std::make_unique<WriteCommand>(false);
+                return std::make_unique<WriteCommand>(false);return 0;
             }
             else {
                 return std::make_unique<WriteCommand>(false, argument);

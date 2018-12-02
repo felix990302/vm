@@ -19,4 +19,12 @@ namespace VM {
             appendChildren(statusBar);
             appendChildren(bufferView);
     }
+
+    void MainView::draw(const Coordinates &parentPosn, TextDisplay &display) {
+        Component::draw(parentPosn, display);
+        if(!statusBar->setCursor(parentPosn, display))
+            bufferView->setCursor(parentPosn, display);
+    }
+
+
 }

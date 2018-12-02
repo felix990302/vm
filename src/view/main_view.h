@@ -19,6 +19,8 @@ namespace VM {
         MainView(FileBuffer *fileBuffer, Controller *controller);
         void setSize(const Coordinates &size) override;
         BufferView &getBufferView() { return *bufferView;}
+
+        void draw(const Coordinates &parentPosn, TextDisplay &display) override;
     };
 
 }
