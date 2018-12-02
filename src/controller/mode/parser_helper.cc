@@ -1,10 +1,10 @@
 #include "controller/command/mutate_command/delete_forward_command.h"
 #include "controller/command/mutate_command/delete_backward_command.h"
-#include "controller/command/mutate_command/replace_command.h"
 
 #include "controller/command/dot_command.h"
 #include "controller/command/undo_command.h"
 #include "controller/command/redo_command.h"
+#include "controller/command/replace_char_command.h"
 #include "controller/command/delete_command.h"
 #include "controller/command/clipboard_command/paste_command.h"
 #include "controller/command/clipboard_command/yank_command.h"
@@ -12,6 +12,7 @@
 #include "controller/command/switch_command/enter_search_command.h"
 #include "controller/command/switch_command/enter_colon_command.h"
 #include "controller/command/switch_command/enter_insert_command.h"
+#include "controller/command/switch_command/enter_replace_command.h"
 #include "controller/command/switch_command/open_line_insert_command.h"
 #include "controller/command/switch_command/eol_enter_insert_command.h"
 #include "controller/command/switch_command/bol_enter_insert_command.h"
@@ -85,7 +86,8 @@ namespace VM {
                     {'s', [](int i) { return std::make_unique<DeleteCharInsertCommand>(i); }},
                     {'u', [](int i) { return std::make_unique<UndoCommand>(i); }},
                     {'r' - 96, [](int i) { return std::make_unique<RedoCommand>(i); }},
-                    {'r', [](int){char c=getchar(); return std::make_unique<ReplaceCommand>(c);}},
+                    {'r', [](int){char c=getchar(); return std::make_unique<ReplaceCharCommand>(c);}},
+                    {'R', [](int i) { return std::make_unique<EnterReplaceCommand>(i); }},
                     {'.', [](int i) { return std::make_unique<DotCommand>(i); }},
                     {':', [](int) { return std::make_unique<EnterColonCommand>(); }},
                     {'/', [](int) { return std::make_unique<EnterSearchCommand<Direction::DOWN>>(); }},

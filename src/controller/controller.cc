@@ -4,6 +4,7 @@
 #include "mode/lazy_command_mode/search_command_mode.h"
 #include "mode/lazy_command_mode/colon_command_mode.h"
 #include "mode/insert_mode.h"
+#include "mode/replace_mode.h"
 #include "mode/command_mode.h"
 #include "controller.h"
 
@@ -11,6 +12,7 @@
 namespace VM {
     Controller::Modes::Modes(Controller &controller):
         insertMode{std::make_unique<InsertMode>(controller)},
+        replaceMode{std::make_unique<ReplaceMode>(controller)},
         commandMode{std::make_unique<CommandMode>(controller)},
         colonCommandMode{std::make_unique<ColonCommandMode>(controller)},
         searchDownMode{std::make_unique<SearchCommandMode<Direction::DOWN>>(controller)},

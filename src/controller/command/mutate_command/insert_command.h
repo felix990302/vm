@@ -2,7 +2,6 @@
 #define INSERT_COMMAND_H
 
 #include "mutate_command.h"
-#include "model/file_buffer.h"
 
 
 namespace VM {

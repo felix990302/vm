@@ -15,6 +15,7 @@ namespace VM {
     class Command;
     class UndoableCommand;
     class InsertMode;
+    class ReplaceMode;
     class CommandMode;
     class ColonCommandMode;
     class BufferView;
@@ -36,6 +37,7 @@ namespace VM {
 
         struct Modes {
             std::unique_ptr<InsertMode> insertMode;
+            std::unique_ptr<ReplaceMode> replaceMode;
             std::unique_ptr<CommandMode> commandMode;
             std::unique_ptr<ColonCommandMode> colonCommandMode;
             std::unique_ptr<SearchCommandMode<Direction::DOWN>> searchDownMode;
