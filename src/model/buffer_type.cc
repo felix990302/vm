@@ -1,4 +1,5 @@
 #include <fstream>
+#include "file_exception.h"
 #include "buffer_type.h"
 
 
@@ -7,6 +8,8 @@ namespace VM {
         BufferType buffer;
         std::string temp;
         std::ifstream file {fileName};
+
+        if(!file) throw FileReadException {};
 
         while(getline(file, temp)) {
             buffer.push_back(std::move(temp));

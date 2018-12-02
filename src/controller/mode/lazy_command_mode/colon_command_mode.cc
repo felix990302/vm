@@ -1,11 +1,12 @@
 #include <cstdlib>
 #include "utility/trim.h"
 #include "model/file_buffer.h"
-#include "model/write_exception.h"
+#include "model/file_exception.h"
 #include "controller/controller.h"
 #include "controller/quit_exception.h"
 #include "controller/mode/parsing_exception.h"
 #include "controller/command/write_command.h"
+#include "controller/command/read_in_command.h"
 #include "controller/command/quit_command.h"
 #include "controller/command/move_command.h"
 #include "controller/command/motion/absolute_motion.h"
@@ -31,7 +32,14 @@ namespace VM {
                 return std::make_unique<WriteCommand>(false, argument);
             }
         }
-        else if(command == "r") {}
+        else if(command == "r") {
+            if(argument.empty()) {
+                return std::make_unique<ReadInCommand>();
+            }
+            else {
+                return std::make_unique<ReadInCommand>(argument);
+            }
+        }
         else if(command == "set") {
             if(argument=="number")
                 return std::make_unique<SetLinesCommand>(true);
@@ -80,6 +88,7 @@ namespace VM {
         }
         catch(const InvalidCommandException&) {}
         catch(const FileWriteException&) {}
+        catch(const FileReadException&) {}
         catch(const ProgramQuitException&) {}
     }
 }

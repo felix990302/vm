@@ -31,6 +31,7 @@ namespace VM {
 
         void write(const std::string &destination);
         void write();
+        const std::string &getFileName() {return fileName;}
 
         std::string getSubBuffer(size_t n);
         std::string getSubBuffer(size_t n, const PtrCursor &ptrCursor1); // not an accident
