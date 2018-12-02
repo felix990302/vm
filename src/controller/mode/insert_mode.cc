@@ -40,7 +40,7 @@ namespace VM {
                 break;
             }
             case 27: { // FIXME: figure out how to handle escape
-                controller.runSimpleCommand(std::make_unique<EscapeCommand>()); // or else flushing might not be recorded
+                controller.runSimpleCommand(std::make_unique<EscapeCommand>().get()); // or else flushing might not be recorded
                 break;
             }
             default: {

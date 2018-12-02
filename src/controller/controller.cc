@@ -1,3 +1,4 @@
+#include <typeinfo>
 #include "mode/mode.h"
 #include "input.h"
 #include "quit_exception.h"
@@ -6,6 +7,7 @@
 #include "mode/insert_mode.h"
 #include "mode/replace_mode.h"
 #include "mode/command_mode.h"
+#include "controller/command/macro/toggle_record_macro_command.h"
 #include "controller.h"
 
 
@@ -34,6 +36,8 @@ namespace VM {
         bufferView {bufferView},
         undoStack{},
         redoStack{},
+        macroRecKey{0},
+        macroMap{},
         programIsRunning{true},
         modes{*this},
         clipBoard{},
@@ -50,7 +54,7 @@ namespace VM {
     }
 
     void Controller::runCommand(std::unique_ptr<Command> command) {
-        command->doCommand(*this);
+        runSimpleCommand(command.get());
 
         if(dynamic_cast<UndoableCommand *>(command.get())) {
             undoStack.emplace_front(static_cast<UndoableCommand *>(command.release()));
@@ -59,16 +63,24 @@ namespace VM {
     }
 
     void Controller::runUndoableCommand(std::unique_ptr<UndoableCommand> command) {
-        command->doCommand(*this);
+        runSimpleCommand(command.get());
         undoStack.push_front(std::move(command));
         redoStack.clear();
     }
 
-    void Controller::runSimpleCommand(std::unique_ptr<Command> command) {
+    void Controller::recordIfToggledCommand(Command* command) {
+        if(macroRecKey && typeid(*command)!=typeid(ToggleRecordMacroCommand)) {
+            macroMap[macroRecKey].push_back(command->clone());
+        }
+    }
+
+    void Controller::runSimpleCommand(Command* command) {
+        recordIfToggledCommand(command);
         command->doCommand(*this);
     }
 
     void Controller::pushCommand(std::unique_ptr<UndoableCommand> &&undoableCommand) {
+        recordIfToggledCommand(undoableCommand.get());
         undoStack.push_front(std::move(undoableCommand));
         redoStack.clear();
     }

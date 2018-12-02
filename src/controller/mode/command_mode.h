@@ -28,7 +28,9 @@ namespace VM {
                 MotionStage
             };
 
-            ParserHelper();
+            Controller &controller;
+
+            ParserHelper(Controller &controller);
         };
         std::unique_ptr<Command> parse();
         std::unique_ptr<Motion> parseMotion(const std::string &, char);
@@ -47,7 +49,7 @@ namespace VM {
 
         CommandMode(Controller &controller):
             Mode(controller),
-            parserHelper{}
+            parserHelper{controller}
         {}
     };
 }

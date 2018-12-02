@@ -3,9 +3,10 @@
 
 #include <memory>
 #include <deque>
+#include <unordered_map>
+#include <vector>
 #include "controller/command/motion/direction.h"
 #include "model/buffer_type.h"
-#include <map>
 
 
 namespace VM {
@@ -24,6 +25,7 @@ namespace VM {
 
     class Controller {
         typedef std::deque<std::unique_ptr<UndoableCommand>> CommandStack;
+        typedef std::unordered_map<char, std::vector<std::unique_ptr<Command>>> MacroMap;
 
         std::unique_ptr<Input> input; 
         FileBuffer *fileBuffer;
@@ -33,7 +35,12 @@ namespace VM {
     private:
         CommandStack undoStack;
         CommandStack redoStack;
+
+        char macroRecKey;
+        MacroMap macroMap;
+
         std::string message;
+
 
         bool programIsRunning;
 
@@ -53,7 +60,6 @@ namespace VM {
             LineType theClipBoard;
             ClipBoard(bool b=false);
         };
-
 
     public:
         Modes modes;
@@ -76,10 +82,15 @@ namespace VM {
         CommandStack &getUndoStack() {return undoStack;}
         CommandStack &getRedoStack() {return redoStack;}
 
+        char getMacroRecKey() {return macroRecKey;}
+        void setMacroRecKey(char c) {macroRecKey = c;}
+        MacroMap &getMacroMap() {return macroMap;}
+
         void runCommand(std::unique_ptr<Command> command);
         void runUndoableCommand(std::unique_ptr<UndoableCommand> command);
-        void runSimpleCommand(std::unique_ptr<Command> command);
+        void runSimpleCommand(Command* command);
         void pushCommand(std::unique_ptr<UndoableCommand> &&undoableCommand);
+        void recordIfToggledCommand(Command* command);
 
         void quit(bool ignoreChanges);
         operator bool() const {return programIsRunning;}
