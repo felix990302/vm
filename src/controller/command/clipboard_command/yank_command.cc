@@ -37,7 +37,7 @@ namespace VM {
 
     }
 
-    YankCommand::YankCommand(const YankCommand &other)  : Clonable {other.quant}, motion{motion->clone()}   {
+    YankCommand::YankCommand(const YankCommand &other)  : Clonable {other.quant}, motion{other.motion->clone()}   {
 
     }
 
