@@ -22,8 +22,10 @@ namespace VM {
         }
         
         for(size_t j=1; j<quant; ++j) {
-            insertMode.getInserBuffer().push_back(std::make_unique<DeleteForwardCommand>(1));
-            insertMode.getInserBuffer().back()->doCommand(controller);
+            if(!cursor.isEOF()) {
+                insertMode.getInserBuffer().push_back(std::make_unique<DeleteForwardCommand>(1));
+                insertMode.getInserBuffer().back()->doCommand(controller);
+            }
             size_t origSize = cursor.getLineIterator()->size();
             for(size_t k=0; k<origSize; ++k) {
                 insertMode.getInserBuffer().push_back(std::make_unique<DeleteForwardCommand>(1));
