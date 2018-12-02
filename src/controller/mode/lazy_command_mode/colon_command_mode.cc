@@ -63,7 +63,7 @@ namespace VM {
                 char *end;
                 long int lineTarget = strtol(command.c_str(), &end, 10);
                 if(lineTarget && *end=='\0') {
-                    return std::make_unique<MoveCommand>(1, std::make_unique<AbsoluteMotion>(lineTarget));
+                    return std::make_unique<MoveCommand>(1, std::make_unique<AbsoluteMotion>(lineTarget-1));
                 }
                 else {
                     throw InvalidCommandException {};

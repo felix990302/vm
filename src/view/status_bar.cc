@@ -16,8 +16,8 @@ namespace VM {
         display.flush(parentPosn + getPosn());
         std::string left = controller->getMode().getStatusBarLeft();
         std::string right = controller->getMode().getStatusBarRight();
-        std::string coordinates = std::to_string(fileBuffer->ptrCursor.getLine())
-                + "," + std::to_string(fileBuffer->ptrCursor.getCol());
+        std::string coordinates = std::to_string(fileBuffer->ptrCursor.getLine()+1)
+                + "," + std::to_string(fileBuffer->ptrCursor.getCol()+1);
         std::stringstream ss;
         ss << left << std::setw(getSize().x-left.size())<< std::right << (right + "    " + coordinates  + "\t");
         std::string output = ss.str();
