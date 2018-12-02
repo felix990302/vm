@@ -30,6 +30,8 @@
 #include "controller/command/motion/line_motion/first_char_motion.h"
 
 
+#include "controller/command/move_screen_command.h"
+
 #include "command_mode.h"
 
 
@@ -96,6 +98,10 @@ namespace VM {
                     {'X', [](int i) { return std::make_unique<DeleteCommand>(1, std::make_unique<DirectionMotion<Direction::LEFT>> (i)); }},
                     {'p', [](int quantifier) { return std::make_unique<PasteCommand>(quantifier, true); }},
                     {'P', [](int quantifier) { return std::make_unique<PasteCommand>(quantifier, false); }},
+                    {'f' - 96, [](int quantifier) { return std::make_unique<MoveScreenCommand>(quantifier, false); }},
+                    {'b' - 96, [](int quantifier) { return std::make_unique<MoveScreenCommand>(quantifier, true); }},
+                    {'d' - 96, [](int quantifier) { return std::make_unique<MoveHalfScreenCommand>(quantifier, false); }},
+                    {'u' - 96, [](int quantifier) { return std::make_unique<MoveHalfScreenCommand>(quantifier, true); }},
             },
             commandWithMotionParser{
                     {'d', [](int i, std::unique_ptr<Motion> && m) { return std::make_unique<DeleteCommand>(i, std::move(m)); }},

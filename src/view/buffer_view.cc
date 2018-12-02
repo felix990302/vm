@@ -52,4 +52,45 @@ namespace VM{
 
     }
     BufferView::BufferView(FileBuffer *fileBuffer) : cursor(0,0), fileBuffer(fileBuffer) {}
+
+    void BufferView::moveScreen(bool up) {
+        int change = (up ? -1 : 1) * (getSize().y - 1);
+
+
+        if (((int)cursor.line) + change < 0)
+            cursor.line = 0;
+        else
+            cursor.line += change;
+
+        if (cursor.line >= fileBuffer->getBuffer().size())
+            cursor.line = fileBuffer->getBuffer().size() - 1;
+
+        Cursor newPtrCursor = fileBuffer->ptrCursor;
+
+        if (newPtrCursor.line > cursor.line + getSize().y - 1)
+            newPtrCursor.line = cursor.line + getSize().y - 1;
+        if (newPtrCursor.line < cursor.line)
+            newPtrCursor.line = cursor.line;
+
+        fileBuffer->ptrCursor.setCursor(newPtrCursor);
+    }
+
+    void BufferView::moveHalfScreen(bool up) {
+        int change = (up ? -1 : 1) * (getSize().y / 2 - 1);
+
+        if (((int)cursor.line) + change < 0)
+            cursor.line = 0;
+        else
+            cursor.line += change;
+
+        if (cursor.line >= (fileBuffer->getBuffer().size()   - getSize().y ))
+            cursor.line = std::max( cursor.line - change, (fileBuffer->getBuffer().size()   - getSize().y ) );
+
+
+
+        if(up)
+            fileBuffer->ptrCursor.moveUp(-change);
+        else
+            fileBuffer->ptrCursor.moveDown( change);
+    }
 }
