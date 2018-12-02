@@ -21,7 +21,7 @@ namespace VM {
         void redoTheCommand(Controller &controller) const override;
 
     public:
-        DeleteCommand(size_t quant, std::unique_ptr<Motion> motion);
+        DeleteCommand(size_t quant, std::unique_ptr<Motion> &&motion);
         DeleteCommand(const DeleteCommand &other);
         DeleteCommand(DeleteCommand &&other);
     };

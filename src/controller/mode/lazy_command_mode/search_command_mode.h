@@ -18,7 +18,7 @@ namespace VM {
 
         public:
         void flush() override {
-            controller.runSimpleCommand(std::make_unique<MoveCommand>(1, std::make_unique<SearchMotion<dir>>(1, commandString)));
+            controller.runSimpleCommand(std::make_unique<MoveCommand>(1, std::make_unique<SearchMotion<dir>>(1, commandString)).get());
 
             controller.modes.commandMode->parserHelper.motionsParser.erase('n');
             controller.modes.commandMode->parserHelper.motionsParser.emplace('n',

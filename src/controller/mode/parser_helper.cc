@@ -6,8 +6,12 @@
 #include "controller/command/redo_command.h"
 #include "controller/command/replace_char_command.h"
 #include "controller/command/delete_command.h"
+
 #include "controller/command/clipboard_command/paste_command.h"
 #include "controller/command/clipboard_command/yank_command.h"
+
+#include "controller/command/macro/toggle_record_macro_command.h"
+#include "controller/command/macro/run_macro_command.h"
 
 #include "controller/command/switch_command/enter_search_command.h"
 #include "controller/command/switch_command/enter_colon_command.h"
@@ -29,14 +33,14 @@
 #include "controller/command/motion/line_motion/beg_line_motion.h"
 #include "controller/command/motion/line_motion/first_char_motion.h"
 
-
 #include "controller/command/move_screen_command.h"
 
+#include "controller/controller.h"
 #include "command_mode.h"
 
 
 namespace VM {
-    CommandMode::ParserHelper::ParserHelper() :
+    CommandMode::ParserHelper::ParserHelper(Controller &controller) :
             motionsParser{
                     {'h', [](int quantifier) {
                         return std::make_unique<DirectionMotion<Direction::LEFT>>(quantifier);
@@ -98,6 +102,12 @@ namespace VM {
                     {'X', [](int i) { return std::make_unique<DeleteCommand>(1, std::make_unique<DirectionMotion<Direction::LEFT>> (i)); }},
                     {'p', [](int quantifier) { return std::make_unique<PasteCommand>(quantifier, true); }},
                     {'P', [](int quantifier) { return std::make_unique<PasteCommand>(quantifier, false); }},
+                    {'q', [controller = std::ref(controller)](int) {
+                        char c=0;
+                        if(!controller.get().getMacroRecKey()) c=getchar();
+                        return std::make_unique<ToggleRecordMacroCommand>(c);
+                    }},
+                    {'@', [](int quantifier) { char c=getchar(); return std::make_unique<RunMacroCommand>(quantifier, c); }},
                     {'f' - 96, [](int quantifier) { return std::make_unique<MoveScreenCommand>(quantifier, false); }},
                     {'b' - 96, [](int quantifier) { return std::make_unique<MoveScreenCommand>(quantifier, true); }},
                     {'d' - 96, [](int quantifier) { return std::make_unique<MoveHalfScreenCommand>(quantifier, false); }},
@@ -107,5 +117,7 @@ namespace VM {
                     {'d', [](int i, std::unique_ptr<Motion> && m) { return std::make_unique<DeleteCommand>(i, std::move(m)); }},
                     {'c', [](int i, std::unique_ptr<Motion> && m) { return std::make_unique<DeleteCommand>(i, std::move(m)); }},
                     {'y', [](int i, std::unique_ptr<Motion> && m) { return std::make_unique<YankCommand>(i, std::move(m)); }},
-            } {}
+            },
+            controller{controller}
+    {}
 }

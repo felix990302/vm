@@ -52,9 +52,26 @@ namespace VM {
         controller.getBuffer().delete_forward(buffer.size());
     }
 
-    DeleteCommand::DeleteCommand(size_t quant, std::unique_ptr<Motion> motion) : Clonable {quant}, beginPosition {0,0}, motion {std::move(motion)} {}
+    DeleteCommand::DeleteCommand(size_t quant, std::unique_ptr<Motion> &&motion):
+        Clonable{quant},
+        beginPosition {0,0},
+        buffer{},
+        isMultiline{false},
+        motion{std::move(motion)}
+    {}
 
-    DeleteCommand::DeleteCommand(const DeleteCommand &other) : Clonable {other.quant}, beginPosition{other.beginPosition}, buffer{other.buffer}, isMultiline{other.isMultiline}, motion{motion->clone()}  {}
+    DeleteCommand::DeleteCommand(const DeleteCommand &other):
+        Clonable{other},
+        beginPosition{other.beginPosition},
+        buffer{other.buffer}, 
+        isMultiline{other.isMultiline},
+        motion{other.motion->clone()}
+    {}
 
-    DeleteCommand::DeleteCommand(DeleteCommand &&other) : Clonable {other.quant}, beginPosition{other.beginPosition}, buffer{other.buffer}, isMultiline{other.isMultiline}, motion{std::move(other.motion)} {}
+    DeleteCommand::DeleteCommand(DeleteCommand &&other):
+        Clonable {std::move(other)},
+        beginPosition{std::move(other.beginPosition)},
+        buffer{std::move(other.buffer)},
+        isMultiline{std::move(other.isMultiline)},
+        motion{std::move(other.motion)} {}
 }

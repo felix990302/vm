@@ -13,14 +13,14 @@ namespace VM {
                 [[fallthrough]]; 
             }
             case 27: { // esc
-                controller.runSimpleCommand(std::make_unique<EscapeCommand>());
+                controller.runSimpleCommand(std::make_unique<EscapeCommand>().get());
                 break;
             }
             case KEY_BACKSPACE:
             case 127: //linux is weired TODO
             {
                 if(commandString.size()) commandString.pop_back();
-                else controller.runSimpleCommand(std::make_unique<EscapeCommand>());
+                else controller.runSimpleCommand(std::make_unique<EscapeCommand>().get());
                 break;
             }
             default: {
