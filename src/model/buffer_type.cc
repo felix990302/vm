@@ -9,7 +9,7 @@ namespace VM {
         std::string temp;
         std::ifstream file {fileName};
 
-        if(!file) throw FileReadException {};
+        if(!file) throw FileReadException {fileName};
 
         while(getline(file, temp)) {
             buffer.push_back(std::move(temp));

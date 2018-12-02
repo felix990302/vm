@@ -38,44 +38,44 @@
 namespace VM {
     CommandMode::ParserHelper::ParserHelper() :
             motionsParser{
-                    {'h', [](int quantifier) {
+                    {'h', [](int quantifier, char) {
                         return std::make_unique<DirectionMotion<Direction::LEFT>>(quantifier);
                     }},
-                    {'j', [](int quantifier) {
+                    {'j', [](int quantifier, char) {
                         return std::make_unique<DirectionMotion<Direction::DOWN>>(quantifier);
                     }},
-                    {'k', [](int quantifier) { return std::make_unique<DirectionMotion<Direction::UP>>(quantifier); }},
-                    {'l', [](int quantifier) {
+                    {'k', [](int quantifier, char) { return std::make_unique<DirectionMotion<Direction::UP>>(quantifier); }},
+                    {'l', [](int quantifier, char) {
                         return std::make_unique<DirectionMotion<Direction::RIGHT>>(quantifier);
                     }},
-                    {'$', [](int quantifier) { return std::make_unique<EOLMotion>(quantifier); }},
-                    {'0', [](int quantifier) { return std::make_unique<BegLineMotion>(quantifier); }},
-                    {'^', [](int quantifier) { return std::make_unique<FirstCharMotion>(quantifier); }},
-                    {'f', [motionsParser = std::ref(motionsParser)](int quantifier) {
+                    {'$', [](int quantifier, char) { return std::make_unique<EOLMotion>(quantifier); }},
+                    {'0', [](int quantifier, char) { return std::make_unique<BegLineMotion>(quantifier); }},
+                    {'^', [](int quantifier, char) { return std::make_unique<FirstCharMotion>(quantifier); }},
+                    {'f', [motionsParser = std::ref(motionsParser)](int quantifier, char) {
                         char target = getchar();
                         motionsParser.get().erase(';');
-                        motionsParser.get().emplace(';', std::function<std::unique_ptr<Motion>(int)>(
-                                [oldQuant = quantifier, target = target](int quantifier) {
+                        motionsParser.get().emplace(';', std::function<std::unique_ptr<Motion>(int,char)>(
+                                [oldQuant = quantifier, target = target](int quantifier, char) {
                                     if (quantifier == 1)
                                         return std::make_unique<FindMotion<Direction::RIGHT>>(oldQuant, target);
                                     return std::make_unique<FindMotion<Direction::RIGHT>>(quantifier, target);
                                 }));
                         return std::make_unique<FindMotion<Direction::RIGHT>>(quantifier, target);
                     }}, //TODO improve
-                    {'F', [motionsParser = std::ref(motionsParser)](int quantifier) {
+                    {'F', [motionsParser = std::ref(motionsParser)](int quantifier, char) {
                         char target = getchar();
                         motionsParser.get().erase(';');
-                        motionsParser.get().emplace(';', std::function<std::unique_ptr<Motion>(int)>(
-                                [oldQuant = quantifier, target = target](int quantifier) {
+                        motionsParser.get().emplace(';', std::function<std::unique_ptr<Motion>(int, char)>(
+                                [oldQuant = quantifier, target = target](int quantifier, char) {
                                     if (quantifier == 1)
                                         return std::make_unique<FindMotion<Direction::LEFT>>(oldQuant, target);
                                     return std::make_unique<FindMotion<Direction::LEFT>>(quantifier, target);
                                 }));
                         return std::make_unique<FindMotion<Direction::LEFT>>(quantifier, target);
                     }},
-                    {'%', [](int quantifier) { return std::make_unique<MatchBraceMotion>(quantifier); }},
-                    {'b', [](int quantifier) { return std::make_unique<WordMotion<Direction::LEFT>>(quantifier); }},
-                    {'w', [](int quantifier) { return std::make_unique<WordMotion<Direction::RIGHT>>(quantifier); }},
+                    {'%', [](int quantifier, char) { return std::make_unique<MatchBraceMotion>(quantifier); }},
+                    {'b', [](int quantifier, char) { return std::make_unique<WordMotion<Direction::LEFT>>(quantifier); }},
+                    {'w', [](int quantifier, char) { return std::make_unique<WordMotion<Direction::RIGHT>>(quantifier); }},
             },
             commandParser{
                     {'i', [](int i) { return std::make_unique<EnterInsertCommand>(i); }},

@@ -9,7 +9,7 @@
 int main(int argc, char *argv[]) {
     if(argc > 1) {
         for(int k=1; k<argc; ++k) {
-            VM::Application app {argv[k], VM::make_bufferType(argv[k])}; // copy ellision :)
+            VM::Application app {argv[k]}; // copy ellision :)
             app.run();
         }
     }
@@ -20,20 +20,11 @@ int main(int argc, char *argv[]) {
 }
 
 namespace VM {
-    Application::Application():
-        fileBuffer(std::make_unique<FileBuffer>()),
-        display(&NCursesDisplay::getMainDisplay()),
-        controller{std::make_unique<Controller>(std::make_unique<NCursesInput>(), fileBuffer.get(), nullptr)},
-        mainView(std::make_shared<MainView>(fileBuffer.get(), controller.get())),
-        input(controller->getInput())
-    {
-        display->setMainComponent(mainView);
-        controller->setBufferView(&(mainView->getBufferView()));
-        NCursesDisplay::resizeHandler(1);
-    }
+    Application::Application(): Application("")
+    {}
 
-    Application::Application(const std::string &fileName, const BufferType &buffer):
-        fileBuffer(std::make_unique<FileBuffer>(fileName, buffer)),
+    Application::Application(const std::string &fileName):
+        fileBuffer(std::make_unique<FileBuffer>(fileName)),
         display(&NCursesDisplay::getMainDisplay()),
         controller{std::make_unique<Controller>(std::make_unique<NCursesInput>(), fileBuffer.get(), nullptr)},
         mainView(std::make_shared<MainView>(fileBuffer.get(), controller.get())),
@@ -42,6 +33,7 @@ namespace VM {
         display->setMainComponent(mainView);
         controller->setBufferView(&(mainView->getBufferView()));
         NCursesDisplay::resizeHandler(1);
+        fileBuffer->getBuffer() = createInitialBufferType(fileName);
     }
 
     void Application::run() {
@@ -52,4 +44,19 @@ namespace VM {
     }
 
     Application::~Application() {}
+
+    BufferType Application::createInitialBufferType(const std::string &filename) {
+        if(filename.size()==0)
+            return BufferType{1};
+        try {
+            const BufferType &bft = make_bufferType(filename);
+            controller->setMessage("\"" + filename + "\" " + std::to_string(bft.size()) + "L");
+            return bft;
+        }
+        catch (...)
+        {
+            controller->setMessage("\"" + filename + "\" [New File]");
+            return BufferType{1};
+        }
+    }
 }

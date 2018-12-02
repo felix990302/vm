@@ -1,3 +1,4 @@
+#include "model/file_exception.h"
 #include "controller/controller.h"
 #include "model/file_buffer.h"
 #include "read_in_command.h"
@@ -11,12 +12,14 @@ namespace VM {
     }
 
     void ReadInCommand::doTheCommand(Controller &controller) {
-        if(fileNameToReadFrom.empty()) {
-            contents = make_bufferType(controller.getBuffer().getFileName());
-        }
-        else {
-            contents = make_bufferType(fileNameToReadFrom);
-        }
+        std::string fileName = controller.getBuffer().getFileName();
+        if(!fileNameToReadFrom.empty())
+            fileName = fileNameToReadFrom;
+
+
+        contents = make_bufferType(fileName);
+
+
 
         commandHelper(controller);
     }

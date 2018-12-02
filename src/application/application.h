@@ -19,10 +19,12 @@ namespace VM {
         std::unique_ptr<Controller> controller;
         std::shared_ptr<MainView> mainView;
         const Input *input;
+        BufferType createInitialBufferType(const std::string &filename);
 
     public:
         Application();
-        Application(const std::string &fileName, const BufferType &buffer);
+        Application(const std::string &fileName);
+
         void run();
 
         ~Application();

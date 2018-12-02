@@ -17,7 +17,7 @@ namespace VM {
         PtrCursor ptrCursor;
 
         FileBuffer();
-        FileBuffer(const std::string &fileName, const BufferType &bufferBase);
+        FileBuffer(const std::string &fileName);
 
         void type(char a);
 

@@ -18,18 +18,18 @@ namespace VM {
 
         public:
         void flush() override {
-            controller.runSimpleCommand(std::make_unique<MoveCommand>(1, std::make_unique<SearchMotion<dir>>(1, commandString)));
+            controller.runSimpleCommand(std::make_unique<MoveCommand>(1, std::make_unique<SearchMotion<dir>>(1, commandString, '\0', &controller)));
 
             controller.modes.commandMode->parserHelper.motionsParser.erase('n');
             controller.modes.commandMode->parserHelper.motionsParser.emplace('n',
-                    std::function<std::unique_ptr<Motion>(int)>([commandString = commandString] (int n) {
-                        return std::make_unique<SearchMotion<dir>>(n, commandString);
+                    std::function<std::unique_ptr<Motion>(int,char)>([commandString = commandString, controller = &controller] (int n, char command) {
+                        return std::make_unique<SearchMotion<dir>>(n, commandString, command, controller);
                     })
             );
             controller.modes.commandMode->parserHelper.motionsParser.erase('N');
             controller.modes.commandMode->parserHelper.motionsParser.emplace('N',
-                    std::function<std::unique_ptr<Motion>(int)>([commandString = commandString] (int n) {
-                        return std::make_unique<SearchMotion<dir==Direction::DOWN ? Direction::UP : Direction::DOWN>>(n, commandString);
+                    std::function<std::unique_ptr<Motion>(int,char)>([commandString = commandString, controller = &controller] (int n, char command) {
+                        return std::make_unique<SearchMotion<(dir==Direction::DOWN)?Direction::UP:Direction ::DOWN>>(n, commandString, command, controller);
                     })
             );
         }

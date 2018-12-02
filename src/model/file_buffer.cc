@@ -10,9 +10,9 @@ namespace VM {
         ptrCursor{Cursor {0, 0}, buffer, PtrCursor::CursorMovement::NormalModeCursor}
     {}
 
-    FileBuffer::FileBuffer(const std::string &fileName, const BufferType &bufferBase):
+    FileBuffer::FileBuffer(const std::string &fileName):
         fileName{fileName},
-        buffer{bufferBase},
+        buffer{1},
         ptrCursor{Cursor {0, 0}, buffer, PtrCursor::CursorMovement::NormalModeCursor}
     {}
 
@@ -97,9 +97,10 @@ namespace VM {
             for(const auto &line : buffer) {
                 file << line << std::endl;
             }
+            fileName = destination;
         }
         else {
-            throw FileWriteException {};
+            throw FileWriteException {fileName};
         }
     }
     void FileBuffer::write() {write(fileName);}

@@ -33,7 +33,7 @@ namespace VM {
     private:
         CommandStack undoStack;
         CommandStack redoStack;
-        map<char, >
+        std::string message;
 
         bool programIsRunning;
 
@@ -54,14 +54,15 @@ namespace VM {
             ClipBoard(bool b=false);
         };
 
-        public:
+
+    public:
         Modes modes;
         ClipBoard clipBoard;
 
-        private:
+    private:
         Mode *mode;
 
-        public:
+    public:
         void getAndProcessChar();
 
         Input* getInput() const {return input.get();}
@@ -87,6 +88,10 @@ namespace VM {
 
         Controller(std::unique_ptr<Input> input, FileBuffer *fileBuffer, BufferView *bufferView);
         Controller(const Controller &other) = delete;
+
+        const std::string &getMessage() const;
+
+        void setMessage(const std::string &message);
 
         ~Controller();
     };

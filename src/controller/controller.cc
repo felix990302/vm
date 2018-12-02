@@ -42,7 +42,7 @@ namespace VM {
 
     void Controller::quit(bool ignoreChanges) {
         if(!undoStack.empty() && !ignoreChanges) {
-            throw ProgramQuitException {};
+            throw (ProgramQuitException {});
         }
         else {
             programIsRunning = false;
@@ -74,4 +74,12 @@ namespace VM {
     }
 
     Controller::~Controller() {}
+
+    const std::string &Controller::getMessage() const {
+        return message;
+    }
+
+    void Controller::setMessage(const std::string &message) {
+        Controller::message = message;
+    }
 }

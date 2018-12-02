@@ -82,13 +82,20 @@ namespace VM {
         std::string command = commandString.substr(0, seperator);
         std::string argument = seperator < commandString.size() ? commandString.substr(seperator) : "";
         ltrim(argument);
+        controller.setMessage("");
 
         try {
             controller.runCommand(parseCommand(command, argument));
         }
-        catch(const InvalidCommandException&) {}
-        catch(const FileWriteException&) {}
-        catch(const FileReadException&) {}
-        catch(const ProgramQuitException&) {}
+        catch(const InvalidCommandException& e) {
+            controller.setMessage("E: Not an editor command: " + e.command);
+        }
+        catch(const FileWriteException& e) {
+            controller.setMessage("E: Unable to write to the file " + e.filename);
+        }
+        catch(const FileReadException& e) {
+            controller.setMessage("Can't open / read file \"" + e.filename +"\"");}
+        catch(const ProgramQuitException&) {
+            controller.setMessage("E: No write since last change (add ! to override)");}
     }
 }

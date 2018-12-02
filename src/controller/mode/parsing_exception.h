@@ -1,5 +1,8 @@
+#include <string>
 namespace VM {
-    class ParsingException {};
-    class UnfinishedCommandException : public ParsingException {};
-    class InvalidCommandException : public ParsingException {};
+    struct ParsingException {};
+    struct UnfinishedCommandException : public ParsingException {};
+    struct InvalidCommandException : public ParsingException {
+        std::string command;
+    };
 }

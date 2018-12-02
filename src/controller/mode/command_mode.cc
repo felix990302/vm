@@ -110,7 +110,7 @@ namespace VM {
 
                 case ParserHelper::ParserStages::MotionStage:
                     if(parserHelper.motionsParser.count(c))
-                        return  parserHelper.motionsParser[c](quantifier);
+                        return  parserHelper.motionsParser[c](quantifier, command);
                     else
                         throw InvalidCommandException();
 
@@ -122,10 +122,15 @@ namespace VM {
     }
 
     std::string CommandMode::getStatusBarLeft() {
-        return "";
+        return controller.getMessage();
     }
 
     std::string CommandMode::getStatusBarRight() {
         return commandBuffer;
+    }
+
+    void CommandMode::onExit() {
+        flush();
+        controller.setMessage("");
     }
 }

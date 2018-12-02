@@ -18,7 +18,7 @@ namespace VM {
         std::string commandBuffer;
 
         struct ParserHelper {
-            std::unordered_map<int, std::function<std::unique_ptr<Motion>(int)>> motionsParser;
+            std::unordered_map<int, std::function<std::unique_ptr<Motion>(int, char)>> motionsParser;
             std::unordered_map<int, std::function<std::unique_ptr<Command>(int)>> commandParser;
             std::unordered_map<int, std::function<std::unique_ptr<Command>(int, std::unique_ptr<Motion>&&)> > commandWithMotionParser;
             enum class ParserStages{
@@ -38,7 +38,7 @@ namespace VM {
 
         void processChar(int c) override;
         void flush() override {/*TODO: flush current command sequence*/}
-        void onExit() override {flush();}
+        void onExit() override;
 
         std::string getStatusBarLeft() override;
 
