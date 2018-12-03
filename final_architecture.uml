@@ -1,0 +1,280 @@
+@startuml
+title Final Architecture
+
+class Application {
+    +run() : Void
+}
+FileBuffer --* Application
+TextDisplay --o Application
+Controller --* Application
+MainView --o Application
+Input --o Application
+
+
+class Coordinates {
+    x : Int
+    y : Int
+}
+
+
+abstract class Component {
+    -size : Coordinates
+    -posn : Coordinates
+
+    +getSize() : Coordinates
+    +{abstract} setSize(Coordinates) : Void
+    +{abstract} setPosn(Coordinates) : Void
+    +enforceFitIntoSize(Coordinates) : Void
+    +appendChildren(Component) : Void
+    +detachChildren(Component) : Void
+    +{abstract} draw(Coordinates, TextDisplay) : Void
+}
+Coordinates --* Component
+
+
+class BufferView {
+    -cursor : Cursor
+
+    +setLineNumbers(Bool) : Void
+    +moveScreen(Bool) : void
+    +moveHalfScreen(Bool) : void
+    +setCursor(Coordinates, TextDisplay) : Bool
+    +getLineNumberWidth() : Int
+}
+Component <|-- BufferView
+FileBuffer --o BufferView
+
+
+class StatusBar {
+    +setCursor(Coordinates, TextDisplay) : Bool
+}
+Component <|-- StatusBar
+FileBuffer --o StatusBar
+Controller --o StatusBar
+
+
+class MainView {
+    +getBufferView() : BufferView
+}
+Component <|-- MainView
+BufferView --o MainView
+StatusBar --o MainView
+
+
+abstract class TextDisplay {
+    +{abstract} putc(Coordinates, Char) : Void
+    +{abstract} puts(Coordinates, String) : Void
+    +{abstract} flush(Coordinates) : Void
+
+    +{abstract} redraw() : Void
+    +{abstract} resizeHandler(Coordinates) : Void
+    +{abstract} setCursorPosition(Int, Int) : Void
+
+    +getMainComponent() : Component
+    +setMainComponent(Component) : Void
+}
+Component --o TextDisplay
+
+
+class NCursesDisplay {
+    +{static} getMainDisplay() : NCursesDisplay
+    +{static} resizeHandler(Int) : Void
+}
+TextDisplay <|-- NCursesDisplay
+
+
+class Cursor {
+    +line : Int
+    +col : Int
+}
+
+
+enum CursorMovement {
+    NormalModeCursor
+    InsertModeCursor
+    IteratorCursor
+}
+
+
+class PtrCursor {
+    +wrapAtEOL() : Bool
+    +canPointAtEOL() : Bool
+
+    +moveRight(Int) : Void
+    +moveLeft(Int) : Void
+    +moveDown(Int) : Void
+    +moveUp(Int) : Void
+    +moveBeginOfLine() : Void
+    +moveEndOfLine() : Void
+
+    +enforeBoundaries() : Void
+    +setType(CursorMovement) : Void
+    +getType() : CursorMovement
+    
+    +isEOL() : Bool
+    +isEOF() : Bool
+}
+Cursor --* PtrCursor
+CursorMovement --* PtrCursor
+BufferType --o PtrCursor
+
+
+class FileBuffer {
+    -fileName : String
+    
+    +type(String) : Void
+    +typeNewLine() : Void
+    +delete_forward(Int) : Void
+    +delete_backward(Int) : Void
+
+    +write(String) : Void
+
+    +typeWithinLine(String) : Void
+}
+PtrCursor --* FileBuffer
+BufferType --* FileBuffer
+
+
+abstract class Input {
+    +{abstract} getChar() : Int
+}
+
+
+class NCursesInput
+Input <|-- NCursesInput
+
+
+class Modes
+InsertMode --* Modes
+ReplaceMode --* Modes
+CommandMode --* Modes
+ColonCommandMode --* Modes
+SearchCommandMode --* Modes
+
+
+class ClipBoard {
+    +multiline : Bool
+    theClipBoard : String
+}
+
+
+class Controller {
+    -undoStack : Stack<UndoableCommand>
+    -redoStack : Stack<UndoableCommand>
+    -macroRecKey : Char
+    -MacroMap : Map<Vector<Command>>
+    -message : String
+    -programIsRunning : Bool
+
+    +getAndProcessChar() : Void
+    +changeMode(Mode) : Void
+    +changeBuffer(FileBuffer) : Void
+    +setBufferView(BufferView) : Void
+    +setMacroReckey(Char) : Void
+    +setMessage(String) : Void
+
+    +runUndoableCommand(UndoableCommand) : Void
+    +runSimpleCommand(Command) : Void
+    +pushCommand(Command) : Void
+    +recordIfToggledCommand(Command) : Void
+
+    +quit(Bool) : Void
+}
+Modes --* Controller
+ClipBoard --* Controller
+Input --* Controller
+Mode --o Controller
+FileBuffer --o Controller
+BufferView --o Controller
+
+
+abstract class Mode {
+    {abstract} +processChar(Int) : Void
+    {abstract} +flush() : Void
+    {abstract} +onExit() : Void
+
+    {abstract} getStatusBarLeft() : String
+    {abstract} getStatusBarRight() : String
+    {abstract} getStatusBarCursor() : Int
+}
+Controller --o Mode
+
+
+class InsertMode {
+    -insertBuffer : Vector<UndoableCommand>
+}
+Mode <|-- InsertMode
+ExitHandler --* InsertMode
+
+
+class ReplaceMode {
+    -replaceBuffer : Vector<UndoableCommand>
+}
+Mode <|-- ReplaceMode
+ExitHandler --* ReplaceMode
+
+
+enum ParserStages {
+    EarlyStage
+    QuantifierStage
+    CommandStage
+    MotionStage
+}
+
+
+class ParserHelper {
+    +motionsParser : Map<Int, Function<Motion, Int, Char>>
+    commandParser : Map<Int, Function<Command, Int>>
+    comandWithMotionParser : Map<Int, Function<Command, Int, Motion>>
+}
+ParserStages --* ParserHelper
+Controller --o ParserHelper
+
+
+class CommandMode {
+    -commandBuffer : String
+
+    +parse() : Command
+    +parseMotion(String, Char) : Motion
+}
+Mode <|-- CommandMode
+ParserHelper --* CommandMode
+
+
+abstract class LazyCommandMode {
+    +getStatusBarLeftIndicatorChar() : Char
+    #commandString : String
+}
+Mode <|-- LazyCommandMode
+
+
+class ColonCommandMode {
+    +parseCommand(String, String) : Command
+}
+LazyCommandMode <|-- ColonCommandMode
+
+
+class SearchCommandMode
+LazyCommandMode <|-- SearchCommandMode
+
+
+abstract class ExitHandler {
+    -quantifier : Int
+
+    {abstract} postExit(Controller, MutationCommand) : Void
+}
+
+
+class OpenLineHandler
+ExitHandler <|-- OpenLineHandler
+
+
+class InsertHandler
+ExitHandler <|-- InsertHandler
+
+
+class DeleteInsertHandler
+ExitHandler <|-- DeleteInsertHandler
+
+
+@enduml 

@@ -1,51 +1,262 @@
 @startuml
 title Commands
 
-abstract class Command {
-    -quant : size_t
 
-    +doCommand() : void 
+abstract class Motion
+
+
+abstract class Command {
+    #quant : Int
+
+    {abstract} +doCommand(Controller) : void
+    {abstract} +clone() : Command
+    +setQuant() : Void
 }
+
+
+class DotCommand
+Command <|-- DotCommand
+
+
+class MoveCommand
 Command <|-- MoveCommand
-Command <|-- UndoableCommand
+
+
+class MoveScreenCommand
+Command <|-- MoveScreenCommand
+
+
+class QuitCommand
+Command <|-- QuitCommand
+
+
+class RedoCommand
+Command <|-- RedoCommand
+
+
+class SetLinesCommand
+Command <|-- SetLinesCommand
+
+
+class UndoCommand
+Command <|-- UndoCommand
+
+
+class YankCommand
+Command <|-- YankCommand
+Motion --* YankCommand
+
+
+class ToggleRecordMacroCommand {
+    -key : Char 
+}
+Command <|-- ToggleRecordMacroCommand
+
+
+class BOLEnterInsertCommand
+Command <|-- BOLEnterInsertCommand
+
+
+class DeleteCharInsertCommand
+Command <|-- DeleteCharInsertCommand
+
+
+class DeleteLineInsertCommand
+Command <|-- DeleteLineInsertCommand
+
+
+class EnterColonCommand
+Command <|-- EnterColonCommand
+
+
+class EnterInsertCommand
 Command <|-- EnterInsertCommand
 
-abstract class MoveCommand {
-}
+
+class EnterReplaceCommand
+Command <|-- EnterReplaceCommand
+
+
+class EnterSearchCommand
+Command <|-- EnterSearchCommand
+
+
+class EOLEnterInsertCommand
+Command <|-- EOLEnterInsertCommand
+
+
+class EscapeCommand
+Command <|-- EscapeCommand
+
+
+class RightEnterInsertCommand
+Command <|-- RightEnterInsertCommand
+@enduml
+
+@startuml
+abstract class Command
+
+
+abstract class Motion
+
 
 abstract class UndoableCommand {
-    {abstract} +UndoCommand() : void
-    {abstract} +RedoCommand() : void
+    #startPosn : Cursor
+    #endPosn : Cursor
+
+    {abstract} +undoCommand(Controller) : Void
+    {abstract} +redoCommand(Controller) : Void
+    {abstract} +undoableClone() : UndoableCommand
+}
+Command <|-- UndoableCommand
+Cursor --* UndoableCommand
+
+
+class DeleteCommand {
+    -beginPosition : Cursor
+    -buffer : String
+    -isMultiline : Bool
+}
+UndoableCommand <|-- DeleteCommand
+Motion --* DeleteCommand
+
+
+class JoinLines
+UndoableCommand <|-- JoinLines
+
+
+class MutationCommand {
+    +theMutateCommands : Vector<UndoableCommand>
+}
+UndoableCommand <|-- MutationCommand
+UndoableCommand --* MutationCommand
+
+
+class ReadInCommand {
+    -fileNameToReadFrom : String
+    -contents : BufferType
+}
+UndoableCommand <|-- ReadInCommand
+
+
+class ReplaceCharCommand {
+    -deleted : Char
+}
+UndoableCommand <|-- ReplaceCharCommand
+
+
+class WriteCommand
+UndoableCommand <|-- WriteCommand
+
+
+class PasteCommand {
+    -toPaste : String
+    -multiline : Bool
+    -pasteAfter : Bool
+    -pasteStarts : Cursor
+}
+UndoableCommand <|-- PasteCommand
+Cursor --* PasteCommand
+
+
+class RunMacroCommand {
+    -key : Char
+    -sequence : Vector<Command>
+}
+UndoableCommand <|-- RunMacroCommand
+Command --* RunMacroCommand
+
+
+abstract class MutateCommand {
+    #toMutate : Char
 }
 UndoableCommand <|-- MutateCommand
 
-abstract class MutateCommand
+
+class DeleteBackWardCommand
+MutateCommand <|-- DeleteBackWardCommand
+
+
+class DeleteForwardCommand
+MutateCommand <|-- DeleteForwardCommand
+
+
+class InsertCommand
 MutateCommand <|-- InsertCommand
-MutateCommand <|-- DeleteCommand
 
-class InsertCommand {
-    +doCommmand() : void
-    +UndoCommand() : void
-    +RedoCommand() : void
+
+class OpenLineCommand
+MutateCommand <|-- OpenLineCommand
+
+
+class ReplaceLineCommand {
+    -deleted : Char
+}
+MutateCommand <|-- ReplaceLineCommand
+@enduml
+
+@startuml
+abstract class Motion {
+    -quantifier : Int
+
+    {abstract} +startPosition(PtrCursor) : Cursor
+    {abstract} +endPosition(PtrCursor) : Cursor
+    {abstract} +clone() : Motion
+    {abstract} +isMultiLine : Bool
 }
 
-class DeleteCommand {
-    +doCommmand() : void
-    +UndoCommand() : void
-    +RedoCommand() : void
+
+enum Direction {
+    UP
+    DOWN
+    LEFT
+    RIGHT
 }
 
-class Motion {
-    +nextPosition(Cursor) : Cursor    
-}
-Motion --* MoveCommand
-Motion --* UndoableCommand
 
-object Direction {
-    Up
-    Down
-    Forward
-    Backward
+class DirectionMotion
+Motion <|-- DirectionMotion
+Direction --* DirectionMotion
+
+
+class AbsoluteMotion
+Motion <|-- AbsoluteMotion
+
+class BraceMatch
+Motion <|-- BraceMatch
+
+class SearchMotion
+Motion <|-- SearchMotion
+Direction --* SearchMotion
+
+
+enum WordState {
+    ALPHA_NUM_UNDERSCORE
+    WHITESPACE
+    OTHER
 }
-Direction --* MutateCommand
+
+
+class WordMotion
+Motion <|-- WordMotion
+WordState --* WordMotion
+Direction --* WordMotion
+
+
+class BegLineMotion
+Motion <|-- BegLineMotion
+
+class EOLMotion
+Motion <|-- EOLMotion
+
+class FindMotion
+Motion <|-- FindMotion
+Direction --* FindMotion
+
+
+class FirstCharMotion
+Motion <|-- FirstCharMotion
+
+class WholeLineMotion
+Motion <|-- WholeLineMotion
 @enduml
