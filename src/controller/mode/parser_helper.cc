@@ -32,6 +32,7 @@
 #include "controller/command/motion/line_motion/eol_motion.h"
 #include "controller/command/motion/line_motion/beg_line_motion.h"
 #include "controller/command/motion/line_motion/first_char_motion.h"
+#include "controller/command/join_lines.h"
 
 #include "controller/command/move_screen_command.h"
 
@@ -112,6 +113,7 @@ namespace VM {
                     {'b' - 96, [](int quantifier) { return std::make_unique<MoveScreenCommand>(quantifier, true); }},
                     {'d' - 96, [](int quantifier) { return std::make_unique<MoveHalfScreenCommand>(quantifier, false); }},
                     {'u' - 96, [](int quantifier) { return std::make_unique<MoveHalfScreenCommand>(quantifier, true); }},
+                    {'J', [](int i) { return std::make_unique<JoinLines>(i); }},
             },
             commandWithMotionParser{
                     {'d', [](int i, std::unique_ptr<Motion> && m) { return std::make_unique<DeleteCommand>(i, std::move(m)); }},

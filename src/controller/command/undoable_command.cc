@@ -13,6 +13,7 @@ namespace VM {
     void UndoableCommand::undoCommand(Controller &controller) const {
         controller.getBuffer().ptrCursor.setCursor(endPosn);
         undoTheCommand(controller);
+        controller.getBuffer().ptrCursor.setCursor(startPosn); //TODO check
     }
     void UndoableCommand::redoCommand(Controller &controller) const {
         controller.getBuffer().ptrCursor.setCursor(startPosn);
