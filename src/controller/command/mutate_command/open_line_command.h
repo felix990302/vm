@@ -13,6 +13,7 @@ namespace VM {
     template<>class OpenLineCommand<Direction::DOWN>: public ClonableCommand<MutateCommand, OpenLineCommand<Direction::DOWN>> {
         void commandHelper(Controller &controller) const {
             PtrCursor &cursor = controller.getBuffer().ptrCursor;
+            cursor.setType(PtrCursor::CursorMovement::IteratorCursor);
             cursor.moveEndOfLine();
             controller.getBuffer().typeNewLine();
         }
