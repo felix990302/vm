@@ -17,12 +17,14 @@ namespace VM {
         try {
             controller.runCommand(parse());
             commandBuffer.clear();
+
         }
         catch (const UnfinishedCommandException &) {}
         catch (const InvalidCommandException &)
         {
             commandBuffer.clear();
         }
+        controller.getBuffer().ptrCursor.setType(PtrCursor::CursorMovement::NormalModeCursor);
     }
 
     std::unique_ptr<Command> CommandMode::parse() {
