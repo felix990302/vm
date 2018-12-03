@@ -14,6 +14,7 @@ namespace VM {
         Cursor cursor;
         FileBuffer *fileBuffer;
         bool showLinesNumbers = false;
+
     public:
 
         BufferView (FileBuffer * fileBuffer);
@@ -23,6 +24,7 @@ namespace VM {
         void moveHalfScreen(bool up);
         bool setCursor(const Coordinates &parentPosn, TextDisplay &display);
         int getLineNumberWidth();
+        std::string getLinePercantage();
     };
 }
 

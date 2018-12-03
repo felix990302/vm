@@ -105,4 +105,14 @@ namespace VM{
     int BufferView::getLineNumberWidth() {
         return showLinesNumbers * (std::max(std::to_string(fileBuffer->getBuffer().size()).size(), (size_t) 3) + 1);
     }
+
+    std::string BufferView::getLinePercantage()
+    {
+        bool top = cursor.line <= 0;
+        bool bottom = cursor.line + getSize().y >= fileBuffer->getBuffer().size();
+        if(top && bottom) return "All";
+        if(top) return "Top";
+        if(bottom) return "Bot";
+        return  std::to_string(100 * cursor.line / (fileBuffer->getBuffer().size() - getSize().y) ) + "%";
+    }
 }

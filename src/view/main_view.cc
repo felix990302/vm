@@ -15,7 +15,7 @@ namespace VM {
 
     MainView::MainView(FileBuffer *fileBuffer, Controller *controller) :
         bufferView {std::make_shared<BufferView>(fileBuffer)},
-        statusBar {std::make_shared<StatusBar>(fileBuffer, controller)} {
+        statusBar {std::make_shared<StatusBar>(fileBuffer, controller, bufferView.get())} {
             appendChildren(statusBar);
             appendChildren(bufferView);
     }

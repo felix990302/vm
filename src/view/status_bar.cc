@@ -7,7 +7,7 @@
 
 
 namespace VM {
-    StatusBar::StatusBar(VM::FileBuffer *fileBuffer, VM::Controller *controller): fileBuffer{fileBuffer}, controller {controller}  {}
+    StatusBar::StatusBar(VM::FileBuffer *fileBuffer, VM::Controller *controller, BufferView *bufferView): fileBuffer{fileBuffer}, controller {controller}, bufferView{bufferView}  {}
 
     void StatusBar::draw(const VM::Coordinates &parentPosn, VM::TextDisplay &display) {
         if(getSize().y < 1)
@@ -19,7 +19,7 @@ namespace VM {
         std::string coordinates = std::to_string(fileBuffer->ptrCursor.getLine()+1)
                 + "," + std::to_string(fileBuffer->ptrCursor.getCol()+1);
         std::stringstream ss;
-        ss << left << std::setw(getSize().x-left.size())<< std::right << (right + "    " + coordinates  + "\t");
+        ss << left << std::setw(getSize().x-left.size())<< std::right << (right + "    " + coordinates + "  " +  bufferView->getLinePercantage());
         std::string output = ss.str();
         display.puts(parentPosn + getPosn(),output);
     }
