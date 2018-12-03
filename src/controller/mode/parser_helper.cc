@@ -34,6 +34,8 @@
 #include "controller/command/motion/line_motion/first_char_motion.h"
 #include "controller/command/join_lines.h"
 
+#include "controller/command/information_command.h"
+
 #include "controller/command/move_screen_command.h"
 
 #include "controller/controller.h"
@@ -113,6 +115,7 @@ namespace VM {
                     {'b' - 96, [](int quantifier) { return std::make_unique<MoveScreenCommand>(quantifier, true); }},
                     {'d' - 96, [](int quantifier) { return std::make_unique<MoveHalfScreenCommand>(quantifier, false); }},
                     {'u' - 96, [](int quantifier) { return std::make_unique<MoveHalfScreenCommand>(quantifier, true); }},
+                    {'g' - 96, [](int quantifier) { return std::make_unique<InformationCommand>(quantifier); }},
                     {'J', [](int i) { return std::make_unique<JoinLines>(i); }},
             },
             commandWithMotionParser{
