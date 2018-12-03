@@ -121,7 +121,7 @@ namespace VM {
     }
 
     std::string CommandMode::getStatusBarLeft() {
-        return controller.getMessage();
+        return controller.getMessage() + Mode::getStatusBarLeft();
     }
 
     std::string CommandMode::getStatusBarRight() {

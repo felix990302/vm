@@ -1,11 +1,13 @@
 #include "mode.h"
-
+#include "controller/controller.h"
 
 namespace VM {
     Mode::~Mode() {}
 
     std::string Mode::getStatusBarLeft() {
-        return "";
+        if(controller.getMacroRecKey() != 0)
+            return " recording @" + controller.getMacroRecKey() ;
+        return  "";
     }
 
     std::string Mode::getStatusBarRight() {
