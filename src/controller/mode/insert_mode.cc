@@ -16,6 +16,7 @@ namespace VM {
         if(!insertBuffer.empty()) {
              exitHandler->postExit(controller, std::make_unique<MutationCommand>(1, std::move(insertBuffer)));
         }
+        controller.getBuffer().ptrCursor.setType(PtrCursor::CursorMovement::NormalModeCursor);
         insertBuffer.clear();
     }
 
@@ -55,7 +56,7 @@ namespace VM {
     }
 
     void InsertMode::onExit() {
-        controller.getBuffer().ptrCursor.setType(PtrCursor::CursorMovement::NormalModeCursor);
+
         flush();
     }
 
