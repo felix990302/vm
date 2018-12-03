@@ -6,6 +6,7 @@ namespace VM {
 
 
     class JoinLines: public ClonableCommand<UndoableCommand, JoinLines> {
+        std::vector<Cursor> positions;
         void doTheCommand(Controller &controller) override;
         void undoTheCommand(Controller &controller) const override;
         void redoTheCommand(Controller &controller) const override;
