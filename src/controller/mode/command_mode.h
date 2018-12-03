@@ -39,7 +39,7 @@ namespace VM {
         ParserHelper parserHelper;
 
         void processChar(int c) override;
-        void flush() override {/*TODO: flush current command sequence*/}
+        void flush() override {}
         void onExit() override;
 
         std::string getStatusBarLeft() override;

@@ -65,7 +65,7 @@ namespace VM {
                                     return std::make_unique<FindMotion<Direction::RIGHT>>(quantifier, target);
                                 }));
                         return std::make_unique<FindMotion<Direction::RIGHT>>(quantifier, target);
-                    }}, //TODO improve
+                    }},
                     {'F', [motionsParser = std::ref(motionsParser)](int quantifier, char) {
                         char target = getchar();
                         motionsParser.get().erase(';');

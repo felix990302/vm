@@ -31,7 +31,7 @@ namespace VM {
                 break;
             }
             case KEY_BACKSPACE:
-            case 127: //linux is weired TODO
+            case 127:
                 {
                 if(controller.getBuffer().ptrCursor.getLine()>0 || controller.getBuffer().ptrCursor.getCol()>0) {
                     insertBuffer.push_back(std::make_unique<DeleteBackwardCommand>(1));

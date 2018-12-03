@@ -81,7 +81,6 @@ namespace VM {
     std::unique_ptr<Motion> CommandMode::parseMotion(const std::string &motionString, char command) {
         if(motionString.length() == 1 && command == motionString[0] && motionString.find_first_of("ycd")==0)
             return std::make_unique<WholeLineMotion>();
-        //TODO special case for whole line motion
         ParserHelper::ParserStages stage = ParserHelper::ParserStages::EarlyStage;
         int quantifier = 1;
         for(const char &c : motionString)

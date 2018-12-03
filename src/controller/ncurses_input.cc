@@ -9,9 +9,7 @@ namespace VM {
             NCursesDisplay::resizeHandler(0);
             c = getch();
         }
-        c=c;
         return c;
-//        return getch(); //TODO debug only
     }
 
     NCursesInput::NCursesInput() {

@@ -5,7 +5,7 @@
 
 
 namespace VM {
-    void MoveCommand::doCommand(Controller &controller) { // TODO: determine interface for moving cursor
+    void MoveCommand::doCommand(Controller &controller) {
         PtrCursor &currentPtrCursor = controller.getBuffer().ptrCursor;
         for(size_t k=0; k<quant; ++k) {
             currentPtrCursor.setCursor(motion->startPosition(currentPtrCursor));

@@ -22,7 +22,6 @@ namespace VM {
         ss << left << std::setw(getSize().x-left.size())<< std::right << (right + "    " + coordinates  + "\t");
         std::string output = ss.str();
         display.puts(parentPosn + getPosn(),output);
-        //TODO : make it nicer
     }
 
     bool StatusBar::setCursor(const Coordinates &parentPosn, TextDisplay &display) {

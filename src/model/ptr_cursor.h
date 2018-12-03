@@ -22,7 +22,7 @@ namespace VM {
 
     public:
         bool wrapAtEOL() const { return (int)type >= 2;}
-        bool canPointAtEOL() const { return (int) type >= 1 || (getLineIterator()->size() == 0);} //TODO: This is bug factorys
+        bool canPointAtEOL() const { return (int) type >= 1 || (getLineIterator()->size() == 0);}
 
         PtrCursor(const Cursor &cursor, BufferType &buffer, const CursorMovement &type);
         PtrCursor(const PtrCursor &other);
