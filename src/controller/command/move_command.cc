@@ -10,6 +10,7 @@ namespace VM {
         for(size_t k=0; k<quant; ++k) {
             currentPtrCursor.setCursor(motion->startPosition(currentPtrCursor));
             currentPtrCursor.setCursor(motion->nextPosition(currentPtrCursor));
+            currentPtrCursor.setType(PtrCursor::CursorMovement::NormalModeCursor);
         }
     }
 

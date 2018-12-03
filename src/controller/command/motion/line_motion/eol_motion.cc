@@ -4,7 +4,10 @@
 
 namespace VM {
     Cursor EOLMotion::nextPosition(const PtrCursor &cursor) {
-        return Cursor{cursor.getLine(), cursor.getLineIterator()->size()-1};
+        PtrCursor cur {cursor};
+        cur.setType(PtrCursor::CursorMovement::IteratorCursor);
+        cur.moveEndOfLine();
+        return cur;
     }
 
     EOLMotion::EOLMotion(size_t quant): Clonable{quant} {}
