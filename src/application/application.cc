@@ -30,10 +30,10 @@ namespace VM {
         mainView(std::make_shared<MainView>(fileBuffer.get(), controller.get())),
         input(controller->getInput())
     {
+        fileBuffer->getBuffer() = createInitialBufferType(fileName);
         display->setMainComponent(mainView);
         controller->setBufferView(&(mainView->getBufferView()));
         NCursesDisplay::resizeHandler(1);
-        fileBuffer->getBuffer() = createInitialBufferType(fileName);
     }
 
     void Application::run() {
