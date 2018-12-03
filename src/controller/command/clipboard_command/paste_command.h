@@ -16,13 +16,14 @@ namespace VM {
         LineType toPaste;
         bool multiline;
         bool pasteAfter;
+        Cursor pasteStarts;
 
 
-        void commandHelper(Controller &controller) const{
+        Cursor commandHelper(Controller &controller) const{
             PtrCursor &cursor = controller.getBuffer().ptrCursor;
             FileBuffer &buffer = controller.getBuffer();
             cursor.setType(PtrCursor::CursorMovement::IteratorCursor);
-            Cursor beginPastePos{0, 0};
+            Cursor pasteStarts{0,0};
             if(multiline) {
                 if(pasteAfter)
                 {
@@ -30,27 +31,31 @@ namespace VM {
                     if(cursor.isEOF()) buffer.type("\n");
                 }
                 cursor.moveBeginOfLine();
-                beginPastePos = cursor.getCursor();
+                pasteStarts = cursor.getCursor();
                 for(size_t k = 0; k < quant; ++k) buffer.type(toPaste);
                 if(cursor.isEOF()) buffer.delete_backward(1);
+                cursor.setCursor(pasteStarts);
             }
             else {
                 if(pasteAfter) cursor.moveRight();
-                beginPastePos = cursor.getCursor();
+                pasteStarts = cursor.getCursor();
                 for(size_t k = 0; k < quant; ++k) buffer.type(toPaste);
+
             }
-            cursor.setCursor(beginPastePos);
+            return pasteStarts;
         }
 
         void doTheCommand(Controller &controller) override {
             toPaste = controller.clipBoard.theClipBoard;
             multiline = controller.clipBoard.multiLine;
-            commandHelper(controller);
+            pasteStarts = commandHelper(controller);
         }
 
         void undoTheCommand(Controller &controller) const override {
             controller.getBuffer().ptrCursor.setType(PtrCursor::CursorMovement::IteratorCursor);
+            controller.getBuffer().ptrCursor.setCursor(pasteStarts);
             controller.getBuffer().delete_forward(quant * toPaste.size());
+            controller.getBuffer().ptrCursor.setCursor(startPosn);
         }
 
         void redoTheCommand(Controller &controller) const override {
@@ -58,9 +63,9 @@ namespace VM {
         }
 
         public:
-        PasteCommand(size_t quant, bool pasteAfter): Clonable{quant}, toPaste{}, multiline{false}, pasteAfter{pasteAfter} {}
-        PasteCommand(const PasteCommand &other): Clonable{other}, toPaste{other.toPaste}, multiline{other.multiline}, pasteAfter{other.pasteAfter}{}
-        PasteCommand(PasteCommand &&other):Clonable{std::move(other)}, toPaste{std::move(other.toPaste)}, multiline{other.multiline} {};
+        PasteCommand(size_t quant, bool pasteAfter): Clonable{quant}, toPaste{}, multiline{false}, pasteAfter{pasteAfter}, pasteStarts{0,0} {}
+        PasteCommand(const PasteCommand &other): Clonable{other}, toPaste{other.toPaste}, multiline{other.multiline}, pasteAfter{other.pasteAfter}, pasteStarts{0,0}{}
+        PasteCommand(PasteCommand &&other):Clonable{std::move(other)}, toPaste{std::move(other.toPaste)}, multiline{other.multiline}, pasteStarts{0,0} {};
     };
 
 
