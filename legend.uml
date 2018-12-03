@@ -5,6 +5,8 @@ class Class
 
 abstract class AbstractClass
 
+enum Enum
+
 object Members {
     -private field
     #protected field
