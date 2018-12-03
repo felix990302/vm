@@ -40,7 +40,7 @@ namespace VM {
                 if(pasteAfter) cursor.moveRight();
                 pasteStarts = cursor.getCursor();
                 for(size_t k = 0; k < quant; ++k) buffer.type(toPaste);
-
+                cursor.moveLeft();
             }
             return pasteStarts;
         }
