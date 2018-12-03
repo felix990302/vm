@@ -82,8 +82,8 @@ namespace VM {
         CommandStack &getUndoStack() {return undoStack;}
         CommandStack &getRedoStack() {return redoStack;}
 
-        char getMacroRecKey() {return macroRecKey;}
-        void setMacroRecKey(char c) {macroRecKey = c;}
+        char getMacroRecKey() {return macroRecKey; }
+        void setMacroRecKey(char c) {setMessage(""); macroRecKey = c;}
         MacroMap &getMacroMap() {return macroMap;}
 
         void runCommand(std::unique_ptr<Command> command);

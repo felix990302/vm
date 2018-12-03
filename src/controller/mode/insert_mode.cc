@@ -52,7 +52,7 @@ namespace VM {
     }
 
     std::string InsertMode::getStatusBarLeft() {
-        return "-- INSERT --" + Mode::getStatusBarLeft();;
+        return "-- INSERT --" + Mode::getStatusBarLeft();
     }
 
     void InsertMode::onExit() {

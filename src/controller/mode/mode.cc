@@ -6,7 +6,7 @@ namespace VM {
 
     std::string Mode::getStatusBarLeft() {
         if(controller.getMacroRecKey() != 0)
-            return " recording @" + controller.getMacroRecKey() ;
+            return std::string(" recording @") + controller.getMacroRecKey() ;
         return  "";
     }
 
