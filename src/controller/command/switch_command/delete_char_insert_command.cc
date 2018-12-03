@@ -11,7 +11,7 @@ namespace VM {
         PtrCursor &cursor = controller.getBuffer().ptrCursor;
         InsertMode &insertMode = *controller.modes.insertMode;
 
-        for(size_t j=1; j<quant; ++j) {
+        for(size_t j=0; j<quant; ++j) {
             if(!cursor.isEOL()) {
                 insertMode.getInserBuffer().push_back(std::make_unique<DeleteForwardCommand>(1));
                 insertMode.getInserBuffer().back()->doCommand(controller);
